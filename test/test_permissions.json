@@ -1,6 +1,6 @@
 [
     {
-        "group" : "Permissions",
+        "groupname" : "Permissions",
         "available_methods" : ["GET", "PUT", "DELETE"],
         "all_test" : [
             {
@@ -234,5 +234,8 @@
                 }
             }
         ]
+    },
+    {
+        "groupname" : "test"
     }
 ]
