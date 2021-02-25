@@ -1,0 +1,25 @@
+{
+  "name": "test-seal-external-api",
+  "version": "1.0.0",
+  "description": "automated test on seal external api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eli0ttD0NATIEN/test-seal-external-api.git"
+  },
+  "author": "archJesus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eli0ttD0NATIEN/test-seal-external-api/issues"
+  },
+  "homepage": "https://github.com/Eli0ttD0NATIEN/test-seal-external-api#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "chai": "^4.3.0",
+    "mocha": "^8.3.0",
+    "should": "^13.2.3"
+  }
+}

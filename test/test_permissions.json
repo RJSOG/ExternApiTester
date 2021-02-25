@@ -1,0 +1,238 @@
+[
+    {
+        "group" : "Permissions",
+        "available_methods" : ["GET", "PUT", "DELETE"],
+        "all_test" : [
+            {
+                "name" : "Test GET permissions",
+                "description" : "listing paginée des droits actif de badge",
+                "endpoint" : "/permission",
+                "method" : "GET",
+                "param_uri" : {
+                    "limit" : 200,
+                    "offset" : 0
+                },
+                "param_body" : {},
+                "assert" : {
+                    "status_code" : 200
+                }
+            },
+            {
+                "name" : "Test PUT badge sur porte",
+                "description" : "Creation / Update d'un badge sur porte",
+                "endpoint" : "/permission",
+                "method" : "PUT",
+                "param_uri" : {},
+                "param_body" : {
+                    "tagId": 1,
+                    "doorId": 1,
+                    "beginDate": "2021-02-24T15:46:39.371Z",
+                    "endDate": "2021-02-24T15:46:39.372Z",
+                    "ulsWeekTemplateId": 0
+                },
+                "assert" : {
+                    "status_code" : 200,
+                    "verify" : true
+                }
+            },
+            {
+                "name" : "Test PUT groupe badge sur porte",
+                "description" : "Creation / Update d'un groupe de badge sur porte",
+                "endpoint" : "/permission",
+                "method" : "PUT",
+                "param_uri" : {},
+                "param_body" : {
+                    "tagGroupId": 1,
+                    "doorId": 1,
+                    "beginDate": "2021-02-24T15:46:39.371Z",
+                    "endDate": "2021-02-24T15:46:39.372Z",
+                    "ulsWeekTemplateId": 0
+                },
+                "assert" : {
+                    "status_code" : 200,
+                    "verify" : true
+                }
+            },
+            {
+                "name" : "Test PUT badge groupe porte",
+                "description" : "Creation / Update d'un badge sur groupe de porte",
+                "endpoint" : "/permission",
+                "method" : "PUT",
+                "param_uri" : {},
+                "param_body" : {
+                    "tagId": 1,
+                    "doorGroupId": 1,
+                    "beginDate": "2021-02-24T15:46:39.371Z",
+                    "endDate": "2021-02-24T15:46:39.372Z",
+                    "ulsWeekTemplateId": 0
+                },
+                "assert" : {
+                    "status_code" : 200,
+                    "verify" : true
+                }
+            },
+            {
+                "name" : "Test PUT groupe badge groupe porte",
+                "description" : "Creation / Update d'un groupe de badge sur groupe de porte",
+                "endpoint" : "/permission",
+                "method" : "PUT",
+                "param_uri" : {},
+                "param_body" : {
+                    "tagGroupId": 1,
+                    "doorGroupId": 1,
+                    "beginDate": "2021-02-24T15:46:39.371Z",
+                    "endDate": "2021-02-24T15:46:39.372Z",
+                    "ulsWeekTemplateId": 0
+                },
+                "assert" : {
+                    "status_code" : 200,
+                    "verify" : true
+                }
+            },
+            {
+                "name" : "Test PUT badge groupe badge",
+                "description" : "Ajout d'un badge d'un un groupe de badge",
+                "endpoint" : "/permission",
+                "method" : "PUT",
+                "param_uri" : {},
+                "param_body" : {
+                    "tagId": 1,
+                    "tagGroupId": 1,
+                    "beginDate": "2021-02-24T15:46:39.371Z",
+                    "endDate": "2021-02-24T15:46:39.372Z",
+                    "ulsWeekTemplateId": 0
+                },
+                "assert" : {
+                    "status_code" : 200,
+                    "verify" : true
+                }
+            },
+            {
+                "name" : "Test PUT porte groupe porte",
+                "description" : "Ajout d'un porte d'un un groupe de porte",
+                "endpoint" : "/permission",
+                "method" : "PUT",
+                "param_uri" : {},
+                "param_body" : {
+                    "doorId": 1,
+                    "doorGroupId": 1,
+                    "beginDate": "2021-02-24T15:46:39.371Z",
+                    "endDate": "2021-02-24T15:46:39.372Z",
+                    "ulsWeekTemplateId": 0
+                },
+                "assert" : {
+                    "status_code" : 200,
+                    "verify" : true
+                }
+            },
+            {
+                "name" : "Test DELETE badge porte",
+                "description" : "Supprime un badge sur une porte",
+                "endpoint" : "/permission",
+                "method" : "DELETE",
+                "param_uri" : {},
+                "param_body" : {
+                    "tagId": 1,
+                    "doorId": 1,
+                    "beginDate": "2021-02-24T15:46:39.371Z",
+                    "endDate": "2021-02-24T15:46:39.372Z",
+                    "ulsWeekTemplateId": 0
+                },
+                "assert" : {
+                    "status_code" : 200,
+                    "verify" : true
+                }
+            },
+            {
+                "name" : "Test DELETE groupe badge porte",
+                "description" : "Supprime un groupe de badge sur une porte",
+                "endpoint" : "/permission",
+                "method" : "DELETE",
+                "param_uri" : {},
+                "param_body" : {
+                    "tagGroupId": 1,
+                    "doorId": 1,
+                    "beginDate": "2021-02-24T15:46:39.371Z",
+                    "endDate": "2021-02-24T15:46:39.372Z",
+                    "ulsWeekTemplateId": 0
+                },
+                "assert" : {
+                    "status_code" : 200,
+                    "verify" : true
+                }
+            },
+            {
+                "name" : "Test DELETE badge groupe porte",
+                "description" : "Supprime un badge sur un groupe de porte",
+                "endpoint" : "/permission",
+                "method" : "DELETE",
+                "param_uri" : {},
+                "param_body" : {
+                    "tagId": 1,
+                    "doorGroupId": 1,
+                    "beginDate": "2021-02-24T15:46:39.371Z",
+                    "endDate": "2021-02-24T15:46:39.372Z",
+                    "ulsWeekTemplateId": 0
+                },
+                "assert" : {
+                    "status_code" : 200,
+                    "verify" : true
+                }
+            },
+            {
+                "name" : "Test DELETE groupe badge groupe porte",
+                "description" : "Supprime un groupe de badge sur un groupe de porte",
+                "endpoint" : "/permission",
+                "method" : "DELETE",
+                "param_uri" : {},
+                "param_body" : {
+                    "tagGroupId": 1,
+                    "doorGroupId": 1,
+                    "beginDate": "2021-02-24T15:46:39.371Z",
+                    "endDate": "2021-02-24T15:46:39.372Z",
+                    "ulsWeekTemplateId": 0
+                },
+                "assert" : {
+                    "status_code" : 200,
+                    "verify" : true
+                }
+            },
+            {
+                "name" : "Test DELETE badge groupe badge",
+                "description" : "Suppression d'un badge d'un un groupe de badge",
+                "endpoint" : "/permission",
+                "method" : "DELETE",
+                "param_uri" : {},
+                "param_body" : {
+                    "tagId": 1,
+                    "tagGroupId": 1,
+                    "beginDate": "2021-02-24T15:46:39.371Z",
+                    "endDate": "2021-02-24T15:46:39.372Z",
+                    "ulsWeekTemplateId": 0
+                },
+                "assert" : {
+                    "status_code" : 200,
+                    "verify" : true
+                }
+            },
+            {
+                "name" : "Test DELETE porte groupe porte",
+                "description" : "Suppression d'une porte d'un groupe de porte",
+                "endpoint" : "/permission",
+                "method" : "DELETE",
+                "param_uri" : {},
+                "param_body" : {
+                    "doorId": 1,
+                    "doorGroupId": 1,
+                    "beginDate": "2021-02-24T15:46:39.371Z",
+                    "endDate": "2021-02-24T15:46:39.372Z",
+                    "ulsWeekTemplateId": 0
+                },
+                "assert" : {
+                    "status_code" : 200,
+                    "verify" : true
+                }
+            }
+        ]
+    }
+]
