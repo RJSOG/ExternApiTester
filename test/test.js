@@ -2,24 +2,24 @@ const should = require("should");
 const axios = require("axios");
 const index = require("../src/index.js");
 const expect = require("chai").expect;
-const baseUrl = 'http://vm-dev-central4';
+const baseUrl = 'http://vm-dev-central4/SealWebMvc/ExternalApi';
 
 async function authenticate(){
     let identifiants = "edonatien:S34l4dm";
-    let buff = Buffer.from(identifiant, 'utf-8');
+    let buff = Buffer.from(identifiants, 'utf-8');
     let headers = {
-        Authorization: "Basic" + buff.toString('base64')
+	headers: {"Authorization": "Basic " + buff.toString('base64')}
     }
-    let resp = await axios.put(baseUrl + '/authenticate', headers).then((response) => {
+    let resp = await axios.put(baseUrl + '/Authenticate', "" , headers).then((response) => {
         return response;
     }).catch((err) => {
         console.log(err);
     })
-    console.log(resp);
+    return resp.headers['set-cookie'];
 }
 
-async function getRequest(endpoint){
-    let resp = await axios.get(baseUrl + endpoint).then((response) => {
+async function getRequest(endpoint, auth)){
+    let resp = await axios.get(baseUrl + endpoint, {Cookie: auth}).then((response) => {
         return response;
     }).catch(err => {
         console.log(err);
@@ -36,7 +36,6 @@ function testFunc(description, endpoint, assert){
         });
     });
 }
-
 index.init();
 var test = index.getSpecificTestInGroup("Test GET permissions", "Permissions");
 testFunc(test.description, test.endpoint, test.assert);
