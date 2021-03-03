@@ -56,6 +56,20 @@
                         "target" : "status",
                         "value" : 200,
                         "verify" : true
+                    },
+                    { 
+                        "comparison" : "Is not",
+                        "target" : "item",
+                        "subTarget" : "processed",
+                        "value" : null,
+                        "verify" : true
+                    },
+                    {
+                        "comparison" : "Type",
+                        "target" : "item",
+                        "subTarget" : "processed",
+                        "use_body" : true,
+                        "value" : "array"
                     }
                 ]
             }

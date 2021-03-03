@@ -64,6 +64,7 @@ class TestFactory{
         return {
             target : testCase.target,
             subTarget : (testCase.verify != undefined) ? testCase.subTarget : false,
+            targetDescription : (testCase.subTarget != undefined) ? 
             useBody : testCase.use_body,
             verify : (testCase.verify != undefined) ? testCase.verify : false,
             comparison : testCase.comparison,
@@ -71,32 +72,55 @@ class TestFactory{
         }
     }
     executeAssertions(testCaseParam, response){
+        //set description target and fix subTarget
         switch (testCaseParam.comparison){
             case 'Equals':
                 this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.target + ' to equal ' + testCaseParam.value, (() => {
                     testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
-                    if(testCaseParam.useBody){
-                        expect(response.data[testCaseParam.target]).to.equal(testCaseParam.value);
+                    if(testCaseParam.subTarget){
+                        if(testCaseParam.useBody){
+                            expect(response.data[testCaseParam.target][testCaseParam.subTarget]).to.equal(testCaseParam.value);
+                        }else{
+                            expect(response[testCaseParam.target][testCaseParam.subTarget]).to.equal(testCaseParam.value);
+                        }
                     }else{
-                        expect(response[testCaseParam.target]).to.equal(testCaseParam.value);
+                        if(testCaseParam.useBody){
+                            expect(response.data[testCaseParam.target]).to.equal(testCaseParam.value);
+                        }else{
+                            expect(response[testCaseParam.target]).to.equal(testCaseParam.value);
+                        }
                     }
                 })))
                 break;
             case 'Is not':
                 this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.target + ' is not ' + testCaseParam.value, (() => {
                     testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
-                    if(testCaseParam.useBody){
-                        expect(response.data[testCaseParam.target]).to.not.equal(testCaseParam.value);
+                    if(testCaseParam.subTarget){
+                        if(testCaseParam.useBody){
+                            expect(response.data[testCaseParam.target][testCaseParam.subTarget]).to.not.equal(testCaseParam.value);
+                        }else{
+                            expect(response[testCaseParam.target][testCaseParam.subTarget]).to.not.equal(testCaseParam.value);
+                        }
                     }else{
-                        expect(response[testCaseParam.target]).to.not.equal(testCaseParam.value);
+                        if(testCaseParam.useBody){
+                            expect(response.data[testCaseParam.target]).to.not.equal(testCaseParam.value);
+                        }else{
+                            expect(response[testCaseParam.target]).to.not.equal(testCaseParam.value);
+                        }
                     }
                 })));
                 break;
             case 'Type':
                 this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.target + ' to be an ' + testCaseParam.value, (() => {
                     testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
-                    if(testCaseParam.useBody){
-                        response.data[testCaseParam.target].should.be.a(testCaseParam.value)
+                    if(testCaseParam.subTarget){
+                        if(testCaseParam.useBody){
+                            response.data[testCaseParam.target][testCaseParam.subTarget].should.be.a(testCaseParam.value)
+                        }
+                    }else{
+                        if(testCaseParam.useBody){
+                            response.data[testCaseParam.target].should.be.a(testCaseParam.value)
+                        }
                     }
                 })));
                 break;
