@@ -7,7 +7,7 @@ const Test = Mocha.Test;
 const defaultCfg = {
     timeout: 1000,
     report: 'cli',
-    baseUrl: 'http://vm-dev-central3.omnitech.security/SealWebMvc/ExternalApi'
+    baseUrl: 'http://vm-dev-central4.omnitech.security/SealWebMvc/ExternalApi'
 }
 
 class TestFactory{
@@ -39,66 +39,67 @@ class TestFactory{
     async testMapper(){
         if(this.method == null) return ''
         var methodMapper = {
-            "GET" : this.getTest,
+            "GET" : await this.getTest,
             // "POST" : this.postTest(),
-            "PUT" : this.putTest
+            "PUT" : await this.putTest
             // "DELETE" : this.deleteTest()
         }
-        return await methodMapper[this.method]();
+        return methodMapper[this.method]();
     }
     getTest = async () => {
         let response = await this.getRequest(this.endpoint + this.param_uri, this.auth);
         for(let testCase of this.assert){
-            let target = testCase.target;
-            let useBody = testCase.use_body;
-            let comparison = testCase.comparison;
-            let value = testCase.value;
-            switch (comparison){
-                case 'Equals':
-                    this.suiteInstance.addTest(new Test('Expect ' + target + ' to equal ' + value, (() => {
-                        target = (target == 'status_code') ? 'status' : target;
-                        if(useBody){
-                            expect(response.data[target]).to.equal(value);
-                        }else{
-                            expect(response[target]).to.equal(value);
-                        }
-                    })))
-                    break;
-                case 'Is not':
-                    this.suiteInstance.addTest(new Test('Expect ' + target + ' is not ' + value, (() => {
-                        target = (target == 'status_code') ? 'status' : target;
-                        if(useBody){
-                            expect(response.data[target]).to.not.equal(value);
-                        }else{
-                            expect(response[target]).to.not.equal(value);
-                        }
-                    })));
-                    break;
-                case 'Type':
-                    this.suiteInstance.addTest(new Test('Expect ' + target + ' to be an ' + value, (() => {
-                        target = (target == 'status_code') ? 'status' : target;
-                        if(useBody){
-                            response.data[target].should.be.a(value)
-                        }
-                    })));
-                    break;
-            }
+            let testCaseParam = this.getTestCaseParam(testCase);
+            this.executeAssertions(testCaseParam, response);
         }
     }
     putTest  = async () => {
         let response = await this.putRequest(this.endpoint + this.param_uri, this.auth, this.param_body);
         for(let testCase of this.assert){
-            let target = testCase.target;
-            let verify = testCase.verify;
-            let comparison = testCase.comparison;
-            let value = testCase.value;
-            switch(comparison){
-                case 'Equals':
-                    this.suiteInstance.addTest(new Test('Expect ' + target + ' to equal ' + value, (() => {
-                        expect(response[target]).to.equal(value);
-                    })))
-                    break;
-            }
+            let testCaseParam = this.getTestCaseParam(testCase);
+            this.executeAssertions(testCaseParam, response);
+        }
+    }
+    getTestCaseParam(testCase){
+        return {
+            target : testCase.target,
+            subTarget : (testCase.verify != undefined) ? testCase.subTarget : false,
+            useBody : testCase.use_body,
+            verify : (testCase.verify != undefined) ? testCase.verify : false,
+            comparison : testCase.comparison,
+            value : testCase.value
+        }
+    }
+    executeAssertions(testCaseParam, response){
+        switch (testCaseParam.comparison){
+            case 'Equals':
+                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.target + ' to equal ' + testCaseParam.value, (() => {
+                    testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
+                    if(testCaseParam.useBody){
+                        expect(response.data[testCaseParam.target]).to.equal(testCaseParam.value);
+                    }else{
+                        expect(response[testCaseParam.target]).to.equal(testCaseParam.value);
+                    }
+                })))
+                break;
+            case 'Is not':
+                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.target + ' is not ' + testCaseParam.value, (() => {
+                    testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
+                    if(testCaseParam.useBody){
+                        expect(response.data[testCaseParam.target]).to.not.equal(testCaseParam.value);
+                    }else{
+                        expect(response[testCaseParam.target]).to.not.equal(testCaseParam.value);
+                    }
+                })));
+                break;
+            case 'Type':
+                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.target + ' to be an ' + testCaseParam.value, (() => {
+                    testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
+                    if(testCaseParam.useBody){
+                        response.data[testCaseParam.target].should.be.a(testCaseParam.value)
+                    }
+                })));
+                break;
         }
     }
     getStrParamUri(){
@@ -118,12 +119,12 @@ class TestFactory{
             const resp = await axios.get(this.config.baseUrl + endpoint, {headers: {"Cookie": auth}});
             return resp;
         }catch(err){
-            console.log(eerr.response.status + " - " + err.response.statusTextrr);
+            console.log(err.response.status + " - " + err.response.statusTextrr);
         }
     }
     async putRequest(endpoint, auth, data){
         try{
-            const resp = await axios.put(this.config.baseUrl + endpoint, data, {headers: {"Cookie": auth}})
+            const resp = await axios.put(this.config.baseUrl + endpoint, data, {headers: {"Cookie": auth}});
             return resp;
         }catch(err){
             console.log(err.response.status + " - " + err.response.statusText);

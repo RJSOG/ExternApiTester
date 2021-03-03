@@ -45,13 +45,13 @@
                 "endpoint" : "/permission",
                 "method" : "PUT",
                 "param_uri" : {},
-                "param_body" : {
-                    "tagId": 1,
-                    "doorId": 1,
-                    "ulsWeekTemplateId": 0
-                },
+                "param_body" : [{
+                    "tagId": 10,
+                    "doorId": 517,
+                    "ulsWeekTemplateId": 165
+                }],
                 "assert" : [
-                    {
+                    { 
                         "comparison" : "Equals",
                         "target" : "status",
                         "value" : 200,

@@ -1,6 +1,6 @@
 const axios = require('axios');
 const TestFactory = require('./testClass');
-const baseUrl = 'http://vm-dev-central3.omnitech.security/SealWebMvc/ExternalApi';
+const baseUrl = 'http://vm-dev-central4.omnitech.security/SealWebMvc/ExternalApi';
 
 class TestGroup{
     constructor(testGroup){

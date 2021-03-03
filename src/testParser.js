@@ -1,5 +1,5 @@
 const fs = require("fs");
-const testFolderPath = "/home/archjesus/Data_dd/Informatique/Programmes/JS/test-seal-external-api/test/"
+const testFolderPath = "C:/Users/edonatien/Desktop/test-seal-external-api/test/"
 
 class TestParser {
     constructor(filename){
