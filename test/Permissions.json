@@ -15,7 +15,7 @@
                 "assert" :[ 
                         {
                             "comparison" : "Equals",
-                            "target" : "status",
+                            "target" : "status_code",
                             "use_body" : false,
                             "value" : 200
                         },
@@ -24,6 +24,18 @@
                             "target" : "item",
                             "use_body" : true,
                             "value" : null
+                        },
+                        {
+                            "comparison" : "Equals",
+                            "target" : "status",
+                            "use_body": true,
+                            "value" : "ok"
+                        },
+                        {
+                            "comparison" : "Type",
+                            "target" : "item",
+                            "use_body" : true,
+                            "value" : "array"
                         }
                     ]
             },
@@ -36,8 +48,6 @@
                 "param_body" : {
                     "tagId": 1,
                     "doorId": 1,
-                    "beginDate": "2021-02-24T15:46:39.371Z",
-                    "endDate": "2021-02-24T15:46:39.372Z",
                     "ulsWeekTemplateId": 0
                 },
                 "assert" : [
