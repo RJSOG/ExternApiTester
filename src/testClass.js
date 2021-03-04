@@ -22,7 +22,7 @@ class TestFactory{
             }
         })
     }
-    setProperty(){
+    setProperty = () => {
         this.endpoint = this.test.endpoint;
         this.method = this.test.method;
         this.assert = this.test.assert;
@@ -30,21 +30,21 @@ class TestFactory{
         this.param_uri = this.getStrParamUri();
         this.param_body = this.test.param_body;
     }
-    setMochaProperties(){
+    setMochaProperties = () => {
         this.config = Object.assign({}, defaultCfg);
         this.mochaInstance = new Mocha();
         this.suiteInstance = Mocha.Suite.create(this.mochaInstance.suite, this.description);
         this.suiteInstance.timeout(this.config.timeout);
     }
-    async testMapper(){
+    testMapper = async () => {
         if(this.method == null) return ''
         var methodMapper = {
-            "GET" : await this.getTest,
-            // "POST" : this.postTest(),
-            "PUT" : await this.putTest
-            // "DELETE" : this.deleteTest()
+            "GET" : this.getTest,
+            "POST" : this.postTest,
+            "PUT" : this.putTest,
+            "DELETE" : this.deleteTest
         }
-        return methodMapper[this.method]();
+        return await methodMapper[this.method]();
     }
     getTest = async () => {
         let response = await this.getRequest(this.endpoint + this.param_uri, this.auth);
@@ -60,22 +60,35 @@ class TestFactory{
             this.executeAssertions(testCaseParam, response);
         }
     }
-    getTestCaseParam(testCase){
+    deleteTest = async () => {
+        let response = await this.deleteRequest(this.endpoint + this.param_uri, this.auth, this.param_body);
+        for(let testCase of this.assert){
+            let testCaseParam = this.getTestCaseParam(testCase);
+            this.executeAssertions(testCaseParam, response)
+        }
+    }
+    postTest = async () => {
+        let response =  await this.postRequest(this.endpoint + this.param_uri, this.auth, this.param_body);
+        for(let testCase of this.assert){
+            let testCaseParam = this.getTestCaseParam(testCase);
+            this.executeAssertions(testCaseParam, response)
+        }
+    }
+    getTestCaseParam = (testCase) => {
         return {
             target : testCase.target,
-            subTarget : (testCase.verify != undefined) ? testCase.subTarget : false,
-            targetDescription : (testCase.subTarget != undefined) ? 
+            subTarget : (testCase.subTarget != undefined) ? testCase.subTarget : false,
+            targetDescription : (testCase.subTarget != undefined) ? testCase.target + "." + testCase.subTarget : testCase.target,
             useBody : testCase.use_body,
             verify : (testCase.verify != undefined) ? testCase.verify : false,
             comparison : testCase.comparison,
             value : testCase.value
         }
     }
-    executeAssertions(testCaseParam, response){
-        //set description target and fix subTarget
+    executeAssertions = (testCaseParam, response) => {
         switch (testCaseParam.comparison){
             case 'Equals':
-                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.target + ' to equal ' + testCaseParam.value, (() => {
+                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.targetDescription + ' to equal ' + testCaseParam.value, (() => {
                     testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
                     if(testCaseParam.subTarget){
                         if(testCaseParam.useBody){
@@ -93,7 +106,7 @@ class TestFactory{
                 })))
                 break;
             case 'Is not':
-                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.target + ' is not ' + testCaseParam.value, (() => {
+                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.targetDescription + ' is not ' + testCaseParam.value, (() => {
                     testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
                     if(testCaseParam.subTarget){
                         if(testCaseParam.useBody){
@@ -111,7 +124,7 @@ class TestFactory{
                 })));
                 break;
             case 'Type':
-                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.target + ' to be an ' + testCaseParam.value, (() => {
+                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.targetDescription + ' to be an ' + testCaseParam.value, (() => {
                     testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
                     if(testCaseParam.subTarget){
                         if(testCaseParam.useBody){
@@ -126,7 +139,7 @@ class TestFactory{
                 break;
         }
     }
-    getStrParamUri(){
+    getStrParamUri = () => {
         let param_uri_str = "?"
         if(this.test.param_uri){
             Object.keys(this.test.param_uri).forEach((param) => {
@@ -138,7 +151,7 @@ class TestFactory{
         }
         return param_uri_str;
     }
-    async getRequest(endpoint, auth){
+    getRequest = async (endpoint, auth) => {
         try {
             const resp = await axios.get(this.config.baseUrl + endpoint, {headers: {"Cookie": auth}});
             return resp;
@@ -146,9 +159,25 @@ class TestFactory{
             console.log(err.response.status + " - " + err.response.statusTextrr);
         }
     }
-    async putRequest(endpoint, auth, data){
+    putRequest = async (endpoint, auth, data) => {
         try{
             const resp = await axios.put(this.config.baseUrl + endpoint, data, {headers: {"Cookie": auth}});
+            return resp;
+        }catch(err){
+            console.log(err.response.status + " - " + err.response.statusText);
+        }
+    }
+    postRequest = async (endpoint, auth, data) => {
+        try {
+            const resp = await axios.post(this.config.baseUrl + endpoint, data, {headers : {"Cookie": auth}});
+            return resp;
+        }catch(err){
+            console.log(err.response.status + " - " + err.response.statusText);
+        }
+    }
+    deleteRequest = async (endpoint, auth, data) => {
+        try {
+            const resp = await axios.delete(this.config.baseUrl + endpoint, data, {headers : {"Cookie": auth}});
             return resp;
         }catch(err){
             console.log(err.response.status + " - " + err.response.statusText);
