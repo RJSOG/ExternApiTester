@@ -1,0 +1,78 @@
+[
+    {
+        "groupname" : "Permissions",
+        "all_test" : [
+            {
+                "name" : "Test GET permissions",
+                "description" : "Listing paginée des droits actif de badge",
+                "endpoint" : "/permission",
+                "method" : "GET",
+                "param_uri" : {
+                    "limit" : 200,
+                    "offset" : 0
+                },
+                "param_body" : {},
+                "assert" :[ 
+                        {
+                            "comparison" : "Equals",
+                            "target" : "status_code",
+                            "use_body" : false,
+                            "value" : 200
+                        },
+                        {
+                            "comparison" : "Is not",
+                            "target" : "item",
+                            "use_body" : true,
+                            "value" : null
+                        },
+                        {
+                            "comparison" : "Equals",
+                            "target" : "status",
+                            "use_body": true,
+                            "value" : "ok"
+                        },
+                        {
+                            "comparison" : "Type",
+                            "target" : "item",
+                            "use_body" : true,
+                            "value" : "array"
+                        }
+                    ]
+            },
+            {
+                "name" : "Test PUT badge sur porte",
+                "description" : "Creation / Update dun badge sur porte",
+                "endpoint" : "/permission",
+                "method" : "PUT",
+                "param_uri" : {},
+                "param_body" : [{
+                    "tagId": 10,
+                    "doorId": 517,
+                    "ulsWeekTemplateId": 165
+                }],
+                "assert" : [
+                    { 
+                        "comparison" : "Equals",
+                        "target" : "status_code",
+                        "use_body" : false,
+                        "value" : 200
+                    },
+                    { 
+                        "comparison" : "Is not",
+                        "target" : "item",
+                        "use_body" : true,
+                        "subTarget" : "processed",
+                        "value" : null
+                    },
+                    {
+                        "comparison" : "Type",
+                        "target" : "item",
+                        "subTarget" : "processed",
+                        "use_body" : true,
+                        "value" : "array"
+                    }
+                ]
+            }
+        ]
+    }
+]
