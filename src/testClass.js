@@ -16,7 +16,11 @@ class TestFactory{
         this.auth = auth;
         this.setProperty();
         this.setMochaProperties();
-        this.testMapper().then(() => {
+        this.methodMapper().then(response => {
+            for(let testCase of this.assert){
+                let testCaseParam = this.getTestCaseParam(testCase);
+                this.executeAssertions(testCaseParam, response);
+            }
             if(this.config.report === 'cli'){
                 this.mochaInstance.run();
             }
@@ -36,43 +40,20 @@ class TestFactory{
         this.suiteInstance = Mocha.Suite.create(this.mochaInstance.suite, this.description);
         this.suiteInstance.timeout(this.config.timeout);
     }
-    testMapper = async () => {
+    methodMapper = async () => {
         if(this.method == null) return ''
+        let requestParam = {
+            'endpoint' : this.endpoint + this.param_uri,
+            'auth' : this.auth,
+            'data' : (this.param_body != undefined) ? this.param_body : ''
+        }
         var methodMapper = {
-            "GET" : this.getTest,
-            "POST" : this.postTest,
-            "PUT" : this.putTest,
-            "DELETE" : this.deleteTest
+            "GET" : this.getRequest,
+            "POST" : this.postRequest,
+            "PUT" : this.putRequest,
+            "DELETE" : this.deleteRequest
         }
-        return await methodMapper[this.method]();
-    }
-    getTest = async () => {
-        let response = await this.getRequest(this.endpoint + this.param_uri, this.auth);
-        for(let testCase of this.assert){
-            let testCaseParam = this.getTestCaseParam(testCase);
-            this.executeAssertions(testCaseParam, response);
-        }
-    }
-    putTest  = async () => {
-        let response = await this.putRequest(this.endpoint + this.param_uri, this.auth, this.param_body);
-        for(let testCase of this.assert){
-            let testCaseParam = this.getTestCaseParam(testCase);
-            this.executeAssertions(testCaseParam, response);
-        }
-    }
-    deleteTest = async () => {
-        let response = await this.deleteRequest(this.endpoint + this.param_uri, this.auth, this.param_body);
-        for(let testCase of this.assert){
-            let testCaseParam = this.getTestCaseParam(testCase);
-            this.executeAssertions(testCaseParam, response)
-        }
-    }
-    postTest = async () => {
-        let response =  await this.postRequest(this.endpoint + this.param_uri, this.auth, this.param_body);
-        for(let testCase of this.assert){
-            let testCaseParam = this.getTestCaseParam(testCase);
-            this.executeAssertions(testCaseParam, response)
-        }
+        return await methodMapper[this.method](requestParam);
     }
     getTestCaseParam = (testCase) => {
         return {
@@ -151,33 +132,33 @@ class TestFactory{
         }
         return param_uri_str;
     }
-    getRequest = async (endpoint, auth) => {
+    getRequest = async (requestParam) => {
         try {
-            const resp = await axios.get(this.config.baseUrl + endpoint, {headers: {"Cookie": auth}});
+            const resp = await axios.get(this.config.baseUrl + requestParam.endpoint, {headers: {"Cookie": requestParam.auth}});
             return resp;
         }catch(err){
-            console.log(err.response.status + " - " + err.response.statusTextrr);
+            console.log(err.response.status + " - " + err.response.statusText);
         }
     }
-    putRequest = async (endpoint, auth, data) => {
+    putRequest = async (requestParam) => {
         try{
-            const resp = await axios.put(this.config.baseUrl + endpoint, data, {headers: {"Cookie": auth}});
+            const resp = await axios.put(this.config.baseUrl + requestParam.endpoint, requestParam.data, {headers: {"Cookie": requestParam.auth}});
             return resp;
         }catch(err){
             console.log(err.response.status + " - " + err.response.statusText);
         }
     }
-    postRequest = async (endpoint, auth, data) => {
+    postRequest = async (requestParam) => {
         try {
-            const resp = await axios.post(this.config.baseUrl + endpoint, data, {headers : {"Cookie": auth}});
+            const resp = await axios.post(this.config.baseUrl + requestParam.endpoint, requestParam.data, {headers : {"Cookie": requestParam.auth}});
             return resp;
         }catch(err){
             console.log(err.response.status + " - " + err.response.statusText);
         }
     }
-    deleteRequest = async (endpoint, auth, data) => {
+    deleteRequest = async (requestParam) => {
         try {
-            const resp = await axios.delete(this.config.baseUrl + endpoint, data, {headers : {"Cookie": auth}});
+            const resp = await axios.delete(this.config.baseUrl + requestParam.endpoint, requestParam.data, {headers : {"Cookie": requestParam.auth}});
             return resp;
         }catch(err){
             console.log(err.response.status + " - " + err.response.statusText);

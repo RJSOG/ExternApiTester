@@ -9,8 +9,9 @@ class TestGroup{
         this.groupName = testGroup.groupname;
         this.authenticate().then(auth => {
             this.auth = auth;
-            this.allJsonTest.forEach(test => {
+            this.allJsonTest.forEach(async (test) => {
                 this.createTest(test);
+                await new Promise(resolve => setTimeout(resolve, 100)); //Pause to have test printed in the right way 
             })
         })
     }
