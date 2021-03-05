@@ -11,7 +11,7 @@
                     "limit" : 200,
                     "offset" : 0
                 },
-                "param_body" : {},
+                "param_body" : [{}],
                 "assert" :[ 
                         {
                             "comparison" : "Equals",
@@ -70,6 +70,39 @@
                         "subTarget" : "processed",
                         "use_body" : true,
                         "value" : "array"
+                    },
+                    {
+                        "comparison" : "Equals",
+                        "target" : "item",
+                        "subTarget" : "ignored",
+                        "use_body" : true,
+                        "value" : []
+                    }
+                ]
+            },
+            {
+                "name" : "Test DELETE badge porte",
+                "description" : "Supprime un badge sur une porte",
+                "endpoint" : "/permission",
+                "method" : "DELETE",
+                "param_uri" : "{}",
+               "param_body" : [{
+                    "tagId": 11,
+                    "doorId": 523,
+                    "ulsWeekTemplateId": 165
+                }],
+                "assert" : [
+                    {
+                        "comparison" : "Equals",
+                        "target" : "status_code",
+                        "use_body": false,
+                        "value" : 200
+                    },
+                    {
+                        "comparison": "Equals",
+                        "target" : "status",
+                        "use_body" : true,
+                        "value" : "ok"
                     }
                 ]
             }

@@ -19,6 +19,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "chai": "^4.3.0",
+    "command-line-args": "^5.1.1",
     "mocha": "^8.3.0",
     "should": "^13.2.3"
   }

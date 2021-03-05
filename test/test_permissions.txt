@@ -1,60 +1,24 @@
-           {
-                "name" : "Test PUT badge sur porte",
-                "description" : "Creation / Update dun badge sur porte",
-                "endpoint" : "/permission",
-                "method" : "PUT",
-                "param_uri" : {},
-                "param_body" : {
-                    "tagId": 10,
-                    "doorId": 517,
-                    "ulsWeekTemplateId": 165
-                },
-                "assert" : [
-                    { 
-                        "comparison" : "Equals",
-                        "target" : "status",
-                        "value" : 200,
-                        "verify" : true
+           "act" : [
+                    {
+                        "id" : "put",
+                        "endpoint" : "/permission",
+                        "method" : "PUT",
+                        "param_uri" : {},
+                        "param_body" : [{
+                            "tagId": 10,
+                            "doorId": 517,
+                            "ulsWeekTemplateId": 165
+                        }]
                     },
                     {
-                        "comparison" : "Is not",
-                        "target" : "item",
-                        "subTarget" : "processed",
-                        "use_body" : true,
-                        "value" : null
-                    },
-                    {
-                        "comparison" : "Type",
-                        "target" : "item",
-                        "subTarget" : "processed",
-                        "use_body" : true,
-                        "value" : "array"
+                        "id" : "checkput",
+                        "endpoint" : "/permission",
+                        "method" : "GET",
+                        "param_uri" : {},
+                        "param_body" : [{
+                        }]
                     }
-                ]
-                
-            }
-          {
-                "name" : "Test PUT badge sur porte",
-                "description" : "Creation / Update dun badge sur porte",
-                "endpoint" : "/permission",
-                "method" : "PUT",
-                "param_uri" : {},
-                "param_body" : {
-                    "tagId": 1,
-                    "doorId": 1,
-                    "beginDate": "2021-02-24T15:46:39.371Z",
-                    "endDate": "2021-02-24T15:46:39.372Z",
-                    "ulsWeekTemplateId": 0
-                },
-                "assert" : [
-                    {
-                        "comparison" : "Equals",
-                        "target" : "status",
-                        "value" : 200,
-                        "verify" : true
-                    }
-                ]
-            },
+                ],
             {
                 name : Test PUT badge sur porte,
                 description : Creation / Update dun badge sur porte",

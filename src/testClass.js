@@ -4,14 +4,11 @@ const should = chai.should();
 const Mocha = require("mocha/mocha").Mocha;
 const axios = require("axios");
 const Test = Mocha.Test;
-const defaultCfg = {
-    timeout: 1000,
-    report: 'cli',
-    baseUrl: 'http://vm-dev-central4.omnitech.security/SealWebMvc/ExternalApi'
-}
+
 
 class TestFactory{
-    constructor(test, auth){
+    constructor(test, auth, config){
+        this.config = config
         this.test = test;
         this.auth = auth;
         this.setProperty();
@@ -35,7 +32,6 @@ class TestFactory{
         this.param_body = this.test.param_body;
     }
     setMochaProperties = () => {
-        this.config = Object.assign({}, defaultCfg);
         this.mochaInstance = new Mocha();
         this.suiteInstance = Mocha.Suite.create(this.mochaInstance.suite, this.description);
         this.suiteInstance.timeout(this.config.timeout);
@@ -73,15 +69,15 @@ class TestFactory{
                     testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
                     if(testCaseParam.subTarget){
                         if(testCaseParam.useBody){
-                            expect(response.data[testCaseParam.target][testCaseParam.subTarget]).to.equal(testCaseParam.value);
+                            expect(response.data[testCaseParam.target][testCaseParam.subTarget]).to.deep.equal(testCaseParam.value);
                         }else{
-                            expect(response[testCaseParam.target][testCaseParam.subTarget]).to.equal(testCaseParam.value);
+                            expect(response[testCaseParam.target][testCaseParam.subTarget]).to.deep.equal(testCaseParam.value);
                         }
                     }else{
                         if(testCaseParam.useBody){
-                            expect(response.data[testCaseParam.target]).to.equal(testCaseParam.value);
+                            expect(response.data[testCaseParam.target]).to.deep.equal(testCaseParam.value);
                         }else{
-                            expect(response[testCaseParam.target]).to.equal(testCaseParam.value);
+                            expect(response[testCaseParam.target]).to.deep.equal(testCaseParam.value);
                         }
                     }
                 })))
@@ -120,6 +116,7 @@ class TestFactory{
                 break;
         }
     }
+    //Transform uri param into one string
     getStrParamUri = () => {
         let param_uri_str = "?"
         if(this.test.param_uri){
@@ -158,7 +155,7 @@ class TestFactory{
     }
     deleteRequest = async (requestParam) => {
         try {
-            const resp = await axios.delete(this.config.baseUrl + requestParam.endpoint, requestParam.data, {headers : {"Cookie": requestParam.auth}});
+            const resp = await axios.delete(this.config.baseUrl + requestParam.endpoint, {data : requestParam.data, headers : {"Cookie": requestParam.auth}});
             return resp;
         }catch(err){
             console.log(err.response.status + " - " + err.response.statusText);
