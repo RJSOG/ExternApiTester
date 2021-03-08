@@ -8,9 +8,10 @@ class TestMotor{
     constructor(config){
         this.config = config;
         this.executeInstance = new Execute(this.config);
-        this.toExecute = this.executeInstance.getFileToExecute;
-        this.allTestFiles = this.listTestFiles;
-        this.allTestData = this.getAllTestData;
+        this.toExecute = this.executeInstance.getFileToExecute();
+        this.allTestFiles = this.listTestFiles();
+        this.allTestData = this.getAllTestData();
+        this.allTestSeries = this.createAllTestSeries();
     }
     listTestFiles = () => {
         let files = [];
@@ -18,7 +19,7 @@ class TestMotor{
              if(path.extname(file) == '.json' && file != 'Execute.json' && this.toExecute.includes(file)){
                  files.push(file);
              }
-        })
+        });
         return files;
     }
     getAllTestData = () => {
@@ -31,11 +32,11 @@ class TestMotor{
         return allTestData
     }
     getTestFromFileAndId = (filename, id) => {
-        for(let file in this.allTestFiles){
+        for(let file of this.allTestFiles){
             if(file == filename){
                 let index = this.allTestFiles.indexOf(file);
                 let fileTest = this.allTestData[index];
-                for(let caseTest of fileTest){
+                for(let caseTest of fileTest.all_test){
                     if(caseTest.id == id){
                         return caseTest;
                     }
@@ -43,13 +44,19 @@ class TestMotor{
             }
         }
     }
-    createAllTestGroup = () => {
-        this.executeInstance.getAllTestSeries.forEach(testSerie => {
-            let testGroup = [];
+    createAllTestSeries = () => {
+        let allTestSeries = []
+        this.executeInstance.getAllTestSeries().forEach(testSerie => {
+            let testCaseGroup = [];
             testSerie.executionOrder.forEach(obj => {
-                testGroup.push(this.getTestFromFileAndId(obj.file, ))
+                testCaseGroup.push(this.getTestFromFileAndId(obj.file, obj.id))
             });
+            allTestSeries.push(testCaseGroup);
         })
-    }   
+        return allTestSeries;
+    } 
+    createTestGroup = () => {
+        
+    }
 }
 module.exports = {TestMotor};
