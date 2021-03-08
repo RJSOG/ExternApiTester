@@ -1,9 +1,8 @@
 const fs = require("fs");
-const testFolderPath = ("C:/Users/edonatien/Desktop/test-seal-external-api/test/")
 
 class FileParser {
-    constructor(filename){
-        this.filepath = testFolderPath + filename;
+    constructor(filename, config){
+        this.filepath = config.testFolder + filename;
         let rawdata = fs.readFileSync(this.filepath);
         this.data  = JSON.parse(rawdata);
     }

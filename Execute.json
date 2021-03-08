@@ -1,0 +1,24 @@
+[
+    {
+        "execute" : "Permissions",
+        "executeOrder" : [
+            {
+                "id" : "P2"
+            },
+            {
+                "id" : "P1",
+                "assert" : [
+                    {
+                        "target" : ""
+                    }
+                ]
+            },
+            {
+                "id" : "P3"
+            },
+            {
+                "id" : "P1"
+            }
+        ]
+    }
+]
