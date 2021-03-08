@@ -1,4 +1,5 @@
 const chai = require("chai");
+const _ = require('lodash');
 const expect = chai.expect;
 const should = chai.should();
 const Mocha = require("mocha/mocha").Mocha;
@@ -14,12 +15,14 @@ class TestFactory{
         this.setProperty();
         this.setMochaProperties();
         this.methodMapper().then(response => {
-            for(let testCase of this.assert){
-                let testCaseParam = this.getTestCaseParam(testCase);
-                this.executeAssertions(testCaseParam, response);
-            }
-            if(this.config.report === 'cli'){
-                this.mochaInstance.run();
+            if(response != 1) {
+                for(let testCase of this.assert){
+                    let testCaseParam = this.getTestCaseParam(testCase);
+                    this.executeAssertions(testCaseParam, response);
+                }
+                if(this.config.report === 'cli'){
+                    this.mochaInstance.run();
+                }
             }
         })
     }
@@ -54,8 +57,6 @@ class TestFactory{
     getTestCaseParam = (testCase) => {
         return {
             target : testCase.target,
-            subTarget : (testCase.subTarget != undefined) ? testCase.subTarget : false,
-            targetDescription : (testCase.subTarget != undefined) ? testCase.target + "." + testCase.subTarget : testCase.target,
             useBody : testCase.use_body,
             verify : (testCase.verify != undefined) ? testCase.verify : false,
             comparison : testCase.comparison,
@@ -65,53 +66,21 @@ class TestFactory{
     executeAssertions = (testCaseParam, response) => {
         switch (testCaseParam.comparison){
             case 'Equals':
-                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.targetDescription + ' to equal ' + testCaseParam.value, (() => {
+                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.target + ' to equal ' + testCaseParam.value, (() => {
                     testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
-                    if(testCaseParam.subTarget){
-                        if(testCaseParam.useBody){
-                            expect(response.data[testCaseParam.target][testCaseParam.subTarget]).to.deep.equal(testCaseParam.value);
-                        }else{
-                            expect(response[testCaseParam.target][testCaseParam.subTarget]).to.deep.equal(testCaseParam.value);
-                        }
-                    }else{
-                        if(testCaseParam.useBody){
-                            expect(response.data[testCaseParam.target]).to.deep.equal(testCaseParam.value);
-                        }else{
-                            expect(response[testCaseParam.target]).to.deep.equal(testCaseParam.value);
-                        }
-                    }
+                    expect(_.result(response, testCaseParam.target)).to.deep.equal(testCaseParam.value);
                 })))
                 break;
             case 'Is not':
-                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.targetDescription + ' is not ' + testCaseParam.value, (() => {
+                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.target + ' is not ' + testCaseParam.value, (() => {
                     testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
-                    if(testCaseParam.subTarget){
-                        if(testCaseParam.useBody){
-                            expect(response.data[testCaseParam.target][testCaseParam.subTarget]).to.not.equal(testCaseParam.value);
-                        }else{
-                            expect(response[testCaseParam.target][testCaseParam.subTarget]).to.not.equal(testCaseParam.value);
-                        }
-                    }else{
-                        if(testCaseParam.useBody){
-                            expect(response.data[testCaseParam.target]).to.not.equal(testCaseParam.value);
-                        }else{
-                            expect(response[testCaseParam.target]).to.not.equal(testCaseParam.value);
-                        }
-                    }
+                    expect(_.result(response, testCaseParam.target)).to.not.equal(testCaseParam.value);
                 })));
                 break;
             case 'Type':
-                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.targetDescription + ' to be an ' + testCaseParam.value, (() => {
+                this.suiteInstance.addTest(new Test('Expect ' + testCaseParam.target + ' to be an ' + testCaseParam.value, (() => {
                     testCaseParam.target = (testCaseParam.target == 'status_code') ? 'status' : testCaseParam.target;
-                    if(testCaseParam.subTarget){
-                        if(testCaseParam.useBody){
-                            response.data[testCaseParam.target][testCaseParam.subTarget].should.be.a(testCaseParam.value)
-                        }
-                    }else{
-                        if(testCaseParam.useBody){
-                            response.data[testCaseParam.target].should.be.a(testCaseParam.value)
-                        }
-                    }
+                    _.result(response, testCaseParam.target).should.be.a(testCaseParam.value)
                 })));
                 break;
         }
@@ -134,7 +103,8 @@ class TestFactory{
             const resp = await axios.get(this.config.baseUrl + requestParam.endpoint, {headers: {"Cookie": requestParam.auth}});
             return resp;
         }catch(err){
-            console.log(err.response.status + " - " + err.response.statusText);
+            console.log("Assertions on " + this.method + " " + this.endpoint + " failed"  + "  -->  " + err.response.status + " - " + err.response.statusText);
+            return 1;
         }
     }
     putRequest = async (requestParam) => {
@@ -142,7 +112,8 @@ class TestFactory{
             const resp = await axios.put(this.config.baseUrl + requestParam.endpoint, requestParam.data, {headers: {"Cookie": requestParam.auth}});
             return resp;
         }catch(err){
-            console.log(err.response.status + " - " + err.response.statusText);
+            console.log("Assertions on " + this.method + " " + this.endpoint + " failed"  + "  -->  " + err.response.status + " - " + err.response.statusText);
+            return 1;
         }
     }
     postRequest = async (requestParam) => {
@@ -150,7 +121,8 @@ class TestFactory{
             const resp = await axios.post(this.config.baseUrl + requestParam.endpoint, requestParam.data, {headers : {"Cookie": requestParam.auth}});
             return resp;
         }catch(err){
-            console.log(err.response.status + " - " + err.response.statusText);
+            console.log("Assertions on " + this.method + " " + this.endpoint + " failed"  + "  -->  " + err.response.status + " - " + err.response.statusText);
+            return 1;
         }
     }
     deleteRequest = async (requestParam) => {
@@ -158,7 +130,8 @@ class TestFactory{
             const resp = await axios.delete(this.config.baseUrl + requestParam.endpoint, {data : requestParam.data, headers : {"Cookie": requestParam.auth}});
             return resp;
         }catch(err){
-            console.log(err.response.status + " - " + err.response.statusText);
+            console.log("Assertions on " + this.method + " " + this.endpoint + " failed"  + "  -->  " + err.response.status + " - " + err.response.statusText);
+            return 1;
         }
     }
 }

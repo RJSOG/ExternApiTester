@@ -11,7 +11,7 @@ class TestGroup{
             this.auth = auth;
             this.allJsonTest.forEach(async (test) => {
                 this.createTest(test);
-                await new Promise(resolve => setTimeout(resolve, 300)); //Pause to have test printed in the right way 
+                await new Promise(resolve => setTimeout(resolve, 500)); //Pause to have test printed in the right way 
             })
         })
     }

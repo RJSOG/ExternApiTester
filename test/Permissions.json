@@ -3,6 +3,7 @@
         "groupname" : "Permissions",
         "all_test" : [
             {
+                "id" : "P1",
                 "name" : "Test GET permissions",
                 "description" : "Listing paginée des droits actif de badge",
                 "endpoint" : "/permission",
@@ -21,25 +22,26 @@
                         },
                         {
                             "comparison" : "Is not",
-                            "target" : "item",
+                            "target" : "data.item",
                             "use_body" : true,
                             "value" : null
                         },
                         {
                             "comparison" : "Equals",
-                            "target" : "status",
+                            "target" : "data.status",
                             "use_body": true,
                             "value" : "ok"
                         },
                         {
                             "comparison" : "Type",
-                            "target" : "item",
+                            "target" : "data.item",
                             "use_body" : true,
                             "value" : "array"
                         }
                     ]
             },
             {
+                "id": "P2",
                 "name" : "Test PUT badge sur porte",
                 "description" : "Creation / Update dun badge sur porte",
                 "endpoint" : "/permission",
@@ -59,36 +61,34 @@
                     },
                     { 
                         "comparison" : "Is not",
-                        "target" : "item",
+                        "target" : "data.item.processed",
                         "use_body" : true,
-                        "subTarget" : "processed",
                         "value" : null
                     },
                     {
                         "comparison" : "Type",
-                        "target" : "item",
-                        "subTarget" : "processed",
+                        "target" : "data.item.processed",
                         "use_body" : true,
                         "value" : "array"
                     },
                     {
                         "comparison" : "Equals",
-                        "target" : "item",
-                        "subTarget" : "ignored",
+                        "target" : "data.item.ignored",
                         "use_body" : true,
                         "value" : []
                     }
                 ]
             },
             {
+                "id" : "P3",
                 "name" : "Test DELETE badge porte",
                 "description" : "Supprime un badge sur une porte",
                 "endpoint" : "/permission",
                 "method" : "DELETE",
                 "param_uri" : "{}",
                "param_body" : [{
-                    "tagId": 11,
-                    "doorId": 523,
+                    "tagId": 10,
+                    "doorId": 517,
                     "ulsWeekTemplateId": 165
                 }],
                 "assert" : [
@@ -100,7 +100,7 @@
                     },
                     {
                         "comparison": "Equals",
-                        "target" : "status",
+                        "target" : "data.status",
                         "use_body" : true,
                         "value" : "ok"
                     }
