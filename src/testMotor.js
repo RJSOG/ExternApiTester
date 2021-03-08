@@ -47,7 +47,7 @@ class TestMotor{
         this.executeInstance.getAllTestSeries.forEach(testSerie => {
             let testGroup = [];
             testSerie.executionOrder.forEach(obj => {
-
+                testGroup.push(this.getTestFromFileAndId(obj.file, ))
             });
         })
     }   
