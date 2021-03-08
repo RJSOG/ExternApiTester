@@ -5,8 +5,9 @@ class FileParser {
         this.filepath = config.testFolder + filename;
         let rawdata = fs.readFileSync(this.filepath);
         this.data  = JSON.parse(rawdata);
+        console.log(this.data);
     }
-    getAllTest(){
+    getData = () => {
         return this.data[0];
     }
 }

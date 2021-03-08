@@ -57,7 +57,6 @@ class TestFactory{
     getTestCaseParam = (testCase) => {
         return {
             target : testCase.target,
-            useBody : testCase.use_body,
             verify : (testCase.verify != undefined) ? testCase.verify : false,
             comparison : testCase.comparison,
             value : testCase.value

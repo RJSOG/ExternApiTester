@@ -26,7 +26,7 @@ class App {
     validConfig = () => {
         this.config.testFolder = this.config.testFolder.replace(/\\/g, '/');
         (this.config.testFolder.slice(-1) != '/') ? this.config.testFolder += '/' : '';
-        return this.folderExist && this.knownReport();
+        return this.folderExist && this.knownReport && this.executeFileExist;
     }
     folderExist = () => {
         if(fs.existsSync(this.config.testFolder)){
@@ -38,6 +38,14 @@ class App {
     } 
     knownReport = () => {
         return (this.config.report === 'cli' || this.config.report === 'tc') ? true : false;
+    }
+    executeFileExist = () => {
+        if(fs.existsSync(this.config.testFolder + "Execute.json")){
+            return true;
+        }else{
+            console.log("Execute File is required can't start !");
+            return false;
+        }  
     }
 }
 let app = new App(options);

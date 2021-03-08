@@ -17,25 +17,21 @@
                         {
                             "comparison" : "Equals",
                             "target" : "status_code",
-                            "use_body" : false,
                             "value" : 200
                         },
                         {
                             "comparison" : "Is not",
                             "target" : "data.item",
-                            "use_body" : true,
                             "value" : null
                         },
                         {
                             "comparison" : "Equals",
                             "target" : "data.status",
-                            "use_body": true,
                             "value" : "ok"
                         },
                         {
                             "comparison" : "Type",
                             "target" : "data.item",
-                            "use_body" : true,
                             "value" : "array"
                         }
                     ]
@@ -56,25 +52,21 @@
                     { 
                         "comparison" : "Equals",
                         "target" : "status_code",
-                        "use_body" : false,
                         "value" : 200
                     },
                     { 
                         "comparison" : "Is not",
                         "target" : "data.item.processed",
-                        "use_body" : true,
                         "value" : null
                     },
                     {
                         "comparison" : "Type",
                         "target" : "data.item.processed",
-                        "use_body" : true,
                         "value" : "array"
                     },
                     {
                         "comparison" : "Equals",
                         "target" : "data.item.ignored",
-                        "use_body" : true,
                         "value" : []
                     }
                 ]
@@ -95,13 +87,11 @@
                     {
                         "comparison" : "Equals",
                         "target" : "status_code",
-                        "use_body": false,
                         "value" : 200
                     },
                     {
                         "comparison": "Equals",
                         "target" : "data.status",
-                        "use_body" : true,
                         "value" : "ok"
                     }
                 ]

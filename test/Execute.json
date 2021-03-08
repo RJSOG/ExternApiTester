@@ -1,0 +1,42 @@
+[
+    {
+        "fileToExecute" : ["Permissions.json"],
+        "testSeries" : [
+            {
+                "name" : "PermissionsTest",
+                "executionOrder" : [
+                    {
+                        "file" : "Permissions.json",
+                        "id" : "P2"
+                    },
+                    {
+                        "file" : "Permissions.json",
+                        "id" : "P1",
+                        "assert" : [
+                            {
+                                "comparison" : "Equals",
+                                "target" : "data.item",
+                                "value" : "P2.param_body"
+                            }
+                        ]
+                    },
+                    {
+                        "file" : "Permissions.json",
+                        "id" : "P3"
+                    },
+                    {
+                        "file" : "Permissions.json",
+                        "id" : "P1",
+                        "assert" : [
+                            {
+                                "comparison" : "Is not",
+                                "target" : "data.item",
+                                "value" : "P3.param_body"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
