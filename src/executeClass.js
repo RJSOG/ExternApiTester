@@ -11,8 +11,22 @@ class Execute {
     getAllTestSeries = () => {
         return this.data.testSeries;
     }
-    getExecutionORder = () => {
-        return this.data.testSeries.executionOrder;
+    getExecutionOrderFromName = (name) => {
+        this.data.testSeries.forEach(serie => {
+            if(serie.name == name){
+                return serie;
+            }
+        });
     }
 }
-module.exports = Execute
+class Singleton {
+    constructor(config) {
+        if(!Singleton.instance){
+            Singleton.instance = new Execute(config);
+        }
+    }
+    getInstance(){
+        return Singleton.instance;
+    }
+}
+module.exports = Singleton;

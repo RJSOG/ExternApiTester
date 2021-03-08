@@ -1,15 +1,17 @@
 const axios = require('axios');
+const Execute = require('./executeClass')
 const TestFactory = require('./testClass');
 
 class TestGroup{
-    constructor(testGroup, config){
+    constructor(serie, config){
         this.config = config;
-        this.allJsonTest = testGroup.all_test;
+        this.serie = serie;
+        this.executeClassInstance = new Execute(this.config).getInstance();
+        this.executionOrder = this.executeClassInstance.getExecutionOrderFromName(this.serie.name)
         this.allRunningTest = [];
-        this.groupName = testGroup.groupname;
         this.authenticate().then(auth => {
             this.auth = auth;
-            this.allJsonTest.forEach(async (test) => {
+            this.serie.testGroup.forEach(async (test) => {
                 this.createTest(test);
                 await new Promise(resolve => setTimeout(resolve, 500)); //Pause to have test printed in the right way 
             })

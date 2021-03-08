@@ -7,11 +7,12 @@ const fs = require('fs');
 class TestMotor{
     constructor(config){
         this.config = config;
-        this.executeInstance = new Execute(this.config);
+        this.executeInstance = new Execute(this.config).getInstance();
         this.toExecute = this.executeInstance.getFileToExecute();
         this.allTestFiles = this.listTestFiles();
         this.allTestData = this.getAllTestData();
         this.allTestSeries = this.createAllTestSeries();
+        this.createTestGroup();
     }
     listTestFiles = () => {
         let files = [];
@@ -47,16 +48,21 @@ class TestMotor{
     createAllTestSeries = () => {
         let allTestSeries = []
         this.executeInstance.getAllTestSeries().forEach(testSerie => {
-            let testCaseGroup = [];
+            let serie = {
+                "name" : testSerie.name,
+                "testGroup" : []
+            }
             testSerie.executionOrder.forEach(obj => {
-                testCaseGroup.push(this.getTestFromFileAndId(obj.file, obj.id))
+                serie.testGroup.push(this.getTestFromFileAndId(obj.file, obj.id))
             });
-            allTestSeries.push(testCaseGroup);
+            allTestSeries.push(serie);
         })
         return allTestSeries;
     } 
     createTestGroup = () => {
-        
+        this.allTestSeries.forEach(series => {
+            new TestGroup(series, this.config);
+        });
     }
 }
 module.exports = {TestMotor};
