@@ -46,7 +46,9 @@
                 "param_body" : [{
                     "tagId": 10,
                     "doorId": 517,
-                    "ulsWeekTemplateId": 165
+                    "ulsWeekTemplateId": 165,
+                    "beginDate": "2021-03-09T00:00:00",
+                    "endDate": "2050-01-01T00:00:00"
                 }],
                 "assert" : [
                     { 

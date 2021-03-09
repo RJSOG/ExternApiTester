@@ -8,20 +8,23 @@ const Test = Mocha.Test;
 
 
 class TestFactory{
-    constructor(test, auth, config){
-        this.config = config
+    constructor(test, auth, config, id){
+        this.config = config;
+        this.myEmitter = this.config.myEmitter;
         this.test = test;
         this.auth = auth;
         this.setProperty();
         this.setMochaProperties();
-        this.methodMapper().then(response => {
+        this.methodMapper().then((response) => {
             if(response != 1) {
                 for(let testCase of this.assert){
                     let testCaseParam = this.getTestCaseParam(testCase);
                     this.executeAssertions(testCaseParam, response);
+                    
                 }
                 if(this.config.report === 'cli'){
                     this.mochaInstance.run();
+                    this.myEmitter.emit("Finished", response, id);
                 }
             }
         })
@@ -33,6 +36,7 @@ class TestFactory{
         this.description = this.test.description;
         this.param_uri = this.getStrParamUri();
         this.param_body = this.test.param_body;
+        this.testFinished = false;
     }
     setMochaProperties = () => {
         this.mochaInstance = new Mocha();
@@ -57,7 +61,6 @@ class TestFactory{
     getTestCaseParam = (testCase) => {
         return {
             target : testCase.target,
-            verify : (testCase.verify != undefined) ? testCase.verify : false,
             comparison : testCase.comparison,
             value : testCase.value
         }

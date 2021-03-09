@@ -12,11 +12,13 @@ class Execute {
         return this.data.testSeries;
     }
     getExecutionOrderFromName = (name) => {
+        let result;
         this.data.testSeries.forEach(serie => {
             if(serie.name == name){
-                return serie;
+                result = serie;
             }
         });
+        return result.executionOrder;
     }
 }
 class Singleton {

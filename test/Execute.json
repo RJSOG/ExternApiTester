@@ -4,6 +4,7 @@
         "testSeries" : [
             {
                 "name" : "PermissionsTest",
+                "description" : "Boucle de test des permissions",
                 "executionOrder" : [
                     {
                         "file" : "Permissions.json",
@@ -14,7 +15,7 @@
                         "id" : "P1",
                         "assert" : [
                             {
-                                "comparison" : "Equals",
+                                "comparison" : "Is in",
                                 "target" : "data.item",
                                 "value" : "P2.param_body"
                             }
@@ -35,6 +36,7 @@
                             }
                         ]
                     }
+                    
                 ]
             }
         ]

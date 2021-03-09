@@ -50,6 +50,7 @@ class TestMotor{
         this.executeInstance.getAllTestSeries().forEach(testSerie => {
             let serie = {
                 "name" : testSerie.name,
+                "description" : testSerie.description,
                 "testGroup" : []
             }
             testSerie.executionOrder.forEach(obj => {
