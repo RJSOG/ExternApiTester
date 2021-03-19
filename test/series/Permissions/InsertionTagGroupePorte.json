@@ -1,0 +1,22 @@
+{
+    "name" : "Insertion Tag Groupe Porte",
+    "automatedAuth" : true,
+    "description" : "Insertion d'un badge sur un groupe de porte",
+    "executionOrder" : [
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P8"
+        },
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P1",
+            "assert" : [
+                {
+                    "comparison" : "Contain",
+                    "target" : "data.item",
+                    "value" : "P8.param_body"
+                }
+            ]
+        }
+    ]
+}

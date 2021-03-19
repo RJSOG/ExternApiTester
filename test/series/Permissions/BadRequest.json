@@ -1,0 +1,27 @@
+{
+    "name" : "BadPermissionsRequest",
+    "automatedAuth" : true,
+    "description" : "Execution de mauvaises requete sur les permissions",
+    "executionOrder" : [
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P4"
+        },
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P5"
+        },
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P6"
+        },
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P9"
+        },
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P10"
+        }
+    ]
+}

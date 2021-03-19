@@ -1,134 +1,85 @@
-"use strict";
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var FileParser = require('./fileParser');
-
+"use strict";function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _createForOfIteratorHelper(o, allowArrayLike) {var it;if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {if (it) o = it;var i = 0;var F = function F() {};return { s: F, n: function n() {if (i >= o.length) return { done: true };return { done: false, value: o[i++] };}, e: function e(_e) {throw _e;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion = true,didErr = false,err;return { s: function s() {it = o[Symbol.iterator]();}, n: function n() {var step = it.next();normalCompletion = step.done;return step;}, e: function e(_e2) {didErr = true;err = _e2;}, f: function f() {try {if (!normalCompletion && it["return"] != null) it["return"]();} finally {if (didErr) throw err;}} };}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var FileParser = require('./fileParser');
 var SerieParser = require('./serieParser');
-
 var Serie = require('./serieClass');
-
 var path = require('path');
+var SingletonFileValidator = require('./singletonFileValidator');
+var fs = require('fs');var _require =
+require('process'),process = _require.process,exit = _require.exit;var
 
-var ValidateStepFile = require('./validateStepFile');
+Motor = /*#__PURE__*/function () {
+  function Motor(config) {var _this = this;_classCallCheck(this, Motor);_defineProperty(this, "getAllStepFiles",
 
-var fs = require('fs');
 
-var _require = require('process'),
-    process = _require.process,
-    exit = _require.exit;
 
-var Motor = function Motor(config) {
-  var _this = this;
 
-  _classCallCheck(this, Motor);
 
-  _defineProperty(this, "listStepFiles", function () {
-    var files = [];
-    fs.readdirSync(_this.config.stepFolder).forEach(function (file) {
-      if (path.extname(file) == '.json') {
-        files.push(file);
-      }
-    });
-    return files;
-  });
 
-  _defineProperty(this, "getAllStepData", function () {
-    var allTestData = [];
 
-    _this.allStepFiles.forEach(function (file) {
-      var fileParser = new FileParser(file, "step", _this.config);
-      var fileData = fileParser.getData();
 
-      if (!_this.validateStepFile.validStepFile(fileData)) {
-        console.log("Step File " + fileData.groupname + " is not valid ! Bad format");
-        process.exit(1);
-      }
-
-      allTestData.push(fileData);
-    });
-
-    return allTestData;
-  });
-
-  _defineProperty(this, "getTestFromFileAndId", function (filename, id) {
-    var _iterator = _createForOfIteratorHelper(_this.allStepFiles),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var file = _step.value;
-
-        if (file == filename) {
-          var index = _this.allStepFiles.indexOf(file);
-
-          var fileTest = _this.allTestData[index];
-
-          var _iterator2 = _createForOfIteratorHelper(fileTest.all_test),
-              _step2;
-
-          try {
-            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-              var caseTest = _step2.value;
-
-              if (caseTest.id == id) {
-                return caseTest;
-              }
-            }
-          } catch (err) {
-            _iterator2.e(err);
-          } finally {
-            _iterator2.f();
+    function (dirPath, arrayOfFiles) {
+      var motor = _this;
+      var files = fs.readdirSync(dirPath);
+      arrayOfFiles = arrayOfFiles || [];
+      files.forEach(function (file) {
+        if (fs.statSync(dirPath + "/" + file).isDirectory()) {
+          arrayOfFiles = motor.getAllStepFiles(dirPath + "/" + file, arrayOfFiles);
+        } else {
+          if (path.extname(file) == '.json') {
+            arrayOfFiles.push(path.join(dirPath, "/", file));
           }
         }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-  });
-
-  _defineProperty(this, "createAllSerieSuite", function () {
-    var allSerieObject = [];
-
-    _this.serieParser.getAllSeries().forEach(function (testSerie) {
-      // console.log(testSerie);
-      var serie = {
-        "name": testSerie.name,
-        "description": testSerie.description,
-        "serieExecutionOrder": []
-      };
-      testSerie.executionOrder.forEach(function (obj) {
-        serie.serieExecutionOrder.push(_this.getTestFromFileAndId(obj.file, obj.id));
       });
-      allSerieObject.push(serie);
-    });
+      return arrayOfFiles;
+    });_defineProperty(this, "getAllStepData",
+    function () {
+      var allTestData = [];
+      _this.allStepFiles.forEach(function (file) {
+        var fileParser = new FileParser(file, _this.config);
+        var fileData = fileParser.getData();
+        if (!_this.validateStepFile.validFile(fileData)) {
+          console.log("Step File " + fileData.groupname + " is not valid ! Bad format");
+          exit(1);
+        }
+        allTestData.push(fileData);
+      });
+      return allTestData;
+    });_defineProperty(this, "getTestFromFileAndId",
+    function (filename, id) {var _iterator = _createForOfIteratorHelper(
+      _this.allStepFiles),_step;try {for (_iterator.s(); !(_step = _iterator.n()).done;) {var file = _step.value;
+          if (path.basename(file) == filename) {
+            var index = _this.allStepFiles.indexOf(file);
+            var fileTest = _this.allTestData[index];var _iterator2 = _createForOfIteratorHelper(
+            fileTest.all_test),_step2;try {for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {var caseTest = _step2.value;
+                if (caseTest.id == id) {
+                  return caseTest;
+                }
+              }} catch (err) {_iterator2.e(err);} finally {_iterator2.f();}
+          }
+        }} catch (err) {_iterator.e(err);} finally {_iterator.f();}
+    });_defineProperty(this, "createAllSerieSuite",
+    function () {
+      var allSerieObject = [];
+      _this.serieParser.getAllSeries().forEach(function (testSerie) {
+        var serie = {
+          "name": testSerie.name,
+          "description": testSerie.description,
+          "serieExecutionOrder": [],
+          "automatedAuth": testSerie.automatedAuth };
 
-    return allSerieObject;
-  });
+        testSerie.executionOrder.forEach(function (executionStep) {
+          var caseTestObj = _this.getTestFromFileAndId(executionStep.file, executionStep.id);
+          serie.serieExecutionOrder.push(caseTestObj);
+        });
+        allSerieObject.push(serie);
+      });
+      return allSerieObject;
+    });this.config = config;this.serieParser = new SerieParser(this.config).getInstance();this.validateStepFile = new SingletonFileValidator(this.config, 'step').getInstance('step');this.allStepFiles = this.getAllStepFiles(this.config.stepFolder);this.allTestData = this.getAllStepData();this.AllSerieSuite = this.createAllSerieSuite();this.createTestGroup();}_createClass(Motor, [{ key: "createTestGroup", value: function () {var _createTestGroup = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(
+      function _callee() {var _iterator3, _step3, serie, serieInstance;return regeneratorRuntime.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_iterator3 = _createForOfIteratorHelper(
+                this.AllSerieSuite);_context.prev = 1;_iterator3.s();case 3:if ((_step3 = _iterator3.n()).done) {_context.next = 10;break;}serie = _step3.value;
+                serieInstance = new Serie(serie, this.config);_context.next = 8;return (
+                  serieInstance.run());case 8:_context.next = 3;break;case 10:_context.next = 15;break;case 12:_context.prev = 12;_context.t0 = _context["catch"](1);_iterator3.e(_context.t0);case 15:_context.prev = 15;_iterator3.f();return _context.finish(15);case 18:case "end":return _context.stop();}}}, _callee, this, [[1, 12, 15, 18]]);}));function createTestGroup() {return _createTestGroup.apply(this, arguments);}return createTestGroup;}() }]);return Motor;}();
 
-  _defineProperty(this, "createTestGroup", function () {
-    _this.AllSerieSuite.forEach(function (serie) {
-      new Serie(serie, _this.config);
-    });
-  });
 
-  this.config = config;
-  this.serieParser = new SerieParser(this.config).getInstance();
-  this.validateStepFile = new ValidateStepFile(this.config).getInstance();
-  this.allStepFiles = this.listStepFiles();
-  this.allTestData = this.getAllStepData();
-  this.AllSerieSuite = this.createAllSerieSuite();
-  this.createTestGroup();
-};
 
 module.exports = Motor;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9tb3Rvci5qcyJdLCJuYW1lcyI6WyJGaWxlUGFyc2VyIiwicmVxdWlyZSIsIlNlcmllUGFyc2VyIiwiU2VyaWUiLCJwYXRoIiwiU2luZ2xldG9uRmlsZVZhbGlkYXRvciIsImZzIiwicHJvY2VzcyIsImV4aXQiLCJNb3RvciIsImNvbmZpZyIsImRpclBhdGgiLCJhcnJheU9mRmlsZXMiLCJtb3RvciIsImZpbGVzIiwicmVhZGRpclN5bmMiLCJmb3JFYWNoIiwiZmlsZSIsInN0YXRTeW5jIiwiaXNEaXJlY3RvcnkiLCJnZXRBbGxTdGVwRmlsZXMiLCJleHRuYW1lIiwicHVzaCIsImpvaW4iLCJhbGxUZXN0RGF0YSIsImFsbFN0ZXBGaWxlcyIsImZpbGVQYXJzZXIiLCJmaWxlRGF0YSIsImdldERhdGEiLCJ2YWxpZGF0ZVN0ZXBGaWxlIiwidmFsaWRGaWxlIiwiY29uc29sZSIsImxvZyIsImdyb3VwbmFtZSIsImZpbGVuYW1lIiwiaWQiLCJiYXNlbmFtZSIsImluZGV4IiwiaW5kZXhPZiIsImZpbGVUZXN0IiwiYWxsX3Rlc3QiLCJjYXNlVGVzdCIsImFsbFNlcmllT2JqZWN0Iiwic2VyaWVQYXJzZXIiLCJnZXRBbGxTZXJpZXMiLCJ0ZXN0U2VyaWUiLCJzZXJpZSIsIm5hbWUiLCJkZXNjcmlwdGlvbiIsImF1dG9tYXRlZEF1dGgiLCJleGVjdXRpb25PcmRlciIsImV4ZWN1dGlvblN0ZXAiLCJjYXNlVGVzdE9iaiIsImdldFRlc3RGcm9tRmlsZUFuZElkIiwic2VyaWVFeGVjdXRpb25PcmRlciIsImdldEluc3RhbmNlIiwic3RlcEZvbGRlciIsImdldEFsbFN0ZXBEYXRhIiwiQWxsU2VyaWVTdWl0ZSIsImNyZWF0ZUFsbFNlcmllU3VpdGUiLCJjcmVhdGVUZXN0R3JvdXAiLCJzZXJpZUluc3RhbmNlIiwicnVuIiwibW9kdWxlIiwiZXhwb3J0cyJdLCJtYXBwaW5ncyI6ImsvRkFBQSxJQUFNQSxVQUFVLEdBQUdDLE9BQU8sQ0FBQyxjQUFELENBQTFC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QUFMLEVBQW5CLENBQ0EsS0FBS0MsYUFBTCxHQUFxQixLQUFLQyxtQkFBTCxFQUFyQixDQUNBLEtBQUtDLGVBQUwsR0FDSCxDO0FBMkREO0FBQ3FCLHFCQUFLRixhQUQxQix5R0FDWVosS0FEWjtBQUVZZSxnQkFBQUEsYUFGWixHQUU0QixJQUFJMUQsS0FBSixDQUFVMkMsS0FBVixFQUFpQixLQUFLcEMsTUFBdEIsQ0FGNUI7QUFHY21ELGtCQUFBQSxhQUFhLENBQUNDLEdBQWQsRUFIZCxpVDs7OztBQU9KQyxNQUFNLENBQUNDLE9BQVAsR0FBaUJ2RCxLQUFqQiIsInNvdXJjZXNDb250ZW50IjpbImNvbnN0IEZpbGVQYXJzZXIgPSByZXF1aXJlKCcuL2ZpbGVQYXJzZXInKTtcbmNvbnN0IFNlcmllUGFyc2VyID0gcmVxdWlyZSgnLi9zZXJpZVBhcnNlcicpO1xuY29uc3QgU2VyaWUgPSByZXF1aXJlKCcuL3NlcmllQ2xhc3MnKTtcbmNvbnN0IHBhdGggPSByZXF1aXJlKCdwYXRoJyk7XG5jb25zdCBTaW5nbGV0b25GaWxlVmFsaWRhdG9yID0gcmVxdWlyZSgnLi9zaW5nbGV0b25GaWxlVmFsaWRhdG9yJyk7XG5jb25zdCBmcyA9IHJlcXVpcmUoJ2ZzJyk7XG5jb25zdCB7IHByb2Nlc3MsIGV4aXQgfSA9IHJlcXVpcmUoJ3Byb2Nlc3MnKTtcblxuY2xhc3MgTW90b3J7XG4gICAgY29uc3RydWN0b3IoY29uZmlnKXtcbiAgICAgICAgdGhpcy5jb25maWcgPSBjb25maWc7XG4gICAgICAgIHRoaXMuc2VyaWVQYXJzZXIgPSBuZXcgU2VyaWVQYXJzZXIodGhpcy5jb25maWcpLmdldEluc3RhbmNlKCk7XG4gICAgICAgIHRoaXMudmFsaWRhdGVTdGVwRmlsZSA9IG5ldyBTaW5nbGV0b25GaWxlVmFsaWRhdG9yKHRoaXMuY29uZmlnLCAnc3RlcCcpLmdldEluc3RhbmNlKCdzdGVwJyk7XG4gICAgICAgIHRoaXMuYWxsU3RlcEZpbGVzID0gdGhpcy5nZXRBbGxTdGVwRmlsZXModGhpcy5jb25maWcuc3RlcEZvbGRlcik7XG4gICAgICAgIHRoaXMuYWxsVGVzdERhdGEgPSB0aGlzLmdldEFsbFN0ZXBEYXRhKCk7XG4gICAgICAgIHRoaXMuQWxsU2VyaWVTdWl0ZSA9IHRoaXMuY3JlYXRlQWxsU2VyaWVTdWl0ZSgpO1xuICAgICAgICB0aGlzLmNyZWF0ZVRlc3RHcm91cCgpO1xuICAgIH1cbiAgICBnZXRBbGxTdGVwRmlsZXMgPSAoZGlyUGF0aCwgYXJyYXlPZkZpbGVzKSA9PiB7XG4gICAgICAgIGxldCBtb3RvciA9IHRoaXM7XG4gICAgICAgIGxldCBmaWxlcyA9IGZzLnJlYWRkaXJTeW5jKGRpclBhdGgpO1xuICAgICAgICBhcnJheU9mRmlsZXMgPSBhcnJheU9mRmlsZXMgfHwgW107XG4gICAgICAgIGZpbGVzLmZvckVhY2goZnVuY3Rpb24oZmlsZSkge1xuICAgICAgICAgICAgaWYgKGZzLnN0YXRTeW5jKGRpclBhdGggKyBcIi9cIiArIGZpbGUpLmlzRGlyZWN0b3J5KCkpIHtcbiAgICAgICAgICAgICAgYXJyYXlPZkZpbGVzID0gbW90b3IuZ2V0QWxsU3RlcEZpbGVzKGRpclBhdGggKyBcIi9cIiArIGZpbGUsIGFycmF5T2ZGaWxlcylcbiAgICAgICAgICAgIH0gZWxzZSB7XG4gICAgICAgICAgICAgICAgaWYocGF0aC5leHRuYW1lKGZpbGUpID09ICcuanNvbicpe1xuICAgICAgICAgICAgICAgICAgICBhcnJheU9mRmlsZXMucHVzaChwYXRoLmpvaW4oZGlyUGF0aCwgXCIvXCIsIGZpbGUpKTtcbiAgICAgICAgICAgICAgICB9XG4gICAgICAgICAgICB9XG4gICAgICAgICAgfSlcbiAgICAgICAgcmV0dXJuIGFycmF5T2ZGaWxlcztcbiAgICB9XG4gICAgZ2V0QWxsU3RlcERhdGEgPSAoKSA9PiB7XG4gICAgICAgIGxldCBhbGxUZXN0RGF0YSA9IFtdXG4gICAgICAgIHRoaXMuYWxsU3RlcEZpbGVzLmZvckVhY2goZmlsZSA9PiB7XG4gICAgICAgICAgICBsZXQgZmlsZVBhcnNlciA9IG5ldyBGaWxlUGFyc2VyKGZpbGUsIHRoaXMuY29uZmlnKTtcbiAgICAgICAgICAgIGxldCBmaWxlRGF0YSA9IGZpbGVQYXJzZXIuZ2V0RGF0YSgpO1xuICAgICAgICAgICAgaWYoIXRoaXMudmFsaWRhdGVTdGVwRmlsZS52YWxpZEZpbGUoZmlsZURhdGEpKXtcbiAgICAgICAgICAgICAgICBjb25zb2xlLmxvZyhcIlN0ZXAgRmlsZSBcIiArIGZpbGVEYXRhLmdyb3VwbmFtZSArIFwiIGlzIG5vdCB2YWxpZCAhIEJhZCBmb3JtYXRcIik7XG4gICAgICAgICAgICAgICAgZXhpdCgxKTtcbiAgICAgICAgICAgIH1cbiAgICAgICAgICAgIGFsbFRlc3REYXRhLnB1c2goZmlsZURhdGEpO1xuICAgICAgICB9KTtcbiAgICAgICAgcmV0dXJuIGFsbFRlc3REYXRhXG4gICAgfVxuICAgIGdldFRlc3RGcm9tRmlsZUFuZElkID0gKGZpbGVuYW1lLCBpZCkgPT4ge1xuICAgICAgICBmb3IobGV0IGZpbGUgb2YgdGhpcy5hbGxTdGVwRmlsZXMpe1xuICAgICAgICAgICAgaWYocGF0aC5iYXNlbmFtZShmaWxlKSA9PSBmaWxlbmFtZSl7XG4gICAgICAgICAgICAgICAgbGV0IGluZGV4ID0gdGhpcy5hbGxTdGVwRmlsZXMuaW5kZXhPZihmaWxlKTtcbiAgICAgICAgICAgICAgICBsZXQgZmlsZVRlc3QgPSB0aGlzLmFsbFRlc3REYXRhW2luZGV4XTtcbiAgICAgICAgICAgICAgICBmb3IobGV0IGNhc2VUZXN0IG9mIGZpbGVUZXN0LmFsbF90ZXN0KXtcbiAgICAgICAgICAgICAgICAgICAgaWYoY2FzZVRlc3QuaWQgPT0gaWQpe1xuICAgICAgICAgICAgICAgICAgICAgICAgcmV0dXJuIGNhc2VUZXN0O1xuICAgICAgICAgICAgICAgICAgICB9XG4gICAgICAgICAgICAgICAgfVxuICAgICAgICAgICAgfVxuICAgICAgICB9XG4gICAgfVxuICAgIGNyZWF0ZUFsbFNlcmllU3VpdGUgPSAoKSA9PiB7XG4gICAgICAgIGxldCBhbGxTZXJpZU9iamVjdCA9IFtdXG4gICAgICAgIHRoaXMuc2VyaWVQYXJzZXIuZ2V0QWxsU2VyaWVzKCkuZm9yRWFjaCh0ZXN0U2VyaWUgPT4ge1xuICAgICAgICAgICAgbGV0IHNlcmllID0ge1xuICAgICAgICAgICAgICAgIFwibmFtZVwiIDogdGVzdFNlcmllLm5hbWUsXG4gICAgICAgICAgICAgICAgXCJkZXNjcmlwdGlvblwiIDogdGVzdFNlcmllLmRlc2NyaXB0aW9uLFxuICAgICAgICAgICAgICAgIFwic2VyaWVFeGVjdXRpb25PcmRlclwiIDogW10sXG4gICAgICAgICAgICAgICAgXCJhdXRvbWF0ZWRBdXRoXCIgOiB0ZXN0U2VyaWUuYXV0b21hdGVkQXV0aFxuICAgICAgICAgICAgfVxuICAgICAgICAgICAgdGVzdFNlcmllLmV4ZWN1dGlvbk9yZGVyLmZvckVhY2goZXhlY3V0aW9uU3RlcCA9PiB7XG4gICAgICAgICAgICAgICAgbGV0IGNhc2VUZXN0T2JqID0gdGhpcy5nZXRUZXN0RnJvbUZpbGVBbmRJZChleGVjdXRpb25TdGVwLmZpbGUsIGV4ZWN1dGlvblN0ZXAuaWQpXG4gICAgICAgICAgICAgICAgc2VyaWUuc2VyaWVFeGVjdXRpb25PcmRlci5wdXNoKGNhc2VUZXN0T2JqKVxuICAgICAgICAgICAgfSk7XG4gICAgICAgICAgICBhbGxTZXJpZU9iamVjdC5wdXNoKHNlcmllKTtcbiAgICAgICAgfSlcbiAgICAgICAgcmV0dXJuIGFsbFNlcmllT2JqZWN0O1xuICAgIH0gXG4gICAgYXN5bmMgY3JlYXRlVGVzdEdyb3VwKCl7XG4gICAgICAgIGZvcihsZXQgc2VyaWUgb2YgdGhpcy5BbGxTZXJpZVN1aXRlKXtcbiAgICAgICAgICAgIGxldCBzZXJpZUluc3RhbmNlID0gbmV3IFNlcmllKHNlcmllLCB0aGlzLmNvbmZpZyk7XG4gICAgICAgICAgICBhd2FpdCBzZXJpZUluc3RhbmNlLnJ1bigpO1xuICAgICAgICB9XG4gICAgfVxufVxubW9kdWxlLmV4cG9ydHMgPSBNb3RvcjsiXX0=

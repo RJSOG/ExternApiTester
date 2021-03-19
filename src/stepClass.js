@@ -17,13 +17,11 @@ class StepFactory{
         this.setMochaProperties();
     }
     async run() {
-        const response = await this.methodMapper();
-        if(response != 1) {  
-            this.response = response;       
-            for(let stepCase of this.assert){
-                let stepCaseParam = this.getstepCaseParam(stepCase);
-                this.executeAssertions(stepCaseParam, response); 
-            }
+        const response = await this.prepareRequest();
+        this.response = response;       
+        for(let stepCase of this.assert){
+            let stepCaseParam = this.getstepCaseParam(stepCase);
+            this.executeAssertions(stepCaseParam, response); 
         }
     }
     setClassProperties = () => {
@@ -41,21 +39,21 @@ class StepFactory{
         this.suiteInstance = Mocha.Suite.create(this.mochaInstance.suite, this.description);
         this.suiteInstance.timeout(this.config.timeout);
     }
-    methodMapper = async () => {
+    prepareRequest = async () => {
         if(this.method == null) return ''
-        let authCookie = {"Cookie": this.auth};
+        let authCookie = (this.auth != null) ? {"Cookie": this.auth} : {};
+        if(this.param_uri != {}){
+            this.endpoint = this.endpoint + this.getStrParamUri();
+        }
         let requestParam = {
-            'endpoint' : this.endpoint + this.param_uri,
+            'url' : this.endpoint,
+            'method' : this.method,
+            'baseURL' : this.config.baseUrl,
+            'params' : this.param_uri,
             'data' : (this.param_body != undefined) ? this.param_body : '',
             'headers' : (this.headers != undefined) ? Object.assign({}, authCookie, this.headers) : authCookie
         }
-        var methodMapper = {
-            "GET" : this.getRequest,
-            "POST" : this.postRequest,
-            "PUT" : this.putRequest,
-            "DELETE" : this.deleteRequest
-        }
-        return await methodMapper[this.method](requestParam);
+        return await this.executeRequest(requestParam);
     }
     getstepCaseParam = (stepCase) => {
         return {
@@ -65,29 +63,35 @@ class StepFactory{
         }
     }
     executeAssertions = (stepCaseParam, response) => {
+        let description = (typeof(stepCaseParam.value) === 'object') ? JSON.stringify(stepCaseParam.value) : stepCaseParam.value; 
         switch (stepCaseParam.comparison){
             case 'Equals':
-                this.suiteInstance.addTest(new Test(stepCaseParam.target + '  doit être égal à ' + stepCaseParam.value, (() => {
+                this.suiteInstance.addTest(new Test(stepCaseParam.target + ' doit être égal à ' + description, (() => {
                     stepCaseParam.target = (stepCaseParam.target == 'status_code') ? 'status' : stepCaseParam.target;
                     expect(_.result(response, stepCaseParam.target)).to.deep.equal(stepCaseParam.value);
                 })))
                 break;
             case 'Is not':
-                this.suiteInstance.addTest(new Test(stepCaseParam.target + ' est différent de ' + stepCaseParam.value, (() => {
+                this.suiteInstance.addTest(new Test(stepCaseParam.target + ' est différent de ' + description, (() => {
                     stepCaseParam.target = (stepCaseParam.target == 'status_code') ? 'status' : stepCaseParam.target;
                     expect(_.result(response, stepCaseParam.target)).to.not.equal(stepCaseParam.value);
                 })));
                 break;
             case 'Type':
-                this.suiteInstance.addTest(new Test(stepCaseParam.target + ' doit être de type ' + stepCaseParam.value, (() => {
+                this.suiteInstance.addTest(new Test(stepCaseParam.target + ' doit être de type ' + description, (() => {
                     stepCaseParam.target = (stepCaseParam.target == 'status_code') ? 'status' : stepCaseParam.target;
-                    _.result(response, stepCaseParam.target).should.be.a(stepCaseParam.value)
+                    _.result(response, stepCaseParam.target).should.be.a(stepCaseParam.value);
                 })));
                 break;
             case 'Contain':
-                this.suiteInstance.addTest(new Test(stepCaseParam.target + '  doit contenir ' + stepCaseParam.value, (() => {
+                this.suiteInstance.addTest(new Test(stepCaseParam.target + ' doit contenir ' + description, (() => {
                     stepCaseParam.target = (stepCaseParam.target == 'status_code') ? 'status' : stepCaseParam.target;
                     expect(_.result(response, stepCaseParam.target)).to.contain.deep.members(stepCaseParam.realValue);
+                })));
+                break;
+            case 'Type':
+                this.suiteInstance.addTest(new Test(stepCaseParam.target + ' doit contenir ' + description + ' elements',(() => {
+                    expect(_.result(response, stepCaseParam.target).length).to.deep.equal(stepCaseParam.value);
                 })));
                 break;
         }
@@ -104,40 +108,12 @@ class StepFactory{
         }
         return param_uri_str;
     }
-    getRequest = async (requestParam) => {
+    executeRequest = async (requestParam) => {
         try {
-            const resp = await axios.get(this.config.baseUrl + requestParam.endpoint, {headers: requestParam.headers});
+            const resp = await axios(requestParam);
             return resp;
-        }catch(err){
-            console.log("Assertions on " + this.method + " " + this.endpoint + " failed"  + "  -->  " + err.response.status + " - " + err.response.statusText);
-            return 1;
-        }
-    }
-    putRequest = async (requestParam) => {
-        try{
-            const resp = await axios.put(this.config.baseUrl + requestParam.endpoint, requestParam.data, {headers: requestParam.headers});
-            return resp;
-        }catch(err){
-            console.log("Assertions on " + this.method + " " + this.endpoint + " failed"  + "  -->  " + err.response.status + " - " + err.response.statusText);
-            return 1;
-        }
-    }
-    postRequest = async (requestParam) => {
-        try {
-            const resp = await axios.post(this.config.baseUrl + requestParam.endpoint, requestParam.data, {headers : requestParam.headers});
-            return resp;
-        }catch(err){
-            console.log("Assertions on " + this.method + " " + this.endpoint + " failed"  + "  -->  " + err.response.status + " - " + err.response.statusText);
-            return 1;
-        }
-    }
-    deleteRequest = async (requestParam) => {
-        try {
-            const resp = await axios.delete(this.config.baseUrl + requestParam.endpoint, {data : requestParam.data, headers : requestParam.headers});
-            return resp;
-        }catch(err){
-            console.log("Assertions on " + this.method + " " + this.endpoint + " failed"  + "  -->  " + err.response.status + " - " + err.response.statusText);
-            return 1;
+        }catch(err){    
+            return err.response;
         }
     }
 }

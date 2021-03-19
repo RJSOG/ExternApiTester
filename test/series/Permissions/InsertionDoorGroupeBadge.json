@@ -1,0 +1,22 @@
+{
+    "name" : "Insertion Door Groupe Badge",
+    "automatedAuth" : true,
+    "description" : "Insertion d'une porte sur un groupe de badges",
+    "executionOrder" : [
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P7"
+        },
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P1",
+            "assert" : [
+                {
+                    "comparison" : "Contain",
+                    "target" : "data.item",
+                    "value" : "P7.param_body"
+                }
+            ]
+        }
+    ]
+}

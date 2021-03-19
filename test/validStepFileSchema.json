@@ -1,37 +1,36 @@
-[
-    {
-        "type": "object",
-        "properties" : {
-            "groupname" : {"type" : "string"},
-            "all_test" : {
-                "type" : "array",
-                "items" : {
-                    "type" : "object",
-                    "properties" : {
-                        "id" : {"type" : "string"},
-                        "name" : {"type": "string"},
-                        "description" : {"type": "string"},
-                        "endpoint" : {"type": "string"},
-                        "method" : {"type": "string"},
-                        "param_uri" : {"type" : "object"},
-                        "param_body" : {"type": ["object", "array"]},
-                        "assert" : {
-                            "type" : "array",
-                            "items" : {
-                                "type" : "object",
-                                "properties" : {
-                                    "comparison" : {"type" : "string"},
-                                    "target" : {"type": "string"},
-                                    "value": {"type" : ["string", "array", "object", "null", "number", "boolean"]}
-                                },
-                                "required" : ["comparison", "target", "value"]
-                            }
+{
+    "type": "object",
+    "properties" : {
+        "groupname" : {"type" : "string"},
+        "all_test" : {
+            "type" : "array",
+            "items" : {
+                "type" : "object",
+                "properties" : {
+                    "id" : {"type" : "string"},
+                    "auth" : {"type" : "boolean"},
+                    "name" : {"type": "string"},
+                    "description" : {"type": "string"},
+                    "endpoint" : {"type": "string"},
+                    "method" : {"type": "string"},
+                    "param_uri" : {"type" : "object"},
+                    "param_body" : {"type": ["object", "array"]},
+                    "assert" : {
+                        "type" : "array",
+                        "items" : {
+                            "type" : "object",
+                            "properties" : {
+                                "comparison" : {"type" : "string"},
+                                "target" : {"type": "string"},
+                                "value": {"type" : ["string", "array", "object", "null", "number", "boolean"]}
+                            },
+                            "required" : ["comparison", "target", "value"]
                         }
-                    },
-                    "required" : ["id", "name", "description", "endpoint", "method", "param_uri", "param_body", "assert"]
-                }
+                    }
+                },
+                "required" : ["id", "name", "description", "endpoint", "method", "param_uri", "param_body", "assert", "auth"]
             }
-        },
-        "required" : ["groupname", "all_test"]
-    }
-]
+        }
+    },
+    "required" : ["groupname", "all_test"]
+}

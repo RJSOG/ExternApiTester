@@ -1,0 +1,141 @@
+
+{
+    "groupname" : "Auth",
+    "all_test" : [
+        {
+            "id" : "A1",
+            "name" : "Test PUT changePass",
+            "description" : "Changement de password",
+            "endpoint" : "/authenticate/changePassword",
+            "method" : "PUT",
+            "param_uri" : {},
+            "param_body" : [{
+                "oldPassword" : "S34l4dm",
+                "newPassword" : "toto"
+            }],
+            "assert" : [
+                {
+                    "comparison" : "Equals",
+                    "target" : "status_code",
+                    "value" : 200
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.status",
+                    "value" : "ok"
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.item",
+                    "value" : true
+                }
+            ]
+        },
+        {
+            "id" : "A2",
+            "name" : "Test PUT Auth",
+            "description" : "authentication avec nouveau password",
+            "endpoint" : "/authenticate/",
+            "method" : "PUT",
+            "param_uri" : {},
+            "param_body" : [{
+            }],
+            "assert" : [
+                {
+                    "comparison" : "Equals",
+                    "target" : "status_code",
+                    "value" : 200
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.status",
+                    "value" : "ok"
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.item",
+                    "value" : true
+                }
+            ]
+        },
+        {
+            "id" : "A3",
+            "name" : "Test PUT changePass",
+            "description" : "Changement de password",
+            "endpoint" : "/authenticate/changePassword",
+            "method" : "PUT",
+            "param_uri" : {},
+            "param_body" : [{
+                "oldPassword" : "toto",
+                "newPassword" : "S34l4dm"
+            }],
+            "assert" : [
+                {
+                    "comparison" : "Equals",
+                    "target" : "status_code",
+                    "value" : 200
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.status",
+                    "value" : "ok"
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.item",
+                    "value" : true
+                }
+            ]
+        },
+        {
+            "id" : "A4",
+            "name" : "Test PUT Auth",
+            "description" : "authentication avec ancien password",
+            "endpoint" : "/authenticate/",
+            "method" : "PUT",
+            "param_uri" : {},
+            "param_body" : [{
+                "oldPassword" : "S34l4dm",
+                "newPassword" : "toto"
+            }],
+            "assert" : [
+                {
+                    "comparison" : "Equals",
+                    "target" : "status_code",
+                    "value" : 200
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.status",
+                    "value" : "ok"
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.item",
+                    "value" : true
+                }
+            ]
+        },
+        {
+            "id" : "A5",
+            "name" : "Utilisateur non identifié",
+            "description" : "Utilisateur non identifié",
+            "endpoint" : "/identity/",
+            "method" : "GET",
+            "param_uri" : {},
+            "param_body" : {},
+            "assert" : [
+                {
+                    "comparison" : "Equals",
+                    "target" : "status_code",
+                    "value" : 401
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.Message",
+                    "value" : "Authorization has been denied for this request."
+                }
+            ]
+        }
+    ]
+}

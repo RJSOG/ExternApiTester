@@ -1,43 +1,30 @@
-"use strict";
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var chai = require("chai");
-
+"use strict";function _createForOfIteratorHelper(o, allowArrayLike) {var it;if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {if (it) o = it;var i = 0;var F = function F() {};return { s: F, n: function n() {if (i >= o.length) return { done: true };return { done: false, value: o[i++] };}, e: function e(_e) {throw _e;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion = true,didErr = false,err;return { s: function s() {it = o[Symbol.iterator]();}, n: function n() {var step = it.next();normalCompletion = step.done;return step;}, e: function e(_e2) {didErr = true;err = _e2;}, f: function f() {try {if (!normalCompletion && it["return"] != null) it["return"]();} finally {if (didErr) throw err;}} };}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _typeof(obj) {"@babel/helpers - typeof";if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {_typeof = function _typeof(obj) {return typeof obj;};} else {_typeof = function _typeof(obj) {return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;};}return _typeof(obj);}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var chai = require("chai");
 var _ = require('lodash');
-
 var expect = chai.expect;
 var should = chai.should();
-
 var Mocha = require("mocha/mocha").Mocha;
-
 var axios = require("axios");
+var Test = Mocha.Test;var
 
-var Test = Mocha.Test;
 
-var StepFactory = /*#__PURE__*/function () {
-  function StepFactory(step, auth, config, id) {
-    var _this = this;
+StepFactory = /*#__PURE__*/function () {
+  function StepFactory(step, auth, config, id) {var _this = this;_classCallCheck(this, StepFactory);_defineProperty(this, "setClassProperties",
 
-    _classCallCheck(this, StepFactory);
 
-    _defineProperty(this, "setClassProperties", function () {
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function () {
       _this.endpoint = _this.step.endpoint;
       _this.method = _this.step.method;
       _this.assert = _this.step.assert;
@@ -46,105 +33,71 @@ var StepFactory = /*#__PURE__*/function () {
       _this.param_uri = _this.getStrParamUri();
       _this.param_body = _this.step.param_body;
       _this.stepFinished = false;
-    });
-
-    _defineProperty(this, "setMochaProperties", function () {
+    });_defineProperty(this, "setMochaProperties",
+    function () {
       _this.mochaInstance = _this.config.mochaInstance;
       _this.suiteInstance = Mocha.Suite.create(_this.mochaInstance.suite, _this.description);
-
       _this.suiteInstance.timeout(_this.config.timeout);
-    });
-
-    _defineProperty(this, "methodMapper", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      var authCookie, requestParam, methodMapper;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              if (!(_this.method == null)) {
-                _context.next = 2;
-                break;
+    });_defineProperty(this, "prepareRequest", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(
+    function _callee() {var authCookie, requestParam;return regeneratorRuntime.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
+              _this.method == null)) {_context.next = 2;break;}return _context.abrupt("return", '');case 2:
+              authCookie = _this.auth != null ? { "Cookie": _this.auth } : {};
+              if (_this.param_uri != {}) {
+                _this.endpoint = _this.endpoint + _this.getStrParamUri();
               }
-
-              return _context.abrupt("return", '');
-
-            case 2:
-              authCookie = {
-                "Cookie": _this.auth
-              };
               requestParam = {
-                'endpoint': _this.endpoint + _this.param_uri,
+                'url': _this.endpoint,
+                'method': _this.method,
+                'baseURL': _this.config.baseUrl,
+                'params': _this.param_uri,
                 'data': _this.param_body != undefined ? _this.param_body : '',
-                'headers': _this.headers != undefined ? Object.assign({}, authCookie, _this.headers) : authCookie
-              };
-              methodMapper = {
-                "GET": _this.getRequest,
-                "POST": _this.postRequest,
-                "PUT": _this.putRequest,
-                "DELETE": _this.deleteRequest
-              };
-              _context.next = 7;
-              return methodMapper[_this.method](requestParam);
+                'headers': _this.headers != undefined ? Object.assign({}, authCookie, _this.headers) : authCookie };_context.next = 7;return (
 
-            case 7:
-              return _context.abrupt("return", _context.sent);
+                _this.executeRequest(requestParam));case 7:return _context.abrupt("return", _context.sent);case 8:case "end":return _context.stop();}}}, _callee);})));_defineProperty(this, "getstepCaseParam",
 
-            case 8:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    })));
-
-    _defineProperty(this, "getstepCaseParam", function (stepCase) {
+    function (stepCase) {
       return {
         target: stepCase.target,
         comparison: stepCase.comparison,
-        value: stepCase.value
-      };
-    });
+        value: stepCase.value };
 
-    _defineProperty(this, "executeAssertions", function (stepCaseParam, response) {
+    });_defineProperty(this, "executeAssertions",
+    function (stepCaseParam, response) {
+      var description = _typeof(stepCaseParam.value) === 'object' ? JSON.stringify(stepCaseParam.value) : stepCaseParam.value;
       switch (stepCaseParam.comparison) {
         case 'Equals':
-          _this.suiteInstance.addTest(new Test(stepCaseParam.target + '  doit être égal à ' + stepCaseParam.value, function () {
+          _this.suiteInstance.addTest(new Test(stepCaseParam.target + ' doit être égal à ' + description, function () {
             stepCaseParam.target = stepCaseParam.target == 'status_code' ? 'status' : stepCaseParam.target;
             expect(_.result(response, stepCaseParam.target)).to.deep.equal(stepCaseParam.value);
           }));
-
           break;
-
         case 'Is not':
-          _this.suiteInstance.addTest(new Test(stepCaseParam.target + ' est différent de ' + stepCaseParam.value, function () {
+          _this.suiteInstance.addTest(new Test(stepCaseParam.target + ' est différent de ' + description, function () {
             stepCaseParam.target = stepCaseParam.target == 'status_code' ? 'status' : stepCaseParam.target;
             expect(_.result(response, stepCaseParam.target)).to.not.equal(stepCaseParam.value);
           }));
-
           break;
-
         case 'Type':
-          _this.suiteInstance.addTest(new Test(stepCaseParam.target + ' doit être de type ' + stepCaseParam.value, function () {
+          _this.suiteInstance.addTest(new Test(stepCaseParam.target + ' doit être de type ' + description, function () {
             stepCaseParam.target = stepCaseParam.target == 'status_code' ? 'status' : stepCaseParam.target;
-
             _.result(response, stepCaseParam.target).should.be.a(stepCaseParam.value);
           }));
-
           break;
-
         case 'Contain':
-          _this.suiteInstance.addTest(new Test(stepCaseParam.target + '  doit contenir ' + stepCaseParam.value, function () {
+          _this.suiteInstance.addTest(new Test(stepCaseParam.target + ' doit contenir ' + description, function () {
             stepCaseParam.target = stepCaseParam.target == 'status_code' ? 'status' : stepCaseParam.target;
             expect(_.result(response, stepCaseParam.target)).to.contain.deep.members(stepCaseParam.realValue);
           }));
-
           break;
-      }
-    });
+        case 'Type':
+          _this.suiteInstance.addTest(new Test(stepCaseParam.target + ' doit contenir ' + description + ' elements', function () {
+            expect(_.result(response, stepCaseParam.target).length).to.deep.equal(stepCaseParam.value);
+          }));
+          break;}
 
-    _defineProperty(this, "getStrParamUri", function () {
+    });_defineProperty(this, "getStrParamUri",
+    function () {
       var param_uri_str = "?";
-
       if (_this.step.param_uri) {
         Object.keys(_this.step.param_uri).forEach(function (param) {
           param_uri_str += param + "=" + _this.step.param_uri[param] + "&";
@@ -153,213 +106,16 @@ var StepFactory = /*#__PURE__*/function () {
       } else {
         param_uri_str = "";
       }
-
       return param_uri_str;
-    });
+    });_defineProperty(this, "executeRequest", /*#__PURE__*/function () {var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(
+      function _callee2(requestParam) {var resp;return regeneratorRuntime.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;_context2.next = 3;return (
 
-    _defineProperty(this, "getRequest", /*#__PURE__*/function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(requestParam) {
-        var resp;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
-                return axios.get(_this.config.baseUrl + requestParam.endpoint, {
-                  headers: requestParam.headers
-                });
+                  axios(requestParam));case 3:resp = _context2.sent;return _context2.abrupt("return",
+                resp);case 7:_context2.prev = 7;_context2.t0 = _context2["catch"](0);return _context2.abrupt("return",
 
-              case 3:
-                resp = _context2.sent;
-                return _context2.abrupt("return", resp);
+                _context2.t0.response);case 10:case "end":return _context2.stop();}}}, _callee2, null, [[0, 7]]);}));return function (_x) {return _ref2.apply(this, arguments);};}());this.id = id;this.config = config;this.step = step;this.auth = auth;this.setClassProperties();this.setMochaProperties();}_createClass(StepFactory, [{ key: "run", value: function () {var _run = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {var response, _iterator, _step, stepCase, stepCaseParam;return regeneratorRuntime.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.next = 2;return this.prepareRequest();case 2:response = _context3.sent;this.response = response;_iterator = _createForOfIteratorHelper(this.assert);try {for (_iterator.s(); !(_step = _iterator.n()).done;) {stepCase = _step.value;stepCaseParam = this.getstepCaseParam(stepCase);this.executeAssertions(stepCaseParam, response);}} catch (err) {_iterator.e(err);} finally {_iterator.f();}case 6:case "end":return _context3.stop();}}}, _callee3, this);}));function run() {return _run.apply(this, arguments);}return run;}() }]);return StepFactory;}();
 
-              case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
-                console.log("Assertions on " + _this.method + " " + _this.endpoint + " failed" + "  -->  " + _context2.t0.response.status + " - " + _context2.t0.response.statusText);
-                return _context2.abrupt("return", 1);
 
-              case 11:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[0, 7]]);
-      }));
-
-      return function (_x) {
-        return _ref2.apply(this, arguments);
-      };
-    }());
-
-    _defineProperty(this, "putRequest", /*#__PURE__*/function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(requestParam) {
-        var resp;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
-                return axios.put(_this.config.baseUrl + requestParam.endpoint, requestParam.data, {
-                  headers: requestParam.headers
-                });
-
-              case 3:
-                resp = _context3.sent;
-                return _context3.abrupt("return", resp);
-
-              case 7:
-                _context3.prev = 7;
-                _context3.t0 = _context3["catch"](0);
-                console.log("Assertions on " + _this.method + " " + _this.endpoint + " failed" + "  -->  " + _context3.t0.response.status + " - " + _context3.t0.response.statusText);
-                return _context3.abrupt("return", 1);
-
-              case 11:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[0, 7]]);
-      }));
-
-      return function (_x2) {
-        return _ref3.apply(this, arguments);
-      };
-    }());
-
-    _defineProperty(this, "postRequest", /*#__PURE__*/function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(requestParam) {
-        var resp;
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
-                return axios.post(_this.config.baseUrl + requestParam.endpoint, requestParam.data, {
-                  headers: requestParam.headers
-                });
-
-              case 3:
-                resp = _context4.sent;
-                return _context4.abrupt("return", resp);
-
-              case 7:
-                _context4.prev = 7;
-                _context4.t0 = _context4["catch"](0);
-                console.log("Assertions on " + _this.method + " " + _this.endpoint + " failed" + "  -->  " + _context4.t0.response.status + " - " + _context4.t0.response.statusText);
-                return _context4.abrupt("return", 1);
-
-              case 11:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, null, [[0, 7]]);
-      }));
-
-      return function (_x3) {
-        return _ref4.apply(this, arguments);
-      };
-    }());
-
-    _defineProperty(this, "deleteRequest", /*#__PURE__*/function () {
-      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(requestParam) {
-        var resp;
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                _context5.prev = 0;
-                _context5.next = 3;
-                return axios["delete"](_this.config.baseUrl + requestParam.endpoint, {
-                  data: requestParam.data,
-                  headers: requestParam.headers
-                });
-
-              case 3:
-                resp = _context5.sent;
-                return _context5.abrupt("return", resp);
-
-              case 7:
-                _context5.prev = 7;
-                _context5.t0 = _context5["catch"](0);
-                console.log("Assertions on " + _this.method + " " + _this.endpoint + " failed" + "  -->  " + _context5.t0.response.status + " - " + _context5.t0.response.statusText);
-                return _context5.abrupt("return", 1);
-
-              case 11:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, null, [[0, 7]]);
-      }));
-
-      return function (_x4) {
-        return _ref5.apply(this, arguments);
-      };
-    }());
-
-    this.id = id;
-    this.config = config;
-    this.step = step;
-    this.auth = auth;
-    this.setClassProperties();
-    this.setMochaProperties();
-  }
-
-  _createClass(StepFactory, [{
-    key: "run",
-    value: function () {
-      var _run = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
-        var response, _iterator, _step, stepCase, stepCaseParam;
-
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                _context6.next = 2;
-                return this.methodMapper();
-
-              case 2:
-                response = _context6.sent;
-
-                if (response != 1) {
-                  this.response = response;
-                  _iterator = _createForOfIteratorHelper(this.assert);
-
-                  try {
-                    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                      stepCase = _step.value;
-                      stepCaseParam = this.getstepCaseParam(stepCase);
-                      this.executeAssertions(stepCaseParam, response);
-                    }
-                  } catch (err) {
-                    _iterator.e(err);
-                  } finally {
-                    _iterator.f();
-                  }
-                }
-
-              case 4:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6, this);
-      }));
-
-      function run() {
-        return _run.apply(this, arguments);
-      }
-
-      return run;
-    }()
-  }]);
-
-  return StepFactory;
-}();
 
 module.exports = StepFactory;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9zdGVwQ2xhc3MuanMiXSwibmFtZXMiOlsiY2hhaSIsInJlcXVpcmUiLCJfIiwiZXhwZWN0Iiwic2hvdWxkIiwiTW9jaGEiLCJheGlvcyIsIlRlc3QiLCJTdGVwRmFjdG9yeSIsInN0ZXAiLCJhdXRoIiwiY29uZmlnIiwiaWQiLCJlbmRwb2ludCIsIm1ldGhvZCIsImFzc2VydCIsImhlYWRlcnMiLCJkZXNjcmlwdGlvbiIsInBhcmFtX3VyaSIsImdldFN0clBhcmFtVXJpIiwicGFyYW1fYm9keSIsInN0ZXBGaW5pc2hlZCIsIm1vY2hhSW5zdGFuY2UiLCJzdWl0ZUluc3RhbmNlIiwiU3VpdGUiLCJjcmVhdGUiLCJzdWl0ZSIsInRpbWVvdXQiLCJhdXRoQ29va2llIiwicmVxdWVzdFBhcmFtIiwiYmFzZVVybCIsInVuZGVmaW5lZCIsIk9iamVjdCIsImFzc2lnbiIsImV4ZWN1dGVSZXF1ZXN0Iiwic3RlcENhc2UiLCJ0YXJnZXQiLCJjb21wYXJpc29uIiwidmFsdWUiLCJzdGVwQ2FzZVBhcmFtIiwicmVzcG9uc2UiLCJKU09OIiwic3RyaW5naWZ5IiwiYWRkVGVzdCIsInJlc3VsdCIsInRvIiwiZGVlcCIsImVxdWFsIiwibm90IiwiYmUiLCJhIiwiY29udGFpbiIsIm1lbWJlcnMiLCJyZWFsVmFsdWUiLCJsZW5ndGgiLCJwYXJhbV91cmlfc3RyIiwia2V5cyIsImZvckVhY2giLCJwYXJhbSIsInNsaWNlIiwicmVzcCIsInNldENsYXNzUHJvcGVydGllcyIsInNldE1vY2hhUHJvcGVydGllcyIsInByZXBhcmVSZXF1ZXN0IiwiZ2V0c3RlcENhc2VQYXJhbSIsImV4ZWN1dGVBc3NlcnRpb25zIiwibW9kdWxlIiwiZXhwb3J0cyJdLCJtYXBwaW5ncyI6ImcyR0FBQSxJQUFNQSxJQUFJLEdBQUdDLE9BQU8sQ0FBQyxNQUFELENBQXBCO0FBQ0EsSUFBTUMsQ0FBQyxHQUFHRCxPQUFPLENBQUMsUUFBRCxDQUFqQjtBQUNBLElBQU1FLE1BQU0sR0FBR0gs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QU9BLGFBQVA7QUFDSCxLQW5Ha0M7QUFvR2xCLHdCQUFPMUIsWUFBUDs7QUFFVXZCLGtCQUFBQSxLQUFLLENBQUN1QixZQUFELENBRmYsU0FFSCtCLElBRkc7QUFHRkEsZ0JBQUFBLElBSEU7O0FBS0YsNkJBQUlwQixRQUxGLDZFQXBHa0Isb0VBQy9CLEtBQUs1QixFQUFMLEdBQVVBLEVBQVYsQ0FDQSxLQUFLRCxNQUFMLEdBQWNBLE1BQWQsQ0FDQSxLQUFLRixJQUFMLEdBQVlBLElBQVosQ0FDQSxLQUFLQyxJQUFMLEdBQVlBLElBQVosQ0FDQSxLQUFLbUQsa0JBQUwsR0FDQSxLQUFLQyxrQkFBTCxHQUNILEMsZ0lBQ0QsaU9BQzJCLEtBQUtDLGNBQUwsRUFEM0IsUUFDVXZCLFFBRFYsa0JBRUksS0FBS0EsUUFBTCxHQUFnQkEsUUFBaEIsQ0FGSix1Q0FHd0IsS0FBS3pCLE1BSDdCLE9BR0ksb0RBQWdDLENBQXhCb0IsUUFBd0IsZUFDeEJJLGFBRHdCLEdBQ1IsS0FBS3lCLGdCQUFMLENBQXNCN0IsUUFBdEIsQ0FEUSxDQUU1QixLQUFLOEIsaUJBQUwsQ0FBdUIxQixhQUF2QixFQUFzQ0MsUUFBdEMsRUFDSCxDQU5MLDBIOzs7O0FBcUdKMEIsTUFBTSxDQUFDQyxPQUFQLEdBQWlCM0QsV0FBakIiLCJzb3VyY2VzQ29udGVudCI6WyJjb25zdCBjaGFpID0gcmVxdWlyZShcImNoYWlcIik7XG5jb25zdCBfID0gcmVxdWlyZSgnbG9kYXNoJyk7XG5jb25zdCBleHBlY3QgPSBjaGFpLmV4cGVjdDtcbmNvbnN0IHNob3VsZCA9IGNoYWkuc2hvdWxkKCk7XG5jb25zdCBNb2NoYSA9IHJlcXVpcmUoXCJtb2NoYS9tb2NoYVwiKS5Nb2NoYTtcbmNvbnN0IGF4aW9zID0gcmVxdWlyZShcImF4aW9zXCIpO1xuY29uc3QgVGVzdCA9IE1vY2hhLlRlc3Q7XG5cblxuY2xhc3MgU3RlcEZhY3Rvcnl7XG4gICAgY29uc3RydWN0b3Ioc3RlcCwgYXV0aCwgY29uZmlnLCBpZCl7XG4gICAgICAgIHRoaXMuaWQgPSBpZDtcbiAgICAgICAgdGhpcy5jb25maWcgPSBjb25maWc7XG4gICAgICAgIHRoaXMuc3RlcCA9IHN0ZXA7XG4gICAgICAgIHRoaXMuYXV0aCA9IGF1dGg7XG4gICAgICAgIHRoaXMuc2V0Q2xhc3NQcm9wZXJ0aWVzKCk7XG4gICAgICAgIHRoaXMuc2V0TW9jaGFQcm9wZXJ0aWVzKCk7XG4gICAgfVxuICAgIGFzeW5jIHJ1bigpIHtcbiAgICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCB0aGlzLnByZXBhcmVSZXF1ZXN0KCk7XG4gICAgICAgIHRoaXMucmVzcG9uc2UgPSByZXNwb25zZTsgICAgICAgXG4gICAgICAgIGZvcihsZXQgc3RlcENhc2Ugb2YgdGhpcy5hc3NlcnQpe1xuICAgICAgICAgICAgbGV0IHN0ZXBDYXNlUGFyYW0gPSB0aGlzLmdldHN0ZXBDYXNlUGFyYW0oc3RlcENhc2UpO1xuICAgICAgICAgICAgdGhpcy5leGVjdXRlQXNzZXJ0aW9ucyhzdGVwQ2FzZVBhcmFtLCByZXNwb25zZSk7IFxuICAgICAgICB9XG4gICAgfVxuICAgIHNldENsYXNzUHJvcGVydGllcyA9ICgpID0+IHtcbiAgICAgICAgdGhpcy5lbmRwb2ludCA9IHRoaXMuc3RlcC5lbmRwb2ludDtcbiAgICAgICAgdGhpcy5tZXRob2QgPSB0aGlzLnN0ZXAubWV0aG9kO1xuICAgICAgICB0aGlzLmFzc2VydCA9IHRoaXMuc3RlcC5hc3NlcnQ7XG4gICAgICAgIHRoaXMuaGVhZGVycyA9ICB0aGlzLnN0ZXAuaGVhZGVycztcbiAgICAgICAgdGhpcy5kZXNjcmlwdGlvbiA9IHRoaXMuc3RlcC5kZXNjcmlwdGlvbjtcbiAgICAgICAgdGhpcy5wYXJhbV91cmkgPSB0aGlzLmdldFN0clBhcmFtVXJpKCk7XG4gICAgICAgIHRoaXMucGFyYW1fYm9keSA9IHRoaXMuc3RlcC5wYXJhbV9ib2R5O1xuICAgICAgICB0aGlzLnN0ZXBGaW5pc2hlZCA9IGZhbHNlO1xuICAgIH1cbiAgICBzZXRNb2NoYVByb3BlcnRpZXMgPSAoKSA9PiB7XG4gICAgICAgIHRoaXMubW9jaGFJbnN0YW5jZSA9IHRoaXMuY29uZmlnLm1vY2hhSW5zdGFuY2U7XG4gICAgICAgIHRoaXMuc3VpdGVJbnN0YW5jZSA9IE1vY2hhLlN1aXRlLmNyZWF0ZSh0aGlzLm1vY2hhSW5zdGFuY2Uuc3VpdGUsIHRoaXMuZGVzY3JpcHRpb24pO1xuICAgICAgICB0aGlzLnN1aXRlSW5zdGFuY2UudGltZW91dCh0aGlzLmNvbmZpZy50aW1lb3V0KTtcbiAgICB9XG4gICAgcHJlcGFyZVJlcXVlc3QgPSBhc3luYyAoKSA9PiB7XG4gICAgICAgIGlmKHRoaXMubWV0aG9kID09IG51bGwpIHJldHVybiAnJ1xuICAgICAgICBsZXQgYXV0aENvb2tpZSA9ICh0aGlzLmF1dGggIT0gbnVsbCkgPyB7XCJDb29raWVcIjogdGhpcy5hdXRofSA6IHt9O1xuICAgICAgICBpZih0aGlzLnBhcmFtX3VyaSAhPSB7fSl7XG4gICAgICAgICAgICB0aGlzLmVuZHBvaW50ID0gdGhpcy5lbmRwb2ludCArIHRoaXMuZ2V0U3RyUGFyYW1VcmkoKTtcbiAgICAgICAgfVxuICAgICAgICBsZXQgcmVxdWVzdFBhcmFtID0ge1xuICAgICAgICAgICAgJ3VybCcgOiB0aGlzLmVuZHBvaW50LFxuICAgICAgICAgICAgJ21ldGhvZCcgOiB0aGlzLm1ldGhvZCxcbiAgICAgICAgICAgICdiYXNlVVJMJyA6IHRoaXMuY29uZmlnLmJhc2VVcmwsXG4gICAgICAgICAgICAncGFyYW1zJyA6IHRoaXMucGFyYW1fdXJpLFxuICAgICAgICAgICAgJ2RhdGEnIDogKHRoaXMucGFyYW1fYm9keSAhPSB1bmRlZmluZWQpID8gdGhpcy5wYXJhbV9ib2R5IDogJycsXG4gICAgICAgICAgICAnaGVhZGVycycgOiAodGhpcy5oZWFkZXJzICE9IHVuZGVmaW5lZCkgPyBPYmplY3QuYXNzaWduKHt9LCBhdXRoQ29va2llLCB0aGlzLmhlYWRlcnMpIDogYXV0aENvb2tpZVxuICAgICAgICB9XG4gICAgICAgIHJldHVybiBhd2FpdCB0aGlzLmV4ZWN1dGVSZXF1ZXN0KHJlcXVlc3RQYXJhbSk7XG4gICAgfVxuICAgIGdldHN0ZXBDYXNlUGFyYW0gPSAoc3RlcENhc2UpID0+IHtcbiAgICAgICAgcmV0dXJuIHtcbiAgICAgICAgICAgIHRhcmdldCA6IHN0ZXBDYXNlLnRhcmdldCxcbiAgICAgICAgICAgIGNvbXBhcmlzb24gOiBzdGVwQ2FzZS5jb21wYXJpc29uLFxuICAgICAgICAgICAgdmFsdWUgOiBzdGVwQ2FzZS52YWx1ZVxuICAgICAgICB9XG4gICAgfVxuICAgIGV4ZWN1dGVBc3NlcnRpb25zID0gKHN0ZXBDYXNlUGFyYW0sIHJlc3BvbnNlKSA9PiB7XG4gICAgICAgIGxldCBkZXNjcmlwdGlvbiA9ICh0eXBlb2Yoc3RlcENhc2VQYXJhbS52YWx1ZSkgPT09ICdvYmplY3QnKSA/IEpTT04uc3RyaW5naWZ5KHN0ZXBDYXNlUGFyYW0udmFsdWUpIDogc3RlcENhc2VQYXJhbS52YWx1ZTsgXG4gICAgICAgIHN3aXRjaCAoc3RlcENhc2VQYXJhbS5jb21wYXJpc29uKXtcbiAgICAgICAgICAgIGNhc2UgJ0VxdWFscyc6XG4gICAgICAgICAgICAgICAgdGhpcy5zdWl0ZUluc3RhbmNlLmFkZFRlc3QobmV3IFRlc3Qoc3RlcENhc2VQYXJhbS50YXJnZXQgKyAnIGRvaXQgw6p0cmUgw6lnYWwgw6AgJyArIGRlc2NyaXB0aW9uLCAoKCkgPT4ge1xuICAgICAgICAgICAgICAgICAgICBzdGVwQ2FzZVBhcmFtLnRhcmdldCA9IChzdGVwQ2FzZVBhcmFtLnRhcmdldCA9PSAnc3RhdHVzX2NvZGUnKSA/ICdzdGF0dXMnIDogc3RlcENhc2VQYXJhbS50YXJnZXQ7XG4gICAgICAgICAgICAgICAgICAgIGV4cGVjdChfLnJlc3VsdChyZXNwb25zZSwgc3RlcENhc2VQYXJhbS50YXJnZXQpKS50by5kZWVwLmVxdWFsKHN0ZXBDYXNlUGFyYW0udmFsdWUpO1xuICAgICAgICAgICAgICAgIH0pKSlcbiAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgIGNhc2UgJ0lzIG5vdCc6XG4gICAgICAgICAgICAgICAgdGhpcy5zdWl0ZUluc3RhbmNlLmFkZFRlc3QobmV3IFRlc3Qoc3RlcENhc2VQYXJhbS50YXJnZXQgKyAnIGVzdCBkaWZmw6lyZW50IGRlICcgKyBkZXNjcmlwdGlvbiwgKCgpID0+IHtcbiAgICAgICAgICAgICAgICAgICAgc3RlcENhc2VQYXJhbS50YXJnZXQgPSAoc3RlcENhc2VQYXJhbS50YXJnZXQgPT0gJ3N0YXR1c19jb2RlJykgPyAnc3RhdHVzJyA6IHN0ZXBDYXNlUGFyYW0udGFyZ2V0O1xuICAgICAgICAgICAgICAgICAgICBleHBlY3QoXy5yZXN1bHQocmVzcG9uc2UsIHN0ZXBDYXNlUGFyYW0udGFyZ2V0KSkudG8ubm90LmVxdWFsKHN0ZXBDYXNlUGFyYW0udmFsdWUpO1xuICAgICAgICAgICAgICAgIH0pKSk7XG4gICAgICAgICAgICAgICAgYnJlYWs7XG4gICAgICAgICAgICBjYXNlICdUeXBlJzpcbiAgICAgICAgICAgICAgICB0aGlzLnN1aXRlSW5zdGFuY2UuYWRkVGVzdChuZXcgVGVzdChzdGVwQ2FzZVBhcmFtLnRhcmdldCArICcgZG9pdCDDqnRyZSBkZSB0eXBlICcgKyBkZXNjcmlwdGlvbiwgKCgpID0+IHtcbiAgICAgICAgICAgICAgICAgICAgc3RlcENhc2VQYXJhbS50YXJnZXQgPSAoc3RlcENhc2VQYXJhbS50YXJnZXQgPT0gJ3N0YXR1c19jb2RlJykgPyAnc3RhdHVzJyA6IHN0ZXBDYXNlUGFyYW0udGFyZ2V0O1xuICAgICAgICAgICAgICAgICAgICBfLnJlc3VsdChyZXNwb25zZSwgc3RlcENhc2VQYXJhbS50YXJnZXQpLnNob3VsZC5iZS5hKHN0ZXBDYXNlUGFyYW0udmFsdWUpO1xuICAgICAgICAgICAgICAgIH0pKSk7XG4gICAgICAgICAgICAgICAgYnJlYWs7XG4gICAgICAgICAgICBjYXNlICdDb250YWluJzpcbiAgICAgICAgICAgICAgICB0aGlzLnN1aXRlSW5zdGFuY2UuYWRkVGVzdChuZXcgVGVzdChzdGVwQ2FzZVBhcmFtLnRhcmdldCArICcgZG9pdCBjb250ZW5pciAnICsgZGVzY3JpcHRpb24sICgoKSA9PiB7XG4gICAgICAgICAgICAgICAgICAgIHN0ZXBDYXNlUGFyYW0udGFyZ2V0ID0gKHN0ZXBDYXNlUGFyYW0udGFyZ2V0ID09ICdzdGF0dXNfY29kZScpID8gJ3N0YXR1cycgOiBzdGVwQ2FzZVBhcmFtLnRhcmdldDtcbiAgICAgICAgICAgICAgICAgICAgZXhwZWN0KF8ucmVzdWx0KHJlc3BvbnNlLCBzdGVwQ2FzZVBhcmFtLnRhcmdldCkpLnRvLmNvbnRhaW4uZGVlcC5tZW1iZXJzKHN0ZXBDYXNlUGFyYW0ucmVhbFZhbHVlKTtcbiAgICAgICAgICAgICAgICB9KSkpO1xuICAgICAgICAgICAgICAgIGJyZWFrO1xuICAgICAgICAgICAgY2FzZSAnVHlwZSc6XG4gICAgICAgICAgICAgICAgdGhpcy5zdWl0ZUluc3RhbmNlLmFkZFRlc3QobmV3IFRlc3Qoc3RlcENhc2VQYXJhbS50YXJnZXQgKyAnIGRvaXQgY29udGVuaXIgJyArIGRlc2NyaXB0aW9uICsgJyBlbGVtZW50cycsKCgpID0+IHtcbiAgICAgICAgICAgICAgICAgICAgZXhwZWN0KF8ucmVzdWx0KHJlc3BvbnNlLCBzdGVwQ2FzZVBhcmFtLnRhcmdldCkubGVuZ3RoKS50by5kZWVwLmVxdWFsKHN0ZXBDYXNlUGFyYW0udmFsdWUpO1xuICAgICAgICAgICAgICAgIH0pKSk7XG4gICAgICAgICAgICAgICAgYnJlYWs7XG4gICAgICAgIH1cbiAgICB9XG4gICAgZ2V0U3RyUGFyYW1VcmkgPSAoKSA9PiB7XG4gICAgICAgIGxldCBwYXJhbV91cmlfc3RyID0gXCI/XCJcbiAgICAgICAgaWYodGhpcy5zdGVwLnBhcmFtX3VyaSl7XG4gICAgICAgICAgICBPYmplY3Qua2V5cyh0aGlzLnN0ZXAucGFyYW1fdXJpKS5mb3JFYWNoKChwYXJhbSkgPT4ge1xuICAgICAgICAgICAgICAgIHBhcmFtX3VyaV9zdHIgKz0gcGFyYW0gKyBcIj1cIiArIHRoaXMuc3RlcC5wYXJhbV91cmlbcGFyYW1dICsgXCImXCI7XG4gICAgICAgICAgICB9KTtcbiAgICAgICAgICAgIHBhcmFtX3VyaV9zdHIgPSBwYXJhbV91cmlfc3RyLnNsaWNlKDAsIC0xKTtcbiAgICAgICAgfWVsc2V7XG4gICAgICAgICAgICBwYXJhbV91cmlfc3RyID0gXCJcIjtcbiAgICAgICAgfVxuICAgICAgICByZXR1cm4gcGFyYW1fdXJpX3N0cjtcbiAgICB9XG4gICAgZXhlY3V0ZVJlcXVlc3QgPSBhc3luYyAocmVxdWVzdFBhcmFtKSA9PiB7XG4gICAgICAgIHRyeSB7XG4gICAgICAgICAgICBjb25zdCByZXNwID0gYXdhaXQgYXhpb3MocmVxdWVzdFBhcmFtKTtcbiAgICAgICAgICAgIHJldHVybiByZXNwO1xuICAgICAgICB9Y2F0Y2goZXJyKXsgICAgXG4gICAgICAgICAgICByZXR1cm4gZXJyLnJlc3BvbnNlO1xuICAgICAgICB9XG4gICAgfVxufVxubW9kdWxlLmV4cG9ydHMgPSBTdGVwRmFjdG9yeTtcbiJdfQ==

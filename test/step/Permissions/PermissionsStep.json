@@ -1,0 +1,369 @@
+{
+    "groupname": "Permissions",
+    "all_test": [
+        {
+            "id": "P1",
+            "name": "Test GET permissions",
+            "description": "Listing paginée des droits actif de badge",
+            "endpoint": "/permission",
+            "method": "GET",
+            "param_uri": {
+                "limit": 200,
+                "offset": 0
+            },
+            "param_body": [
+                {}
+            ],
+            "assert": [
+                {
+                    "comparison": "Equals",
+                    "target": "status_code",
+                    "value": 200
+                },
+                {
+                    "comparison": "Is not",
+                    "target": "data.item",
+                    "value": null
+                },
+                {
+                    "comparison": "Equals",
+                    "target": "data.status",
+                    "value": "ok"
+                },
+                {
+                    "comparison": "Type",
+                    "target": "data.item",
+                    "value": "array"
+                }
+            ]
+        },
+        {
+            "id": "P2",
+            "name": "Test PUT badge sur porte",
+            "description": "Update d'un badge sur porte",
+            "endpoint": "/permission",
+            "method": "PUT",
+            "param_uri": {},
+            "param_body": [
+                {
+                    "tagId": 10,
+                    "doorId": 517,
+                    "ulsWeekTemplateId": 165,
+                    "beginDate": "2021-03-09T00:00:00",
+                    "endDate": "2050-01-01T00:00:00"
+                }
+            ],
+            "assert": [
+                {
+                    "comparison": "Equals",
+                    "target": "status_code",
+                    "value": 200
+                },
+                {
+                    "comparison": "Is not",
+                    "target": "data.item.processed",
+                    "value": null
+                },
+                {
+                    "comparison": "Type",
+                    "target": "data.item.processed",
+                    "value": "array"
+                },
+                {
+                    "comparison": "Equals",
+                    "target": "data.item.ignored",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "P3",
+            "name": "Test DELETE badge porte",
+            "description": "Supprime un badge sur une porte",
+            "endpoint": "/permission",
+            "method": "DELETE",
+            "param_uri": {},
+            "param_body": [
+                {
+                    "tagId": 10,
+                    "doorId": 517,
+                    "ulsWeekTemplateId": 165
+                }
+            ],
+            "assert": [
+                {
+                    "comparison": "Equals",
+                    "target": "status_code",
+                    "value": 200
+                },
+                {
+                    "comparison": "Equals",
+                    "target": "data.status",
+                    "value": "ok"
+                }
+            ]
+        },
+        {
+            "id" : "P4",
+            "name" : "Insertion Objet Inexistant",
+            "description" : "Insertion d'un objet qui n'existe pas en base",
+            "endpoint" : "/permission",
+            "method" : "PUT",
+            "param_uri": {},
+            "param_body" : [
+                {
+                    "tagId" : 1000,
+                    "doorId" : 1000,
+                    "ulsWeekTemplateId" : 165
+                }
+            ],
+            "assert" : [
+                {
+                    "comparison" : "Equals",
+                    "target" : "status_code",
+                    "value" : 200
+                },
+                {
+                    "comparison": "Is not",
+                    "target": "data.item.ignored",
+                    "value": null
+                },
+                {
+                    "comparison": "Type",
+                    "target": "data.item.ignored",
+                    "value": "array"
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.item.ignored[0]",
+                    "value" : {
+                        "tagId" : 1000,
+                        "doorId" : 1000,
+                        "ulsWeekTemplateId" : 165
+                    }
+                }
+            ]
+        },
+        {
+            "id" : "P5",
+            "name" : "Element Manquant Requete",
+            "description" : "Execution d'une requête avec élements manquants",
+            "endpoint" : "/permission",
+            "method" : "PUT",
+            "param_uri": {},
+            "param_body" : [
+                {
+                    "tagId" : 1000,
+                    "doorId" : 1000
+                }
+            ],
+            "assert" : [
+                {
+                    "comparison" : "Equals",
+                    "target" : "status_code",
+                    "value" : 500
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.Message",
+                    "value" : "An error has occurred."
+                }
+            ]
+        },
+        {
+            "id" : "P6",
+            "name" : "Mauvais Format d'objet",
+            "description" : "Insertion d'un objet avec un mauvais format",
+            "endpoint" : "/permission",
+            "method" : "PUT",
+            "param_uri": {},
+            "param_body" : [
+                {
+                    "tagId" : {},
+                    "doorId" : {},
+                    "ulsWeekTemplateId" : 165
+                }
+            ],
+            "assert" : [
+                {
+                    "comparison" : "Equals",
+                    "target" : "status_code",
+                    "value" : 400
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.status",
+                    "value" : "error"
+                }
+            ]
+        },
+        {
+            "id": "P7",
+            "name": "Test PUT porte sur groupe badge",
+            "description": "Update d'une porte sur un groupe de badges",
+            "endpoint": "/permission",
+            "method": "PUT",
+            "param_uri": {},
+            "param_body": [
+                {
+                    "tagGroupId" : 4,
+                    "doorId": 525,
+                    "ulsWeekTemplateId": 165,
+                    "beginDate": "2021-03-09T00:00:00",
+                    "endDate": "2050-01-01T00:00:00"
+                }
+            ],
+            "assert": [
+                {
+                    "comparison": "Equals",
+                    "target": "status_code",
+                    "value": 200
+                },
+                {
+                    "comparison": "Is not",
+                    "target": "data.item.processed",
+                    "value": null
+                },
+                {
+                    "comparison": "Type",
+                    "target": "data.item.processed",
+                    "value": "array"
+                },
+                {
+                    "comparison": "Equals",
+                    "target": "data.item.ignored",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "P8",
+            "name": "Test PUT badge sur groupe porte",
+            "description": "Update d'un badge sur un groupe de portes",
+            "endpoint": "/permission",
+            "method": "PUT",
+            "param_uri": {},
+            "param_body": [
+                {
+                    "tagId" : 11,
+                    "doorGroupId": 528,
+                    "ulsWeekTemplateId": 165,
+                    "beginDate": "2021-03-09T00:00:00",
+                    "endDate": "2050-01-01T00:00:00"
+                }
+            ],
+            "assert": [
+                {
+                    "comparison": "Equals",
+                    "target": "status_code",
+                    "value": 200
+                },
+                {
+                    "comparison": "Is not",
+                    "target": "data.item.processed",
+                    "value": null
+                },
+                {
+                    "comparison": "Type",
+                    "target": "data.item.processed",
+                    "value": "array"
+                },
+                {
+                    "comparison": "Equals",
+                    "target": "data.item.ignored",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "P9",
+            "name": "Test PUT porte sur groupe porte",
+            "description": "Update d'une porte sur un groupe de portes",
+            "endpoint": "/permission",
+            "method": "PUT",
+            "param_uri": {},
+            "param_body": [
+                {
+                    "doorId" : 517,
+                    "doorGroupId": 519,
+                    "ulsWeekTemplateId": 165
+                }
+            ],
+            "assert": [
+                {
+                    "comparison": "Equals",
+                    "target": "status_code",
+                    "value": 400
+                },
+                {
+                    "comparison" :"Equals",
+                    "target" : "data.status",
+                    "value" : "error"
+                }
+            ]
+        },
+        {
+            "id": "P10",
+            "name": "Test PUT badge sur groupe badge",
+            "description": "Update d'un badge sur un groupe de badge",
+            "endpoint": "/permission",
+            "method": "PUT",
+            "param_uri": {},
+            "param_body": [
+                {
+                    "doorId" : 10,
+                    "doorGroupId": 4,
+                    "ulsWeekTemplateId": 165
+                }
+            ],
+            "assert": [
+                {
+                    "comparison": "Equals",
+                    "target": "status_code",
+                    "value": 400
+                },
+                {
+                    "comparison" :"Equals",
+                    "target" : "data.status",
+                    "value" : "error"
+                }
+            ]
+        },
+        {
+            "id": "P11",
+            "name": "Test GET permissions limit / offset",
+            "description": "Verification fonctionnement param_uri limit",
+            "endpoint": "/permission",
+            "method": "GET",
+            "param_uri": {
+                "limit": 2,
+                "offset": 0
+            },
+            "param_body": [
+                {}
+            ],
+            "assert": [
+                {
+                    "comparison": "Equals",
+                    "target": "status_code",
+                    "value": 206
+                },
+                {
+                    "comparison": "Is not",
+                    "target": "data.item",
+                    "value": null
+                },
+                {
+                    "comparison": "Equals",
+                    "target": "data.status",
+                    "value": "ok"
+                },
+                {
+                    "comparison": "Type",
+                    "target": "data.item",
+                    "value": "array"
+                }
+            ]
+        }
+    ]
+}

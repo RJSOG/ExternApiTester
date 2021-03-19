@@ -4,11 +4,14 @@
   "description": "automated test on seal external api",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "app": "node src/index.js",
+    "test": "mocha",
+    "build": "babel src -d dist",
+    "buildAndRun": "npm run build && node dist/index.js"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Eli0ttD0NATIEN/test-seal-external-api.git"
+    "type": "mercurial",
+    "url": "http://dev-hg:8000/hgweb.cgi/SealExternalApiTester/"
   },
   "author": "archJesus",
   "license": "ISC",
@@ -17,11 +20,32 @@
   },
   "homepage": "https://github.com/Eli0ttD0NATIEN/test-seal-external-api#readme",
   "dependencies": {
+    "ajv": "^7.2.1",
     "axios": "^0.21.1",
+    "babel": "^6.23.0",
     "chai": "^4.3.0",
     "command-line-args": "^5.1.1",
+    "events": "^3.3.0",
     "lodash": "^4.17.21",
     "mocha": "^8.3.0",
+    "mocha-teamcity-reporter": "^3.0.0",
     "should": "^13.2.3"
+  },
+  "mocha": {
+    "diff": true,
+    "spec": "./test/unit",
+    "recursive": true,
+    "extension": [
+      "js"
+    ],
+    "opts": false,
+    "timeout": 2000,
+    "ui": "bdd"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.10",
+    "@babel/core": "^7.13.10",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.13.10"
   }
 }

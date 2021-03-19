@@ -1,25 +1,27 @@
 const FileParser = require('./fileParser');
 const fs = require('fs');
-const ValidateSerieFile = require("./validateSerieFile");
+const path = require('path');
+const SingletonFileValidator = require("./singletonFileValidator");
 const { process, exit } = require('process');
+const { dir } = require('console');
 
 class SerieParser {
     constructor(config){
         this.config = config;
-        this.allSeriesFiles = this.getAllSeriesFiles();
+        this.allSeriesFiles = this.getAllSeriesFiles(this.config.serieFolder);
         this.allSerieData = this.getAllSerieData();
-        this.validateSerieFile = new ValidateSerieFile(this.config).getInstance();
+        this.validateSerieFile = new SingletonFileValidator(this.config, 'serie').getInstance('serie');
         this.allSerieData.forEach((serie) => {
-            if(!this.validateSerieFile.validSerieFile(serie)){
+            if(!this.validateSerieFile.validFile(serie)){
                 console.log("Serie " + serie.name + " is not valid ! Bad format");
-                process.exit(1);
+                exit(1);
             }
         })
     }
     getAllSerieData = () => {
         let allSerieData = []
         for(let file of this.allSeriesFiles){
-            let fileParser = new FileParser(file, "serie", this.config);
+            let fileParser = new FileParser(file, this.config);
             allSerieData.push(fileParser.getData());
         }
         return allSerieData;
@@ -43,9 +45,20 @@ class SerieParser {
         });
         return result.executionOrder;
     }
-    getAllSeriesFiles = () => {
-        let files = fs.readdirSync(this.config.serieFolder);
-        return Object.values(files);
+    getAllSeriesFiles = (dirPath, arrayOfFiles) => {
+        let serieParser = this;
+        let files = fs.readdirSync(dirPath);
+        arrayOfFiles = arrayOfFiles || [];
+        files.forEach(function(file) {
+            if (fs.statSync(dirPath + "/" + file).isDirectory()) {
+              arrayOfFiles = serieParser.getAllSeriesFiles(dirPath + "/" + file, arrayOfFiles)
+            } else {
+                if(path.extname(file) == '.json'){
+                    arrayOfFiles.push(path.join(dirPath, "/", file));
+                }
+            }
+          })
+        return arrayOfFiles;
     }
 }
 class Singleton {

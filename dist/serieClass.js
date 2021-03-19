@@ -1,302 +1,132 @@
-"use strict";
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var axios = require('axios');
-
+"use strict";function _createForOfIteratorHelper(o, allowArrayLike) {var it;if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {if (it) o = it;var i = 0;var F = function F() {};return { s: F, n: function n() {if (i >= o.length) return { done: true };return { done: false, value: o[i++] };}, e: function e(_e2) {throw _e2;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion = true,didErr = false,err;return { s: function s() {it = o[Symbol.iterator]();}, n: function n() {var step = it.next();normalCompletion = step.done;return step;}, e: function e(_e3) {didErr = true;err = _e3;}, f: function f() {try {if (!normalCompletion && it["return"] != null) it["return"]();} finally {if (didErr) throw err;}} };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function _typeof(obj) {"@babel/helpers - typeof";if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {_typeof = function _typeof(obj) {return typeof obj;};} else {_typeof = function _typeof(obj) {return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;};}return _typeof(obj);}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var axios = require('axios');
 var chai = require("chai");
-
 var Execute = require('./serieParser');
-
 var StepFactory = require('./stepClass');
-
 var _ = require('lodash');
-
 var Mocha = require("mocha/mocha").Mocha;
-
 var expect = chai.expect;
 var should = chai.should();
 var Test = Mocha.Test;
 var Spec = Mocha.Spec;
+var TeamCity = require('mocha-teamcity-reporter');var _require =
+require('mocha/mocha'),type = _require.type;var
 
-var TeamCity = require('mocha-teamcity-reporter');
+Serie = /*#__PURE__*/function () {
+  function Serie(serie, config) {var _this = this;_classCallCheck(this, Serie);_defineProperty(this, "getSerieCaseParam",
 
-var Serie = /*#__PURE__*/function () {
-  function Serie(serie, config) {
-    var _this = this;
 
-    _classCallCheck(this, Serie);
 
-    _defineProperty(this, "getSerieCaseParam", function (serieCase) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function (serieCase) {
       return {
         target: serieCase.target,
         comparison: serieCase.comparison,
         realValue: _this.getAssertValue(serieCase.value),
-        value: serieCase.value
-      };
-    });
+        value: serieCase.value };
 
-    _defineProperty(this, "setMochaProperties", function () {
+    });_defineProperty(this, "setMochaProperties",
+    function () {
       _this.suiteInstance = Mocha.Suite.create(_this.mochaInstance.suite, _this.description);
-
       _this.suiteInstance.timeout(_this.config.timeout);
-    });
-
-    _defineProperty(this, "executeSerieAssertions", function (serieCaseParam, response) {
+    });_defineProperty(this, "executeSerieAssertions",
+    function (serieCaseParam, response) {
+      var description = _typeof(serieCaseParam.realValue) == 'object' ? JSON.stringify(serieCaseParam.realValue) : serieCaseParam.realValue;
       switch (serieCaseParam.comparison) {
         case 'Equals':
-          _this.suiteInstance.addTest(new Test(serieCaseParam.target + ' doit être égal à ' + serieCaseParam.value, function () {
+          _this.suiteInstance.addTest(new Test(serieCaseParam.target + ' doit être égal à ' + description, function () {
             serieCaseParam.target = serieCaseParam.target == 'status_code' ? 'status' : serieCaseParam.target;
             expect(_.result(response, serieCaseParam.target)).to.deep.equal(serieCaseParam.realValue);
           }));
-
           break;
-
         case 'Is not':
-          _this.suiteInstance.addTest(new Test(serieCaseParam.target + ' est différent de ' + serieCaseParam.value, function () {
+          _this.suiteInstance.addTest(new Test(serieCaseParam.target + ' est différent de ' + description, function () {
             serieCaseParam.target = serieCaseParam.target == 'status_code' ? 'status' : serieCaseParam.target;
             expect(_.result(response, serieCaseParam.target)).to.not.equal(serieCaseParam.realValue);
           }));
-
           break;
-
         case 'Type':
-          _this.suiteInstance.addTest(new Test(serieCaseParam.target + ' doit être de type ' + serieCaseParam.value, function () {
+          _this.suiteInstance.addTest(new Test(serieCaseParam.target + ' doit être de type ' + description, function () {
             serieCaseParam.target = serieCaseParam.target == 'status_code' ? 'status' : serieCaseParam.target;
-
             _.result(response, serieCaseParam.target).should.be.a(serieCaseParam.realValue);
           }));
-
           break;
-
         case 'Contain':
-          _this.suiteInstance.addTest(new Test(serieCaseParam.target + ' doit contenir ' + serieCaseParam.value, function () {
+          _this.suiteInstance.addTest(new Test(serieCaseParam.target + ' doit contenir ' + description, function () {
             serieCaseParam.target = serieCaseParam.target == 'status_code' ? 'status' : serieCaseParam.target;
             expect(_.result(response, serieCaseParam.target)).to.contain.deep.members(serieCaseParam.realValue);
           }));
-
           break;
-      }
-    });
+        case 'Type':
+          _this.suiteInstance.addTest(new Test(stepCaseParam.target + ' doit contenir ' + description + ' elements', function () {
+            expect(_.result(response, stepCaseParam.target).length).to.deep.equal(stepCaseParam.value);
+          }));
+          break;}
 
-    _defineProperty(this, "getAssertValue", function (value) {
-      var result;
-
+    });_defineProperty(this, "getAssertValue",
+    function (value) {
       _this.serie.serieExecutionOrder.forEach(function (testCase) {
-        var _value$split = value.split("."),
-            _value$split2 = _slicedToArray(_value$split, 2),
-            id = _value$split2[0],
-            property = _value$split2[1];
-
-        if (id == testCase.id && testCase.hasOwnProperty(property)) {
-          result = testCase[property];
+        if (typeof value === 'string') {var _value$split =
+          value.split("."),_value$split2 = _slicedToArray(_value$split, 2),id = _value$split2[0],property = _value$split2[1];
+          if (id == testCase.id && testCase.hasOwnProperty(property)) {
+            value = testCase[property];
+          }
         }
       });
-
-      return result;
-    });
-
-    _defineProperty(this, "assertionsOnSerie", function (response, id) {
+      return value;
+    });_defineProperty(this, "assertionsOnSerie",
+    function (response, id) {
       if (_this.haveAssert(id)) {
         _this.executionOrder[id].assert.forEach(function (caseAssert) {
           var serieCaseParam = _this.getSerieCaseParam(caseAssert);
-
           _this.executeSerieAssertions(serieCaseParam, response);
         });
       }
-    });
-
-    _defineProperty(this, "haveAssert", function (id) {
+    });_defineProperty(this, "haveAssert",
+    function (id) {
       return _this.executionOrder[id].hasOwnProperty("assert");
-    });
-
-    this.config = config;
-    this.description = serie.description;
-    this.serie = serie;
-    this.executionOrderId = 0;
-    this.executeClassInstance = new Execute(this.config).getInstance();
-    this.executionOrder = this.executeClassInstance.getExecutionOrderFromName(this.serie.name);
-    this.mochaInstance = new Mocha({
-      reporter: this.config.report == 'tc' ? TeamCity : Spec
-    });
-    this.config.mochaInstance = this.mochaInstance;
-    this.authenticate().then( /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(auth) {
-        var _iterator, _step, step, stepInstance;
-
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (!(auth != 1)) {
-                  _context.next = 23;
-                  break;
-                }
-
-                _this.auth = auth;
-
-                _this.setMochaProperties();
-
-                _iterator = _createForOfIteratorHelper(_this.serie.serieExecutionOrder);
-                _context.prev = 4;
-
-                _iterator.s();
-
-              case 6:
-                if ((_step = _iterator.n()).done) {
-                  _context.next = 14;
-                  break;
-                }
-
-                step = _step.value;
-                _context.next = 10;
-                return _this.createStep(step);
-
-              case 10:
-                stepInstance = _context.sent;
-
-                _this.assertionsOnSerie(stepInstance.response, stepInstance.id);
-
-              case 12:
-                _context.next = 6;
-                break;
-
-              case 14:
-                _context.next = 19;
-                break;
-
-              case 16:
-                _context.prev = 16;
-                _context.t0 = _context["catch"](4);
-
-                _iterator.e(_context.t0);
-
-              case 19:
-                _context.prev = 19;
-
-                _iterator.f();
-
-                return _context.finish(19);
-
-              case 22:
-                _this.mochaInstance.run();
-
-              case 23:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[4, 16, 19, 22]]);
-      }));
-
-      return function (_x) {
-        return _ref.apply(this, arguments);
-      };
-    }());
-  } //Authenticate and get auth cookie
-
-
-  _createClass(Serie, [{
-    key: "authenticate",
-    value: function () {
-      var _authenticate = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var buff, headers, resp;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                buff = Buffer.from(this.config.auth.toString(), 'utf-8');
-                headers = {
-                  headers: {
-                    "Authorization": "Basic " + buff.toString('base64')
-                  }
-                };
-                _context2.prev = 2;
-                _context2.next = 5;
-                return axios.put(this.config.baseUrl + '/Authenticate', "", headers);
-
-              case 5:
-                resp = _context2.sent;
-                return _context2.abrupt("return", resp.headers['set-cookie']);
-
-              case 9:
-                _context2.prev = 9;
-                _context2.t0 = _context2["catch"](2);
-                console.log("Authentification Failed !\n" + _context2.t0);
-                return _context2.abrupt("return", 1);
-
-              case 13:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this, [[2, 9]]);
-      }));
-
-      function authenticate() {
-        return _authenticate.apply(this, arguments);
-      }
-
-      return authenticate;
-    }()
-  }, {
-    key: "createStep",
-    value: function () {
-      var _createStep = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(step) {
-        var stepInstance;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                stepInstance = new StepFactory(step, this.auth, this.config, this.executionOrderId);
-                this.executionOrderId += 1;
-                _context3.next = 4;
-                return stepInstance.run();
-
-              case 4:
-                return _context3.abrupt("return", stepInstance);
-
-              case 5:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function createStep(_x2) {
-        return _createStep.apply(this, arguments);
-      }
-
-      return createStep;
-    }()
-  }]);
-
-  return Serie;
-}();
-
+    });this.config = config;this.description = serie.description;this.serie = serie;this.executionOrderId = 0;this.executeClassInstance = new Execute(this.config).getInstance();this.executionOrder = this.executeClassInstance.getExecutionOrderFromName(this.serie.name);this.mochaInstance = new Mocha({ reporter: this.config.report == 'tc' ? TeamCity : Spec });this.config.mochaInstance = this.mochaInstance;}_createClass(Serie, [{ key: "run", value: function () {var _run = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {var _this2 = this;return regeneratorRuntime.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:this.authenticate().then( /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(auth) {var _iterator, _step, step, stepInstance;return regeneratorRuntime.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_this2.auth = auth;_this2.setMochaProperties();_iterator = _createForOfIteratorHelper(_this2.serie.serieExecutionOrder);_context.prev = 3;_iterator.s();case 5:if ((_step = _iterator.n()).done) {_context.next = 13;break;}step = _step.value;_context.next = 9;return _this2.createStep(step);case 9:stepInstance = _context.sent;_this2.assertionsOnSerie(stepInstance.response, stepInstance.id);case 11:_context.next = 5;break;case 13:_context.next = 18;break;case 15:_context.prev = 15;_context.t0 = _context["catch"](3);_iterator.e(_context.t0);case 18:_context.prev = 18;_iterator.f();return _context.finish(18);case 21:_this2.mochaInstance.run();case 22:case "end":return _context.stop();}}}, _callee, null, [[3, 15, 18, 21]]);}));return function (_x) {return _ref.apply(this, arguments);};}());case 1:case "end":return _context2.stop();}}}, _callee2, this);}));function run() {return _run.apply(this, arguments);}return run;}() //Authenticate and get auth cookie
+  }, { key: "authenticate", value: function () {var _authenticate = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {var buff, headers, resp;return regeneratorRuntime.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:if (!this.serie.automatedAuth) {_context3.next = 14;break;}buff = Buffer.from(this.config.auth.toString(), 'utf-8');headers = { headers: { "Authorization": "Basic " + buff.toString('base64') } };_context3.prev = 3;_context3.next = 6;return axios.put(this.config.baseUrl + '/Authenticate', "", headers);case 6:resp = _context3.sent;return _context3.abrupt("return", resp.headers['set-cookie']);case 10:_context3.prev = 10;_context3.t0 = _context3["catch"](3);console.log("Authentification Failed !\n" + _context3.t0);return _context3.abrupt("return", 1);case 14:return _context3.abrupt("return", null);case 15:case "end":return _context3.stop();}}}, _callee3, this, [[3, 10]]);}));function authenticate() {return _authenticate.apply(this, arguments);}return authenticate;}() }, { key: "createStep", value: function () {var _createStep = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(step) {var stepInstance;return regeneratorRuntime.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:stepInstance = new StepFactory(step, this.auth, this.config, this.executionOrderId);this.executionOrderId += 1;_context4.next = 4;return stepInstance.run();case 4:return _context4.abrupt("return", stepInstance);case 5:case "end":return _context4.stop();}}}, _callee4, this);}));function createStep(_x2) {return _createStep.apply(this, arguments);}return createStep;}() }]);return Serie;}();
 module.exports = Serie;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9zZXJpZUNsYXNzLmpzIl0sIm5hbWVzIjpbImF4aW9zIiwicmVxdWlyZSIsImNoYWkiLCJFeGVjdXRlIiwiU3RlcEZhY3RvcnkiLCJfIiwiTW9jaGEiLCJleHBlY3QiLCJzaG91bGQiLCJUZXN0IiwiU3BlYyIsIlRlYW1DaXR5IiwidHlwZSIsIlNlcmllIiwic2VyaWUiLCJjb25maWciLCJzZXJpZUNhc2UiLCJ0YXJnZXQiLCJjb21wYXJpc29uIiwicmVhbFZhbHVlIiwiZ2V0QXNzZXJ0VmFsdWUiLCJ2YWx1ZSIsInN1aXRlSW5zdGFuY2UiLCJTdWl0ZSIsImNyZWF0ZSIsIm1vY2hhSW5zdGFuY2UiLCJzdWl0ZSIsImRlc2NyaXB0aW9uIiwidGltZW91dCIsInNlcmllQ2FzZVBhcmFtIiwicmVzcG9uc2UiLCJKU09OIiwic3RyaW5naWZ5IiwiYWRkVGVzdCIsInJlc3VsdCIsInRvIiwiZGVlcCIsImVxdWFsIiwibm90IiwiYmUiLCJhIiwiY29udGFpbiIsIm1lbWJlcnMiLCJzdGVwQ2FzZVBhcmFtIiwibGVuZ3RoIiwic2VyaWVFeGVjdXRpb25PcmRlciIsImZvckVhY2giLCJ0ZXN0Q2FzZSIsInNwbGl0IiwiaWQiLCJwcm9wZXJ0eSIsImhhc093blByb3BlcnR5IiwiaGF2ZUFzc2VydCIsImV4ZWN1dGlvbk9yZGVyIiwiYXNzZXJ0IiwiY2FzZUFzc2VydCIsImdldFNlcmllQ2FzZVBhcmFtIiwiZXhlY3V0ZVNlcmllQXNzZXJ0aW9ucyIsImV4ZWN1dGlvbk9yZGVySWQiLCJleGVjdXRlQ2xhc3NJbnN0YW5jZSIsImdldEluc3RhbmNlIiwiZ2V0RXhlY3V0aW9uT3JkZXJGcm9tTmFtZSIsIm5hbWUiLCJyZXBvcnRlciIsInJlcG9ydCIsImF1dGhlbnRpY2F0ZSIsInRoZW4iLCJhdXRoIiwic2V0TW9jaGFQcm9wZXJ0aWVzIiwic3RlcCIsImNyZWF0ZVN0ZXAiLCJzdGVwSW5zdGFuY2UiLCJhc3NlcnRpb25zT25TZXJpZSIsInJ1biIsImF1dG9tYXRlZEF1dGgiLCJidWZmIiwiQnVmZmVyIiwiZnJvbSIsInRvU3RyaW5nIiwiaGVhZGVycyIsInB1dCIsImJhc2VVcmwiLCJyZXNwIiwiY29uc29sZSIsImxvZyIsIm1vZHVsZSIsImV4cG9ydHMiXSwibWFwcGluZ3MiOiJtdElBQUEsSUFBTUEsS0FBSyxHQUFHQyxPQUFPLENBQUMsT0FBRCxDQUFyQjtBQUNBLElBQU1DLElBQUksR0FBR0QsT0FBTyxDQUFDLE1BQUQsQ0FBcEI7QUFDQSxJQUFNRSxPQUFPLEdBQUdGLE9BQU8sQ0FBQyxlQUFELENBQXZCO0FBQ0EsSUFBTUcsV0FBVyxHQUFHSCxPQUFPLENBQUMsYUFBRCxDQUEzQjtBQUNBLElBQU1JLENBQUMsR0FBR0osT0FBTyxDQUFDLFFBQUQsQ0FBakI7QUFDQSxJQUFNSyxLQUFLLEdBQUdMLE9BQU8sQ0FBQyxhQUFELENBQVAsQ0FBdUJLLEtBQXJDO0FBQ0EsSUFBTUMsTUFBTSxHQUFHTCxJQUFJLENBQUNLLE1BQXBCO0FBQ0EsSUFBTUMsTUFBTSxHQUFHTixJQUFJLENBQUNNLE1BQUwsRUFBZjtBQUNBLElBQU1DLElBQUksR0FBR0gsS0FBSyxDQUFDRyxJQUFuQjtBQUNBLElBQU1DLElBQUksR0FBR0osS0FBSyxDQUFDSSxJQUFuQjtBQUNBLElBQU1DLFFBQVEsR0FBR1YsT0FBTyxDQUFDLHlCQUFELENBQXhCLEM7QUFDaUJBLE9BQU8sQ0FBQyxhQUFELEMsQ0FBaEJXLEksWUFBQUEsSTs7QUFFRkMsSztBQUNGLGlCQUFZQyxLQUFaLEVBQW1CQyxNQUFuQixFQUEwQjs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUErQ04sY0FBQ0MsU0FBRCxFQUFlO0FBQy9CLGFBQU87QUFDSEMsUUFBQUEsTUFBTSxFQUFHRCxTQUFTLENBQUNDLE1BRGhCO0FBRUhDLFFBQUFBLFVBQVUsRUFBR0YsU0FBUyxDQUFDRSxVQUZwQjtBQUdIQyxRQUFBQSxTQUFTLEVBQUcsS0FBSSxDQUFDQyxjQUFMLENBQW9CSixTQUFTLENB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QVksNENBQVosRUFYWixrQ0FZbUIsQ0FabkIsNENBZVcsSUFmWCw4RSx1TkFpQkEsa0JBQWlCZixJQUFqQiw4SUFDUUUsWUFEUixHQUN1QixJQUFJbkUsV0FBSixDQUFnQmlFLElBQWhCLEVBQXNCLEtBQUtGLElBQTNCLEVBQWlDLEtBQUtwRCxNQUF0QyxFQUE4QyxLQUFLMkMsZ0JBQW5ELENBRHZCLENBRUksS0FBS0EsZ0JBQUwsSUFBeUIsQ0FBekIsQ0FGSiwwQkFHVWEsWUFBWSxDQUFDRSxHQUFiLEVBSFYsMENBSVdGLFlBSlgsa0U7QUEyRUpjLE1BQU0sQ0FBQ0MsT0FBUCxHQUFpQnpFLEtBQWpCIiwic291cmNlc0NvbnRlbnQiOlsiY29uc3QgYXhpb3MgPSByZXF1aXJlKCdheGlvcycpO1xuY29uc3QgY2hhaSA9IHJlcXVpcmUoXCJjaGFpXCIpO1xuY29uc3QgRXhlY3V0ZSA9IHJlcXVpcmUoJy4vc2VyaWVQYXJzZXInKVxuY29uc3QgU3RlcEZhY3RvcnkgPSByZXF1aXJlKCcuL3N0ZXBDbGFzcycpO1xuY29uc3QgXyA9IHJlcXVpcmUoJ2xvZGFzaCcpO1xuY29uc3QgTW9jaGEgPSByZXF1aXJlKFwibW9jaGEvbW9jaGFcIikuTW9jaGE7XG5jb25zdCBleHBlY3QgPSBjaGFpLmV4cGVjdDtcbmNvbnN0IHNob3VsZCA9IGNoYWkuc2hvdWxkKCk7XG5jb25zdCBUZXN0ID0gTW9jaGEuVGVzdDtcbmNvbnN0IFNwZWMgPSBNb2NoYS5TcGVjO1xuY29uc3QgVGVhbUNpdHkgPSByZXF1aXJlKCdtb2NoYS10ZWFtY2l0eS1yZXBvcnRlcicpO1xuY29uc3QgeyB0eXBlIH0gPSByZXF1aXJlKCdtb2NoYS9tb2NoYScpO1xuXG5jbGFzcyBTZXJpZXtcbiAgICBjb25zdHJ1Y3RvcihzZXJpZSwgY29uZmlnKXtcbiAgICAgICAgdGhpcy5jb25maWcgPSBjb25maWc7XG4gICAgICAgIHRoaXMuZGVzY3JpcHRpb24gPSBzZXJpZS5kZXNjcmlwdGlvbjtcbiAgICAgICAgdGhpcy5zZXJpZSA9IHNlcmllO1xuICAgICAgICB0aGlzLmV4ZWN1dGlvbk9yZGVySWQgPSAwO1xuICAgICAgICB0aGlzLmV4ZWN1dGVDbGFzc0luc3RhbmNlID0gbmV3IEV4ZWN1dGUodGhpcy5jb25maWcpLmdldEluc3RhbmNlKCk7XG4gICAgICAgIHRoaXMuZXhlY3V0aW9uT3JkZXIgPSB0aGlzLmV4ZWN1dGVDbGFzc0luc3RhbmNlLmdldEV4ZWN1dGlvbk9yZGVyRnJvbU5hbWUodGhpcy5zZXJpZS5uYW1lKTtcbiAgICAgICAgdGhpcy5tb2NoYUluc3RhbmNlID0gbmV3IE1vY2hhKHtcbiAgICAgICAgICAgIHJlcG9ydGVyOiAodGhpcy5jb25maWcucmVwb3J0ID09ICd0YycpID8gVGVhbUNpdHkgOiBTcGVjXG4gICAgICAgIH0pO1xuICAgICAgICB0aGlzLmNvbmZpZy5tb2NoYUluc3RhbmNlID0gdGhpcy5tb2NoYUluc3RhbmNlO1xuICAgIH1cbiAgICBhc3luYyBydW4oKXtcbiAgICAgICAgdGhpcy5hdXRoZW50aWNhdGUoKS50aGVuKGFzeW5jIGF1dGggPT4ge1xuICAgICAgICAgICAgdGhpcy5hdXRoID0gYXV0aDtcbiAgICAgICAgICAgIHRoaXMuc2V0TW9jaGFQcm9wZXJ0aWVzKCk7XG4gICAgICAgICAgICBmb3IgKGNvbnN0IHN0ZXAgb2YgdGhpcy5zZXJpZS5zZXJpZUV4ZWN1dGlvbk9yZGVyKSB7XG4gICAgICAgICAgICAgICAgY29uc3Qgc3RlcEluc3RhbmNlID0gYXdhaXQgdGhpcy5jcmVhdGVTdGVwKHN0ZXApO1xuICAgICAgICAgICAgICAgIHRoaXMuYXNzZXJ0aW9uc09uU2VyaWUoc3RlcEluc3RhbmNlLnJlc3BvbnNlLCBzdGVwSW5zdGFuY2UuaWQpO1xuICAgICAgICAgICAgfVxuICAgICAgICAgICAgdGhpcy5tb2NoYUluc3RhbmNlLnJ1bigpO1xuICAgICAgICB9KTtcbiAgICB9XG4gICAgLy9BdXRoZW50aWNhdGUgYW5kIGdldCBhdXRoIGNvb2tpZVxuICAgIGFzeW5jIGF1dGhlbnRpY2F0ZSgpe1xuICAgICAgICBpZih0aGlzLnNlcmllLmF1dG9tYXRlZEF1dGgpe1xuICAgICAgICAgICAgbGV0IGJ1ZmYgPSBCdWZmZXIuZnJvbSh0aGlzLmNvbmZpZy5hdXRoLnRvU3RyaW5nKCksICd1dGYtOCcpO1xuICAgICAgICAgICAgbGV0IGhlYWRlcnMgPSB7XG4gICAgICAgICAgICAgICAgaGVhZGVyczoge1wiQXV0aG9yaXphdGlvblwiOiBcIkJhc2ljIFwiICsgYnVmZi50b1N0cmluZygnYmFzZTY0Jyl9XG4gICAgICAgICAgICB9XG4gICAgICAgICAgICB0cnl7XG4gICAgICAgICAgICAgICAgbGV0IHJlc3AgPSBhd2FpdCBheGlvcy5wdXQodGhpcy5jb25maWcuYmFzZVVybCArICcvQXV0aGVudGljYXRlJywgXCJcIiAsIGhlYWRlcnMpXG4gICAgICAgICAgICAgICAgcmV0dXJuIHJlc3AuaGVhZGVyc1snc2V0LWNvb2tpZSddO1xuICAgICAgICAgICAgfVxuICAgICAgICAgICAgY2F0Y2goZXJyKSB7XG4gICAgICAgICAgICAgICAgY29uc29sZS5sb2coXCJBdXRoZW50aWZpY2F0aW9uIEZhaWxlZCAhXFxuXCIgKyBlcnIpO1xuICAgICAgICAgICAgICAgIHJldHVybiAxXG4gICAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgICAgcmV0dXJuIG51bGw7XG4gICAgfVxuICAgIGFzeW5jIGNyZWF0ZVN0ZXAoc3RlcCl7XG4gICAgICAgIGxldCBzdGVwSW5zdGFuY2UgPSBuZXcgU3RlcEZhY3Rvcnkoc3RlcCwgdGhpcy5hdXRoLCB0aGlzLmNvbmZpZywgdGhpcy5leGVjdXRpb25PcmRlcklkKVxuICAgICAgICB0aGlzLmV4ZWN1dGlvbk9yZGVySWQgKz0gMTtcbiAgICAgICAgYXdhaXQgc3RlcEluc3RhbmNlLnJ1bigpO1xuICAgICAgICByZXR1cm4gc3RlcEluc3RhbmNlO1xuICAgIH1cbiAgICBnZXRTZXJpZUNhc2VQYXJhbSA9IChzZXJpZUNhc2UpID0+IHtcbiAgICAgICAgcmV0dXJuIHtcbiAgICAgICAgICAgIHRhcmdldCA6IHNlcmllQ2FzZS50YXJnZXQsXG4gICAgICAgICAgICBjb21wYXJpc29uIDogc2VyaWVDYXNlLmNvbXBhcmlzb24sXG4gICAgICAgICAgICByZWFsVmFsdWUgOiB0aGlzLmdldEFzc2VydFZhbHVlKHNlcmllQ2FzZS52YWx1ZSksXG4gICAgICAgICAgICB2YWx1ZSA6IHNlcmllQ2FzZS52YWx1ZVxuICAgICAgICB9XG4gICAgfVxuICAgIHNldE1vY2hhUHJvcGVydGllcyA9ICgpID0+IHtcbiAgICAgICAgdGhpcy5zdWl0ZUluc3RhbmNlID0gTW9jaGEuU3VpdGUuY3JlYXRlKHRoaXMubW9jaGFJbnN0YW5jZS5zdWl0ZSwgdGhpcy5kZXNjcmlwdGlvbik7XG4gICAgICAgIHRoaXMuc3VpdGVJbnN0YW5jZS50aW1lb3V0KHRoaXMuY29uZmlnLnRpbWVvdXQpO1xuICAgIH1cbiAgICBleGVjdXRlU2VyaWVBc3NlcnRpb25zID0gKHNlcmllQ2FzZVBhcmFtLCByZXNwb25zZSkgPT4ge1xuICAgICAgICBsZXQgZGVzY3JpcHRpb24gPSAodHlwZW9mKHNlcmllQ2FzZVBhcmFtLnJlYWxWYWx1ZSkgPT0gJ29iamVjdCcpID8gSlNPTi5zdHJpbmdpZnkoc2VyaWVDYXNlUGFyYW0ucmVhbFZhbHVlKSA6IHNlcmllQ2FzZVBhcmFtLnJlYWxWYWx1ZTtcbiAgICAgICAgc3dpdGNoIChzZXJpZUNhc2VQYXJhbS5jb21wYXJpc29uKXtcbiAgICAgICAgICAgIGNhc2UgJ0VxdWFscyc6XG4gICAgICAgICAgICAgICAgdGhpcy5zdWl0ZUluc3RhbmNlLmFkZFRlc3QobmV3IFRlc3Qoc2VyaWVDYXNlUGFyYW0udGFyZ2V0ICsgJyBkb2l0IMOqdHJlIMOpZ2FsIMOgICcrIGRlc2NyaXB0aW9uLCAoKCkgPT4ge1xuICAgICAgICAgICAgICAgICAgICBzZXJpZUNhc2VQYXJhbS50YXJnZXQgPSAoc2VyaWVDYXNlUGFyYW0udGFyZ2V0ID09ICdzdGF0dXNfY29kZScpID8gJ3N0YXR1cycgOiBzZXJpZUNhc2VQYXJhbS50YXJnZXQ7XG4gICAgICAgICAgICAgICAgICAgIGV4cGVjdChfLnJlc3VsdChyZXNwb25zZSwgc2VyaWVDYXNlUGFyYW0udGFyZ2V0KSkudG8uZGVlcC5lcXVhbChzZXJpZUNhc2VQYXJhbS5yZWFsVmFsdWUpO1xuICAgICAgICAgICAgICAgIH0pKSlcbiAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgIGNhc2UgJ0lzIG5vdCc6XG4gICAgICAgICAgICAgICAgdGhpcy5zdWl0ZUluc3RhbmNlLmFkZFRlc3QobmV3IFRlc3Qoc2VyaWVDYXNlUGFyYW0udGFyZ2V0ICsgJyBlc3QgZGlmZsOpcmVudCBkZSAnKyBkZXNjcmlwdGlvbiwgKCgpID0+IHtcbiAgICAgICAgICAgICAgICAgICAgc2VyaWVDYXNlUGFyYW0udGFyZ2V0ID0gKHNlcmllQ2FzZVBhcmFtLnRhcmdldCA9PSAnc3RhdHVzX2NvZGUnKSA/ICdzdGF0dXMnIDogc2VyaWVDYXNlUGFyYW0udGFyZ2V0O1xuICAgICAgICAgICAgICAgICAgICBleHBlY3QoXy5yZXN1bHQocmVzcG9uc2UsIHNlcmllQ2FzZVBhcmFtLnRhcmdldCkpLnRvLm5vdC5lcXVhbChzZXJpZUNhc2VQYXJhbS5yZWFsVmFsdWUpO1xuICAgICAgICAgICAgICAgIH0pKSk7XG4gICAgICAgICAgICAgICAgYnJlYWs7XG4gICAgICAgICAgICBjYXNlICdUeXBlJzpcbiAgICAgICAgICAgICAgICB0aGlzLnN1aXRlSW5zdGFuY2UuYWRkVGVzdChuZXcgVGVzdChzZXJpZUNhc2VQYXJhbS50YXJnZXQgKyAnIGRvaXQgw6p0cmUgZGUgdHlwZSAnKyBkZXNjcmlwdGlvbiwgKCgpID0+IHtcbiAgICAgICAgICAgICAgICAgICAgc2VyaWVDYXNlUGFyYW0udGFyZ2V0ID0gKHNlcmllQ2FzZVBhcmFtLnRhcmdldCA9PSAnc3RhdHVzX2NvZGUnKSA/ICdzdGF0dXMnIDogc2VyaWVDYXNlUGFyYW0udGFyZ2V0O1xuICAgICAgICAgICAgICAgICAgICBfLnJlc3VsdChyZXNwb25zZSwgc2VyaWVDYXNlUGFyYW0udGFyZ2V0KS5zaG91bGQuYmUuYShzZXJpZUNhc2VQYXJhbS5yZWFsVmFsdWUpXG4gICAgICAgICAgICAgICAgfSkpKTtcbiAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgIGNhc2UgJ0NvbnRhaW4nOlxuICAgICAgICAgICAgICAgIHRoaXMuc3VpdGVJbnN0YW5jZS5hZGRUZXN0KG5ldyBUZXN0KHNlcmllQ2FzZVBhcmFtLnRhcmdldCArICcgZG9pdCBjb250ZW5pciAnKyBkZXNjcmlwdGlvbiwgKCgpID0+IHtcbiAgICAgICAgICAgICAgICAgICAgc2VyaWVDYXNlUGFyYW0udGFyZ2V0ID0gKHNlcmllQ2FzZVBhcmFtLnRhcmdldCA9PSAnc3RhdHVzX2NvZGUnKSA/ICdzdGF0dXMnIDogc2VyaWVDYXNlUGFyYW0udGFyZ2V0O1xuICAgICAgICAgICAgICAgICAgICBleHBlY3QoXy5yZXN1bHQocmVzcG9uc2UsIHNlcmllQ2FzZVBhcmFtLnRhcmdldCkpLnRvLmNvbnRhaW4uZGVlcC5tZW1iZXJzKHNlcmllQ2FzZVBhcmFtLnJlYWxWYWx1ZSk7XG4gICAgICAgICAgICAgICAgfSkpKTtcbiAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgIGNhc2UgJ1R5cGUnOlxuICAgICAgICAgICAgICAgIHRoaXMuc3VpdGVJbnN0YW5jZS5hZGRUZXN0KG5ldyBUZXN0KHN0ZXBDYXNlUGFyYW0udGFyZ2V0ICsgJyBkb2l0IGNvbnRlbmlyICcrIGRlc2NyaXB0aW9uICsgJyBlbGVtZW50cycsKCgpID0+IHtcbiAgICAgICAgICAgICAgICAgICAgZXhwZWN0KF8ucmVzdWx0KHJlc3BvbnNlLCBzdGVwQ2FzZVBhcmFtLnRhcmdldCkubGVuZ3RoKS50by5kZWVwLmVxdWFsKHN0ZXBDYXNlUGFyYW0udmFsdWUpO1xuICAgICAgICAgICAgICAgIH0pKSk7XG4gICAgICAgICAgICAgICAgYnJlYWs7XG4gICAgICAgIH1cbiAgICB9XG4gICAgZ2V0QXNzZXJ0VmFsdWUgPSAodmFsdWUpID0+IHtcbiAgICAgICAgdGhpcy5zZXJpZS5zZXJpZUV4ZWN1dGlvbk9yZGVyLmZvckVhY2godGVzdENhc2UgPT4ge1xuICAgICAgICAgICAgaWYodHlwZW9mKHZhbHVlKSA9PT0gJ3N0cmluZycpe1xuICAgICAgICAgICAgICAgIGxldCBbaWQsIHByb3BlcnR5XSA9IHZhbHVlLnNwbGl0KFwiLlwiKTtcbiAgICAgICAgICAgICAgICBpZihpZCA9PSB0ZXN0Q2FzZS5pZCAmJiB0ZXN0Q2FzZS5oYXNPd25Qcm9wZXJ0eShwcm9wZXJ0eSkpe1xuICAgICAgICAgICAgICAgICAgICB2YWx1ZSA9IHRlc3RDYXNlW3Byb3BlcnR5XTtcbiAgICAgICAgICAgICAgICB9XG4gICAgICAgICAgICB9XG4gICAgICAgIH0pO1xuICAgICAgICByZXR1cm4gdmFsdWU7XG4gICAgfVxuICAgIGFzc2VydGlvbnNPblNlcmllID0gKHJlc3BvbnNlLCBpZCkgPT4ge1xuICAgICAgICBpZih0aGlzLmhhdmVBc3NlcnQoaWQpKXtcbiAgICAgICAgICAgIHRoaXMuZXhlY3V0aW9uT3JkZXJbaWRdLmFzc2VydC5mb3JFYWNoKChjYXNlQXNzZXJ0KSA9PiB7XG4gICAgICAgICAgICAgICAgbGV0IHNlcmllQ2FzZVBhcmFtID0gdGhpcy5nZXRTZXJpZUNhc2VQYXJhbShjYXNlQXNzZXJ0KTtcbiAgICAgICAgICAgICAgICB0aGlzLmV4ZWN1dGVTZXJpZUFzc2VydGlvbnMoc2VyaWVDYXNlUGFyYW0sIHJlc3BvbnNlKTtcbiAgICAgICAgICAgIH0pO1xuICAgICAgICB9XG4gICAgfVxuICAgIGhhdmVBc3NlcnQgPSAoaWQpID0+IHtcbiAgICAgICAgcmV0dXJuIHRoaXMuZXhlY3V0aW9uT3JkZXJbaWRdLmhhc093blByb3BlcnR5KFwiYXNzZXJ0XCIpO1xuICAgIH1cbn1cbm1vZHVsZS5leHBvcnRzID0gU2VyaWU7Il19
