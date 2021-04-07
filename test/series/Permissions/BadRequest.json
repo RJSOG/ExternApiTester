@@ -1,27 +1,33 @@
 {
     "name" : "BadPermissionsRequest",
     "automatedAuth" : true,
+    "serieIsEnabled" : true,
     "description" : "Execution de mauvaises requete sur les permissions",
     "executionOrder" : [
         {
             "file" : "PermissionsStep.json",
-            "id" : "P4"
+            "id" : "P4",
+            "requiredStep" : false
         },
         {
             "file" : "PermissionsStep.json",
-            "id" : "P5"
+            "id" : "P5",
+            "requiredStep" : false
         },
         {
             "file" : "PermissionsStep.json",
-            "id" : "P6"
+            "id" : "P6",
+            "requiredStep" : false
         },
         {
             "file" : "PermissionsStep.json",
-            "id" : "P9"
+            "id" : "P9",
+            "requiredStep" : false
         },
         {
             "file" : "PermissionsStep.json",
-            "id" : "P10"
+            "id" : "P10",
+            "requiredStep" : false
         }
     ]
 }

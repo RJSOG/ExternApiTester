@@ -34,7 +34,7 @@
         {
             "id" : "A2",
             "name" : "Test PUT Auth",
-            "description" : "authentication avec nouveau password",
+            "description" : "Authentication avec un nouveau password",
             "endpoint" : "/authenticate/",
             "method" : "PUT",
             "param_uri" : {},
@@ -90,7 +90,7 @@
         {
             "id" : "A4",
             "name" : "Test PUT Auth",
-            "description" : "authentication avec ancien password",
+            "description" : "Authentication avec un ancien password",
             "endpoint" : "/authenticate/",
             "method" : "PUT",
             "param_uri" : {},

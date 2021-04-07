@@ -1,39 +1,66 @@
 const axios = require('axios');
 const chai = require("chai");
-const Execute = require('./serieParser')
+const SerieParser = require('./serieParser')
 const StepFactory = require('./stepClass');
+const Cache = require('./cacheClass');
 const _ = require('lodash');
 const Mocha = require("mocha/mocha").Mocha;
 const expect = chai.expect;
 const should = chai.should();
 const Test = Mocha.Test;
-const Spec = Mocha.Spec;
-const TeamCity = require('mocha-teamcity-reporter');
 const { type } = require('mocha/mocha');
+const { times } = require('lodash');
 
 class Serie{
     constructor(serie, config){
         this.config = config;
+        this.config.parent = this;
+        this.config.isDispose = false;
         this.description = serie.description;
+        this.serieStop = false;
         this.serie = serie;
         this.executionOrderId = 0;
-        this.executeClassInstance = new Execute(this.config).getInstance();
-        this.executionOrder = this.executeClassInstance.getExecutionOrderFromName(this.serie.name);
-        this.mochaInstance = new Mocha({
-            reporter: (this.config.report == 'tc') ? TeamCity : Spec
-        });
-        this.config.mochaInstance = this.mochaInstance;
+        this.serieParser = new SerieParser(this.config).getInstance();
+        this.executionOrder = this.serieParser.getExecutionOrderFromName(this.serie.name)
+        this.allStepResponse = [];
+        if(serie.cache){
+            this.prepareCache();
+        }
     }
     async startAssert(){
-        this.authenticate().then(async auth => {
-            this.auth = auth;
-            this.setMochaProperties();
-            for (const step of this.serie.serieExecutionOrder) {
-                const stepInstance = await this.createStep(step);
-                this.assertionsOnSerie(stepInstance.response, stepInstance.id);
+        this.auth = await this.authenticate();
+        this.setMochaProperties();
+        for (const step of this.serie.serieExecutionOrder) {
+            const stepInstance = await this.createStep(step);
+            this.allStepResponse.push({
+                id : step.id,
+                response : stepInstance.response
+            });
+            if(this.serie.cache){
+                this.fillCache(stepInstance.response);
             }
-            this.mochaInstance.run();
-        });
+            this.assertionsOnSerie(stepInstance.response, stepInstance.id);
+        }
+    }
+    prepareCache = () => {
+        this.cache = new Cache();
+        this.config.cacheInstance = this.cache;
+        this.cacheData = this.serieParser.getSerieCache(this.serie.name);
+    }
+    fillCache = (response) => {
+        this.cacheData.forEach((cacheObject) => {
+            for(let element of cacheObject){
+                if(typeof(element.value) === 'string'){
+                    if(element.value.includes("response")){
+                        let target = this.getTarget(element.value);
+                        let value = _.result(response, target);
+                        this.cache.put(element.name, value)
+                    }
+                }else{
+                    this.cache.put(element.name, element.value);
+                }
+            }
+        })
     }
     //Authenticate and get auth cookie
     async authenticate(){
@@ -61,18 +88,24 @@ class Serie{
     }
     getSerieCaseParam = (serieCase) => {
         return {
-            target : serieCase.target,
+            target : (serieCase.target.split(".")[1] === "response") ? this.getTarget(serieCase.target) : serieCase.target,
             comparison : serieCase.comparison,
             realValue : this.getAssertValue(serieCase.value),
             value : serieCase.value
         }
     }
+    getTarget = (target) => {
+        let pattern = "response";
+        return target.slice(target.indexOf(pattern) + pattern.length + 1, target.length)
+    }   
     setMochaProperties = () => {
-        this.suiteInstance = Mocha.Suite.create(this.mochaInstance.suite, this.description);
+        this.suiteInstance = Mocha.Suite.create(this.config.mochaInstance.suite, this.description);
         this.suiteInstance.timeout(this.config.timeout);
+        this.config.suiteInstance = this.suiteInstance;
     }
     executeSerieAssertions = (serieCaseParam, response) => {
-        let description = (typeof(serieCaseParam.realValue) == 'object') ? JSON.stringify(serieCaseParam.realValue) : serieCaseParam.realValue;
+        let description = (typeof(serieCaseParam.realValue) === 'object') ? JSON.stringify(serieCaseParam.realValue) : serieCaseParam.realValue;
+        serieCaseParam.realValue = (this.isNumeric(serieCaseParam.realValue)) ? Number(serieCaseParam.realValue) : serieCaseParam.realValue;
         switch (serieCaseParam.comparison){
             case 'Equals':
                 this.suiteInstance.addTest(new Test(serieCaseParam.target + ' doit être égal à '+ description, (() => {
@@ -98,22 +131,34 @@ class Serie{
                     expect(_.result(response, serieCaseParam.target)).to.contain.deep.members(serieCaseParam.realValue);
                 })));
                 break;
-            case 'Type':
-                this.suiteInstance.addTest(new Test(stepCaseParam.target + ' doit contenir '+ description + ' elements',(() => {
-                    expect(_.result(response, stepCaseParam.target).length).to.deep.equal(stepCaseParam.value);
+            case 'Count':
+                this.suiteInstance.addTest(new Test(serieCaseParam.target + ' doit contenir '+ description + ' elements',(() => {
+                    expect(_.result(response, serieCaseParam.target).length).to.deep.equal(serieCaseParam.realValue);
                 })));
                 break;
         }
     }
+    isNumeric = (str) => {
+        return /^\d+$/.test(str);
+    }
     getAssertValue = (value) => {
-        this.serie.serieExecutionOrder.forEach(testCase => {
-            if(typeof(value) === 'string'){
-                let [id, property] = value.split(".");
-                if(id == testCase.id && testCase.hasOwnProperty(property)){
-                    value = testCase[property];
-                }
+        if(typeof(value) === 'string'){
+            let pattern = "response"
+            let [id, property] = value.split(".");
+            if(property === pattern){
+                let response = this.getStepResponse(id);
+                let responseProperty = value.slice(value.indexOf(pattern) + pattern.length + 1, value.length);
+                value = _.result(response, responseProperty);
+            }else{
+                this.serie.serieExecutionOrder.forEach(testCase => {
+                    if(id == testCase.id){
+                        if(testCase.hasOwnProperty(property)){
+                            value = testCase[property];
+                        }
+                    } 
+                });
             }
-        });
+        }
         return value;
     }
     assertionsOnSerie = (response, id) => {
@@ -126,6 +171,15 @@ class Serie{
     }
     haveAssert = (id) => {
         return this.executionOrder[id].hasOwnProperty("assert");
+    }
+    getStepResponse = (id) => {
+        let stepResponse;
+        this.allStepResponse.forEach((stepObj) => {
+            if(stepObj.id == id){
+                stepResponse = stepObj.response;
+            }
+        })
+        return stepResponse
     }
 }
 module.exports = Serie;

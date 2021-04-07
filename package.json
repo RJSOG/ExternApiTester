@@ -20,9 +20,10 @@
   },
   "homepage": "https://github.com/Eli0ttD0NATIEN/test-seal-external-api#readme",
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "agentkeepalive": "^4.1.4",
     "ajv": "^7.2.1",
     "axios": "^0.21.1",
-    "babel": "^6.23.0",
     "chai": "^4.3.0",
     "command-line-args": "^5.1.1",
     "events": "^3.3.0",

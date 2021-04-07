@@ -22,7 +22,10 @@ class SerieParser {
         let allSerieData = []
         for(let file of this.allSeriesFiles){
             let fileParser = new FileParser(file, this.config);
-            allSerieData.push(fileParser.getData());
+            let serieData = fileParser.getData();
+            if(serieData.serieIsEnabled){
+                allSerieData.push(serieData);
+            }
         }
         return allSerieData;
     }
@@ -30,7 +33,7 @@ class SerieParser {
         return this.allSerieData;
     }
     getSerieDataFromName = (name) => {
-        for(serie of this.allSerieData){
+        for(let serie of this.allSerieData){
             if(serie.name == name){
                 return serie;
             }
@@ -59,6 +62,16 @@ class SerieParser {
             }
           })
         return arrayOfFiles;
+    }
+    getSerieCache = (name) => {
+        let serieCache = [];
+        let serieData = this.getSerieDataFromName(name);
+        for(let stepCase of serieData.executionOrder){
+            if(stepCase["cache"] != undefined){
+                serieCache.push(stepCase.cache);
+            }
+        }
+        return serieCache;
     }
 }
 class Singleton {

@@ -364,6 +364,42 @@
                     "value": "array"
                 }
             ]
+        },
+        {
+            "id": "P11",
+            "name": "Test GET permissions limit / offset",
+            "description": "Verification fonctionnement param_uri limit",
+            "endpoint": "/permission",
+            "method": "GET",
+            "param_uri": {
+                "limit": 200,
+                "offset": 2
+            },
+            "param_body": [
+                {}
+            ],
+            "assert": [
+                {
+                    "comparison": "Equals",
+                    "target": "status_code",
+                    "value": 206
+                },
+                {
+                    "comparison": "Is not",
+                    "target": "data.item",
+                    "value": null
+                },
+                {
+                    "comparison": "Equals",
+                    "target": "data.status",
+                    "value": "ok"
+                },
+                {
+                    "comparison": "Type",
+                    "target": "data.item",
+                    "value": "array"
+                }
+            ]
         }
     ]
 }

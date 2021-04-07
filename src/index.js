@@ -1,3 +1,5 @@
+require("@babel/polyfill");
+
 const Motor = require('./motor');
 const commandLineArgs = require('command-line-args');
 const fs = require('fs');

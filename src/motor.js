@@ -5,10 +5,16 @@ const path = require('path');
 const SingletonFileValidator = require('./singletonFileValidator');
 const fs = require('fs');
 const { process, exit } = require('process');
+const Spec = Mocha.Spec;
+const TeamCity = require('mocha-teamcity-reporter');
+const { type } = require('mocha/mocha');
 
 class Motor{
     constructor(config){
         this.config = config;
+        this.config.mochaInstance =  new Mocha({
+            reporter: (this.config.report == 'tc') ? TeamCity : Spec
+        });
         this.serieParser = new SerieParser(this.config).getInstance();
         this.validateStepFile = new SingletonFileValidator(this.config, 'step').getInstance('step');
         this.allStepFiles = this.getAllStepFiles(this.config.stepFolder);
@@ -64,11 +70,16 @@ class Motor{
                 "name" : testSerie.name,
                 "description" : testSerie.description,
                 "serieExecutionOrder" : [],
-                "automatedAuth" : testSerie.automatedAuth
+                "automatedAuth" : testSerie.automatedAuth,
+                "cache" : false
             }
             testSerie.executionOrder.forEach(executionStep => {
                 let caseTestObj = this.getTestFromFileAndId(executionStep.file, executionStep.id)
-                serie.serieExecutionOrder.push(caseTestObj)
+                caseTestObj.requiredStep = executionStep.requiredStep;
+                serie.serieExecutionOrder.push(caseTestObj);
+                if(executionStep['cache'] != undefined){
+                    serie.cache = true;
+                }
             });
             allSerieObject.push(serie);
         })
@@ -79,6 +90,7 @@ class Motor{
             let serieInstance = new Serie(serie, this.config);
             await serieInstance.startAssert();
         }
+        this.config.mochaInstance.run();
     }
 }
 module.exports = Motor;

@@ -1,0 +1,49 @@
+{
+    "name" : "Passage Portes",
+    "automatedAuth" : true,
+    "serieIsEnabled" : true,
+    "description" : "Listing de tous les passages sur portes",
+    "executionOrder" : [
+        {
+            "file" : "PassagePortesStep.json",
+            "id" : "PP1",
+            "requiredStep" : false
+        },
+        {
+            "file" : "PassagePortesStep.json",
+            "id" : "PP2",
+            "requiredStep" : true,
+            "cache" : [
+                {
+                    "name" : "${lastUsageId}",
+                    "value" : "response.data.item[0].UsageId"
+                }
+            ]
+        },
+        {
+            "file" : "PassagePortesStep.json",
+            "id" : "PP3",
+            "requiredStep" : true
+        },
+        {
+            "file" : "PassagePortesStep.json",
+            "id" : "PP4",
+            "requiredStep" : false
+        },
+        {
+            "file" : "PassagePortesStep.json",
+            "id" : "PP5",
+            "requiredStep" : false
+        },
+        {
+            "file" : "PassagePortesStep.json",
+            "id" : "PP6",
+            "requiredStep" : false
+        },
+        {
+            "file" : "PassagePortesStep.json",
+            "id" : "PP7",
+            "requiredStep" : false
+        }
+    ]
+}

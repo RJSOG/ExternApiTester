@@ -1,0 +1,31 @@
+{
+    "name" : "Liens Badges Groupe Badges",
+    "automatedAuth" : true,
+    "serieIsEnabled" : true,
+    "description" : "Vérifications des liens badge et groupes de badges",
+    "executionOrder" : [
+        {
+            "file" : "LiensBadgesGroupeStep.json",
+            "id" : "BL3",
+            "requiredStep" : false
+        },
+        {
+            "file" : "LiensBadgesGroupeStep.json",
+            "id" : "BL1",
+            "requiredStep" : true
+        },
+        {
+            "file" : "LiensBadgesGroupeStep.json",
+            "id" : "BL2",
+            "requiredStep" : false,
+            "assert" : [
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.item[0]",
+                    "value": "BL1.response.data.item[1]"
+                }
+            ]
+        }
+
+    ]
+}

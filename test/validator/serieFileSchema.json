@@ -3,6 +3,7 @@
     "properties" : {
         "name" : {"type": "string"},
         "description" : {"type": "string"},
+        "serieIsEnabled" : {"type": "boolean"},
         "executionOrder" : {
             "type": "array",
             "items" : {
@@ -10,6 +11,18 @@
                 "properties" : {
                     "file": {"type": "string"},
                     "id": {"type": "string"},
+                    "requiredStep" : {"type": "boolean"},
+                    "cache" : {
+                        "type" : "array",
+                        "items" : {
+                            "type" : "object",
+                            "properties" : {
+                                "name" : {"type" :"string"},
+                                "value" : {"type": ["string", "array", "object", "null", "number", "boolean"]}
+                            },
+                            "required" : ["name", "value"]
+                        }
+                    },
                     "assert": {
                         "type" : "array",
                         "items" : {
@@ -23,9 +36,9 @@
                         }
                     }
                 },
-                "required" : ["file", "id"]
+                "required" : ["file", "id", "requiredStep"]
             }
         }
     },
-    "required" : ["name", "description", "executionOrder"]
+    "required" : ["name", "description", "executionOrder", "serieIsEnabled"]
 }
