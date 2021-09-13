@@ -1,6 +1,14 @@
-# test-seal-external-api
-Project for automated test on the seal external api
-Available param :
+# ExternApiTester
+This project is used to do automated tests on API.
+It allow you to describe acceptance test and unit test using json file.
+Those filles will be interpreted and executed by the script and he will report you the test result.
+## How it works ?
+<ol>
+  <li> Describe your test by using serie and step files architecture </li>
+  <li> Execute the script by using you favorite shell </li>
+</ol>
+
+## Available param :
 <ol>
   <li> name: 'timeout', alias: 't', type: Number, --> Set the Mocha timeout (optionnal)</li>
   <li> name: 'report', alias: 'r',  type: String, --> Change Mocha reporter (tc or cli) (optionnal)</li>
