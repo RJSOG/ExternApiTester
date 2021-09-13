@@ -1,0 +1,33 @@
+[
+    {
+        "type": "object",
+        "properties" : {
+            "name" : {"type": "string"},
+            "description" : {"type": "string"},
+            "executionOrder" : {
+                "type": "array",
+                "items" : {
+                    "type": "object",
+                    "properties" : {
+                        "file": {"type": "string"},
+                        "id": {"type": "string"},
+                        "assert": {
+                            "type" : "array",
+                            "items" : {
+                                "type": "object",
+                                "properties" : {
+                                    "comparison" : {"type" : "string"},
+                                    "target" : {"type": "string"},
+                                    "value": {"type" : ["string", "array", "object", "null", "number", "boolean"]}
+                                },
+                                "required" : ["comparison", "target", "value"]
+                            }
+                        }
+                    },
+                    "required" : ["file", "id"]
+                }
+            }
+        },
+        "required" : ["name", "description", "executionOrder"]
+    }
+]

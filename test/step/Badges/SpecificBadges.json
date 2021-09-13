@@ -1,0 +1,57 @@
+{
+    "groupname" : "Informations sur un badge spécifique",
+    "all_test" : [
+        {
+            "id" : "SB1",
+            "name" : "Info Badge Existant",
+            "description" : "Récupération des info sur un badge spécifique existant",
+            "endpoint" : "/tag/10",
+            "method": "GET",
+            "param_uri" : {},
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" : "Equals", 
+                    "target" : "status_code",
+                    "value" : 200
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.status",
+                    "value" : "ok"
+                },
+                {
+                    "comparison" :"Equals",
+                    "target" :"data.item.id",
+                    "value" : 10
+                }
+            ]
+        },
+        {
+            "id" : "SB2",
+            "name" : "Info Badge Inexistant",
+            "description" : "Récupération des infos sur un badge inexistant",
+            "endpoint" : "/tag/69696969",
+            "method": "GET",
+            "param_uri" : {},
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" : "Equals", 
+                    "target" : "status_code",
+                    "value" : 404
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" : "data.status",
+                    "value" : "error"
+                },
+                {
+                    "comparison" :"Equals",
+                    "target" :"data.message",
+                    "value" : "L'élément demandé n'a pas été trouvé"
+                }
+            ]
+        }
+    ]
+}

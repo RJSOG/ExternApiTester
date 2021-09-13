@@ -1,0 +1,77 @@
+{
+    "groupname" : "foo",
+    "all_test" : [
+        {
+            "id" : "EP1",
+            "name" : "Generation Evenement Porte Valide Badge non valide",
+            "description" : "Generation Evenement Porte Valide Badge non valide",
+            "endpoint" : "/door/517/generateTagEvent",
+            "method": "PUT",
+            "param_uri" : {
+                "tagId" : 6666
+            },
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" : "Equals", 
+                    "target" : "status_code",
+                    "value" : 400
+                }
+            ]
+        },
+        {
+            "id" : "EP2",
+            "name" : "Generation Evenement Porte Non Valide Badge Valide",
+            "description" : "Generation Evenement Porte Non Valide Badge Valide",
+            "endpoint" : "/door/66666/generateTagEvent",
+            "method": "PUT",
+            "param_uri" : {
+                "tagId" : 15
+            },
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" : "Equals", 
+                    "target" : "status_code",
+                    "value" : 400
+                }
+            ]
+        },
+        {
+            "id" : "EP3",
+            "name" : "Verification Autorisation Badge Non Valide",
+            "description" : "Verification Autorisation Badge Non Valide",
+            "endpoint" : "/door/517/isAuthorized",
+            "method": "GET",
+            "param_uri" : {
+                "tagId" : 6666
+            },
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" : "Equals", 
+                    "target" : "status_code",
+                    "value" : 400
+                }
+            ]
+        },
+        {
+            "id" : "EP4",
+            "name" : "Verification Autorisation Porte Non Valide",
+            "description" : "Verification Autorisation Porte Non Valide",
+            "endpoint" : "/door/6666/isAuthorized",
+            "method": "GET",
+            "param_uri" : {
+                "tagId" : 15
+            },
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" : "Equals", 
+                    "target" : "status_code",
+                    "value" : 400
+                }
+            ]
+        }
+    ]
+}

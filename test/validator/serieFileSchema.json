@@ -1,0 +1,44 @@
+{
+    "type": "object",
+    "properties" : {
+        "name" : {"type": "string"},
+        "description" : {"type": "string"},
+        "serieIsEnabled" : {"type": "boolean"},
+        "executionOrder" : {
+            "type": "array",
+            "items" : {
+                "type": "object",
+                "properties" : {
+                    "file": {"type": "string"},
+                    "id": {"type": "string"},
+                    "requiredStep" : {"type": "boolean"},
+                    "cache" : {
+                        "type" : "array",
+                        "items" : {
+                            "type" : "object",
+                            "properties" : {
+                                "name" : {"type" :"string"},
+                                "value" : {"type": ["string", "array", "object", "null", "number", "boolean"]}
+                            },
+                            "required" : ["name", "value"]
+                        }
+                    },
+                    "assert": {
+                        "type" : "array",
+                        "items" : {
+                            "type": "object",
+                            "properties" : {
+                                "comparison" : {"type" : "string"},
+                                "target" : {"type": "string"},
+                                "value": {"type" : ["string", "array", "object", "null", "number", "boolean"]}
+                            },
+                            "required" : ["comparison", "target", "value"]
+                        }
+                    }
+                },
+                "required" : ["file", "id", "requiredStep"]
+            }
+        }
+    },
+    "required" : ["name", "description", "executionOrder", "serieIsEnabled"]
+}

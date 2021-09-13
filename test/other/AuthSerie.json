@@ -1,0 +1,12 @@
+[
+    {
+        "name" :"AuthSerie",
+        "description" : "Test des différentes méthodes d'authentification",
+        "executionOrder" : [
+            {
+                "file" : "AuthStep",
+                "id" : "A1"
+            }
+        ]
+    }
+]

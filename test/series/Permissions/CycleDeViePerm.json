@@ -1,0 +1,42 @@
+{
+    "name" : "CycleDeViePermission",
+    "automatedAuth" : true,
+    "serieIsEnabled" : true,
+    "description" : "Cycle de vie d'une permission",
+    "executionOrder" : [
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P2",
+            "requiredStep" : false
+        },
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P1",
+            "requiredStep" : false,
+            "assert" : [
+                {
+                    "comparison" : "Contain",
+                    "target" : "data.item",
+                    "value" : "P2.param_body"
+                }
+            ]
+        },
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P3",
+            "requiredStep" : false
+        },
+        {
+            "file" : "PermissionsStep.json",
+            "id" : "P1",
+            "requiredStep" : false,
+            "assert" : [
+                {
+                    "comparison" : "Is not",
+                    "target" : "data.item",
+                    "value" : "P3.param_body"
+                }
+            ]
+        }
+    ]
+}

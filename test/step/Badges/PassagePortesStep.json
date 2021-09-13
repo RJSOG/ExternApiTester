@@ -1,0 +1,186 @@
+{
+    "groupname" : "Passage Portes",
+    "all_test" : [
+        {
+            "id" : "PP1",
+            "name" : "Passages Portes",
+            "description" : "Listing de tous les passages sur portes",
+            "endpoint" : "/tagUsage",
+            "method": "GET",
+            "param_uri" : {
+                "lastUsageId" : null
+            },
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" : "Equals", 
+                    "target" : "status_code",
+                    "value" : 200
+                },
+                {
+                    "comparison" :"Is not",
+                    "target" : "data.item",
+                    "value" : null
+                },
+                {
+                    "comparison" :"Type",
+                    "target" :"data.item",
+                    "value": "array"
+                }
+            ]
+        },
+        {
+            "id" : "PP2",
+            "name" : "Récupération du lastUsageId",
+            "description" : "Récupération du lastUsageId",
+            "endpoint" : "/tagUsage",
+            "method": "GET",
+            "param_uri" : {
+                "doorIds" : 517,
+                "limit" : 1
+            },
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" : "Equals", 
+                    "target" : "status_code",
+                    "value" : 206
+                },
+                {
+                    "comparison" :"Equals",
+                    "target" :"data.status",
+                    "value": "ok"
+                },
+                {
+                    "comparison" : "Count",
+                    "target" :"data.item",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "id" : "PP3",
+            "name" : "Creation Passage Porte",
+            "description" : "Générations de  1 passage sur une porte",
+            "endpoint" : "/door/517/generateTagEvent",
+            "method": "PUT",
+            "param_uri" : {
+                "tagId" : 15
+            },
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" : "Equals", 
+                    "target" : "status_code",
+                    "value" : 200
+                },
+                {
+                    "comparison" :"Is not",
+                    "target" : "data.item",
+                    "value" : null
+                },
+                {
+                    "comparison" :"Equals",
+                    "target" :"data.status",
+                    "value": "ok"
+                }
+            ]
+        },
+        {
+            "id" : "PP4",
+            "name" : "Passages sur une Porte",
+            "description" : "Vérification de la génération de passage avec le lastUsageId",
+            "endpoint" : "/tagUsage",
+            "method": "GET",
+            "param_uri" : {
+                "lastUsageId" : "${lastUsageId}",
+                "doorIds" : 517,
+                "limit" : 1
+            },
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" : "Equals", 
+                    "target" : "status_code",
+                    "value" : 200
+                },
+                {
+                    "comparison" :"Equals",
+                    "target" :"data.status",
+                    "value": "ok"
+                },
+                {
+                    "comparison" : "Count",
+                    "target" :"data.item",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "id" :"PP5",
+            "name" : "Porte autorisé ?",
+            "description" : "Porte autorisé ?",
+            "endpoint" : "/door/517/isAuthorized",
+            "method" : "GET",
+            "param_uri" : {
+                "tagId" : 15
+            },
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" :"Equals",
+                    "target" : "status_code",
+                    "value" : 200
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" :"data.item",
+                    "value" : true
+                }
+            ]
+        },
+        {
+            "id" :"PP6",
+            "name" : "Porte non autorisé ?",
+            "description" : "Porte non autorisé ?",
+            "endpoint" : "/door/523/isAuthorized",
+            "method" : "GET",
+            "param_uri" : {
+                "tagId" : 15
+            },
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" :"Equals",
+                    "target" : "status_code",
+                    "value" : 200
+                },
+                {
+                    "comparison" : "Equals",
+                    "target" :"data.item",
+                    "value" : false
+                }
+            ]
+        },
+        {
+            "id" : "PP7",
+            "name" : "Erreur offset",
+            "description" : "Génération d'une erreur avec un offset négatif",
+            "endpoint" : "/tagUsage",
+            "method": "GET",
+            "param_uri" : {
+                "lastUsageId" : null,
+                "doorIds" : 517,
+                "offset" : -1
+            },
+            "param_body" : [{}],
+            "assert" : [
+                {
+                    "comparison" : "Equals", 
+                    "target" : "status_code",
+                    "value" : 400
+                }
+            ]
+        }
+    ]
+}

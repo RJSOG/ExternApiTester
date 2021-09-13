@@ -1,0 +1,29 @@
+-> Arg to say serie type
+-> Arg to say if step is a required step for serie
+	-> Check if base data is ok
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	-> If fail don't run test

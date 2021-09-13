@@ -2,12 +2,12 @@ const fs = require("fs");
 
 class FileParser {
     constructor(filename, config){
-        this.filepath = config.testFolder + filename;
-        let rawdata = fs.readFileSync(this.filepath);
+        this.config = config;   
+        let rawdata = fs.readFileSync(filename, {encoding: 'utf-8'});
         this.data  = JSON.parse(rawdata);
     }
-    getAllTest(){
-        return this.data[0];
+    getData = () => {
+        return this.data;
     }
 }
 module.exports = FileParser;

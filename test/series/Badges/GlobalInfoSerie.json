@@ -1,0 +1,33 @@
+{
+    "name" : "Informations Global sur les badges",
+    "automatedAuth" : true,
+    "serieIsEnabled" : true,
+    "description" : "Test des différentes info recuperables sur un badge",
+    "executionOrder" : [
+        {
+            "file" : "GlobalInfosStep.json",
+            "id" : "B1",
+            "requiredStep" : false
+        },
+        {
+            "file" : "GlobalInfosStep.json",
+            "id" : "B2",
+            "requiredStep" : false
+        },
+        {
+            "file" : "GlobalInfosStep.json",
+            "id" : "B3",
+            "requiredStep" : true
+        },
+        {
+            "file" : "GlobalInfosStep.json",
+            "id" : "B4",
+            "requiredStep" : false,
+            "assert" : [{
+                "comparison" : "Equals",
+                "target" : "data.item[0]",
+                "value" : "B3.response.data.item[1]"
+            }]
+        }
+    ]
+}
